@@ -1,0 +1,25 @@
+
+.navbar .navbar-nav .nav-link {
+    letter-spacing: 0.5px;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    font-size: 1.1em;
+    
+}
+
+.navbar{
+    margin: 2em;
+    white-space: pre;
+}
+
+.btn{
+    letter-spacing: 0.5px;
+    padding-right: 1.3rem;
+    padding-left: 1.3rem;
+    font-size: 1.1em;
+    border-radius: 1.5rem;
+}
+
+.emphasis{
+    color: var(--secondary);
+}
