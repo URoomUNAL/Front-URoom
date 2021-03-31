@@ -9,15 +9,15 @@
     img-height="2"
   >
     <b-carousel-slide
-      caption="First slide"
+      caption="Buena so"
       img-src="https://picsum.photos/1024/480/?image=10"
     ></b-carousel-slide>
     <b-carousel-slide
-      caption="Second Slide"
+      caption="La re Buena"
       img-src="https://picsum.photos/1024/480/?image=12"
     ></b-carousel-slide>
     <b-carousel-slide
-      caption="Third Slide"
+      caption="La re contre re buena So"
       img-src="https://picsum.photos/1024/480/?image=22"
     ></b-carousel-slide>
   </b-carousel>

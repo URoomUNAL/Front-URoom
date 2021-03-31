@@ -6,13 +6,13 @@
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium minus nisi atque a, facere laboriosam.</p>
             <div class="row">
               <div class="col-2 offset-3">
-                  <b-icon icon="facebook" font-scale="1.5" ></b-icon>
+                  <b-icon style="color:#000000" icon="facebook" font-scale="1.5" ></b-icon>
               </div>
               <div class="col-2">
-                  <b-icon icon="instagram" font-scale="1.5"></b-icon>
+                  <b-icon style="color:#000000" icon="instagram" font-scale="1.5"></b-icon>
               </div>
               <div class="col-2 ">
-                  <b-icon icon="twitter" font-scale="1.5"></b-icon>
+                  <b-icon style="color:#000000" icon="twitter" font-scale="1.5"></b-icon>
               </div>
             </div>
         </div>
