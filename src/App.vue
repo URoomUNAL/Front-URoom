@@ -3,7 +3,7 @@
     <!--Importación del header-->
     <Header/>
     <!--Importación del contenido-->
-    <HomeContent/>
+    <router-view/>
     <!--Importación del footer-->
     <Footer/>
   </div>
@@ -11,14 +11,12 @@
 
 <script>
 import Footer from './components/Footer.vue'
-import HomeContent from './components/HomeContent.vue'
 import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    HomeContent,
     Footer
   }
 }

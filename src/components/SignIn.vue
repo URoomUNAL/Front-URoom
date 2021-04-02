@@ -14,16 +14,21 @@
             required
             class="m-3"
             />
-            <b-button type="submit">Inicia sesión</b-button>
+            <router-link :to="{name: 'RegistroData'}">
+                <b-button type="submit">Regístrate</b-button>
+            </router-link>
         </b-form>
-        
+        <HomeContent/>
     </div>
 </template>
 
 <script>
-
+import HomeContent from '../components/HomeContent.vue'
 export default {
-  name: 'LogIn',
-  props: {}
+  name: 'SignIn',
+  props: {},
+  components: {
+    HomeContent
+  }
 }
 </script>

@@ -16,14 +16,17 @@
             />
             <b-button type="submit">Inicia sesión</b-button>
         </b-form>
-        
+        <HomeContent/>
     </div>
 </template>
 
 <script>
-
+import HomeContent from '../components/HomeContent.vue'
 export default {
   name: 'LogIn',
-  props: {}
+  props: {},
+  components: {
+    HomeContent
+  }
 }
 </script>
