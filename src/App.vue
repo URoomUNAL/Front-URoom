@@ -2,22 +2,24 @@
   <div id="app">
     <!--Importación del header-->
     <Header/>
-    <Carousel/>
+    <!--Importación del contenido-->
+    <HomeContent/>
+    <!--Importación del footer-->
     <Footer/>
   </div>
 </template>
 
 <script>
 import Footer from './components/Footer.vue'
+import HomeContent from './components/HomeContent.vue'
 import Header from './components/Header.vue'
-import Carousel from './components/Carousel.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer,
-    Carousel
+    HomeContent,
+    Footer
   }
 }
 </script>
