@@ -8,12 +8,12 @@ const routes=[
         component:()=>import('@/components/HomeContent.vue'),//componente que ocupa esa vista
     },
     {
-        path:'/SignIn',//ruta (localhost:8080/)
+        path:'/SignIn',//ruta (localhost:8080/SignIn)
         name:'SignIn',//nombre de ruta
         component:()=>import('@/components/SignIn.vue'),//componente que ocupa esa vista
     },
     {
-        path:'/LogIn',//ruta (localhost:8080/)
+        path:'/LogIn',//ruta (localhost:8080/LogIn)
         name:'LogIn',//nombre de ruta
         component:()=>import('@/components/LogIn.vue'),//componente que ocupa esa vista
     },

@@ -51,7 +51,7 @@
                     </b-form-group>
                     <label for="edad">Edad:</label>
                     <b-form-spinbutton id="edad" v-model="value" min="18" max="100"></b-form-spinbutton>
-                    <p>Tienes que ser mayor de edad.</p>
+                    <p>Tienes que ser mayor de edad. (a revisar)</p>
                 </div>
             </div>
             
@@ -62,8 +62,7 @@
             id="checkboxes-4"
             :aria-describedby="ariaDescribedby"
             >
-            <b-form-checkbox value="Estudiante">Pincha si eres estudiante.</b-form-checkbox>
-            <b-form-checkbox value="Acepta">Acepto los términos y condiciones.</b-form-checkbox>
+            
             </b-form-checkbox-group>
         </b-form-group>
         <div id='enviar'>
