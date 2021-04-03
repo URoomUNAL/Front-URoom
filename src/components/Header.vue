@@ -13,8 +13,8 @@
                   <b-nav-item>Sobre nosotros</b-nav-item>
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto">
-                  <b-nav-item v-b-modal.log-in-modal><div class="emphasis">Inicia sesión</div></b-nav-item>
-                  <b-button v-b-toggle.collapse-1>Registrate</b-button>
+                  <b-nav-item v-b-toggle="'LogIn'" ><div class="emphasis">Inicia sesión</div></b-nav-item>
+                  <b-button v-b-toggle="'SignIn'" data-parent="#myGroup">Registrate</b-button>
               </b-navbar-nav>
           </b-collapse>
       </b-container>
@@ -29,6 +29,13 @@
 
 export default {
   name: 'Header',
-  props: {}
+  props: {},
+  method: {
+    OpenAllCollapse() {
+            for (var i = 0; i < this.periods.length; i++) {
+                this.$refs["period" + i][0].$data.show = true
+            }
+        }
+  }
 }
 </script>

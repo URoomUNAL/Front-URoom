@@ -19,19 +19,18 @@
         <div class="col-md-6 col-12">
             <p>Encuentra tu vivienda ideal.</p>
             <p>Decenas de opciones que se ajustan a tus necesidades.</p>
-            <p>Encuentra en tan solo unos pocos clics.</p>
+            <p>Todo en tan solo unos pocos clics.</p>
         </div>
       </div>
       <div id="abajo" class="row">
         <div class="col-md-6 col-12">
-          <p> UROOM&copy;. Todos los derechos reservados.</p>
+          <p> UROOM 2021&copy;. Todos los derechos reservados.</p>
         </div>
         <div class="col-md-6 col-12" >
           <a  href="">Preguntas frecuentes</a>
           <a  href="">Política de privacidad</a>
           <a  href="">Términos y condiciones</a>
         </div>
-        
       </div>
     </footer>
      
