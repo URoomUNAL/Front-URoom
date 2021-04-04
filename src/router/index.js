@@ -1,16 +1,18 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
+
 Vue.use(VueRouter)
+
 const routes=[
     {
         path:'/',//ruta (localhost:8080/)
-        name:'HomeContent',//nombre de ruta
-        component:()=>import('@/components/HomeContent.vue'),//componente que ocupa esa vista
+        name:'Home',//nombre de ruta
+        component:()=>import('@/components/Home.vue'),//componente que ocupa esa vista
     },
     {
-        path:'/SignIn',//ruta (localhost:8080/SignIn)
-        name:'SignIn',//nombre de ruta
-        component:()=>import('@/components/SignIn.vue'),//componente que ocupa esa vista
+        path:'/SignUp',//ruta (localhost:8080/SignUp)
+        name:'SignUp',//nombre de ruta
+        component:()=>import('@/components/SignUp.vue'),//componente que ocupa esa vista
     },
     {
         path:'/LogIn',//ruta (localhost:8080/LogIn)
@@ -23,10 +25,11 @@ const routes=[
         component:()=>import('@/components/RegistroData.vue'),//componente que ocupa esa vista
     }
 ]
+
 const router = new VueRouter({
-        mode : 'history',
-        base: process.env.BASE_URL,
-        routes
-    })
+    mode : 'history',
+    base: process.env.BASE_URL,
+    routes
+});
 
 export default router;

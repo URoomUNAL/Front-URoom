@@ -1,12 +1,10 @@
 $theme-colors: (
-        "primary": #3f3f41,
-        "secondary": #670071
+        "primary": #670071,
+        "secondary": #3f3f41,
+        "google": #db4a39,
+        "facebook": #3b5998
 );
-
-
 
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
-
-
 

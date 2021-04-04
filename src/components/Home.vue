@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Carousel from '../components/Carousel.vue'
+import Carousel from './Carousel.vue'
 
 export default {
-  name: 'HomeContent',
+  name: 'Home',
   props: {},
   components: {
       Carousel

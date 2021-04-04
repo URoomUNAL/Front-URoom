@@ -1,8 +1,8 @@
 body{
     font-family: 'jost';
-    src: url('../fonts/jost.ttf') format('truetype');
+    //src: local('jost'), url('../fonts/jost.ttf') format('truetype');
 }
-@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap");
-h1{
-    src: url('../fonts/hey-august.ttf') format('truetype');
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'hey august';
 }
