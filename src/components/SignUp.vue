@@ -27,7 +27,7 @@
               <b-form-radio>Arrendatario</b-form-radio>
             </b-form-radio-group>
             <p class="mt-3">Al presionar el siguiente botón estás aceptando los <a class="primary" href='/'>términos y condiciones</a>.</p>
-            <b-button variant="primary" class="col-6 mb-3" type="submit">Regístrate</b-button>            
+            <b-button to='/RegistroData' variant="primary" class="col-6 mb-3" type="submit">Regístrate</b-button>            
         </b-form>
     </div> 
 </template>

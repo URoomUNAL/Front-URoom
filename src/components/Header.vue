@@ -19,10 +19,10 @@
           </b-collapse>
       </b-container>
     </b-navbar>
-    <b-collapse id="log-in">
+    <b-collapse accordion="my-accordion" id="log-in">
       <LogIn/>
     </b-collapse>
-    <b-collapse id="sign-up">
+    <b-collapse accordion="my-accordion" id="sign-up">
       <SignUp/>
     </b-collapse>
   </div>
