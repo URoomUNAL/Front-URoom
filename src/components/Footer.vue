@@ -6,7 +6,7 @@
             <p class="text-justify col-md-12">URoom es el sitio ideal para encontrar tu habitación ideal en cuestión de segundos.</p>
             <b-row>
               <b-col cols="2" offset="3">
-                  <b-icon icon="facebook" font-scale="1.5"/>
+                  <b-icon style="color:black" icon="facebook" font-scale="1.5"/>
               </b-col>
               <b-col cols="2">
                   <b-icon icon="instagram" font-scale="1.5"/>
@@ -43,10 +43,8 @@
 </script>
 
 <style scoped>
-  /*@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap");*/
   #top {
       background: rgb(179, 178, 178);
-      font-family: 'Jost';
       padding: 20px;
   }
   #top p {
@@ -57,7 +55,6 @@
   }
   #bottom {
       background: rgb(218, 218, 218);
-      font-family: 'Jost';
       padding: 20px;
   }
   #bottom a {
