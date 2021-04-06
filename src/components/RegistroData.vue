@@ -64,15 +64,18 @@
 </template>
 
 <script>
+  
+  const axios = require('axios'); //El que hace peticiones http
   export default {
     data() {
       return {
         form: {
           email: '',
           name: '',
-          apellido:'',
+          apellido: '',
           checked: [],
-          file1: null
+          file1: null,
+          cellphone: String(parseInt(Math.random() * (3200000000 - 3000000000) + 3000000000)),
         },
         show: true
       }
@@ -80,7 +83,21 @@
     methods: {
       onSubmit(event) {
         event.preventDefault()
+        var myForm = this.form
+        //alert(typeof myForm)
         alert(JSON.stringify(this.form))
+        //Petición post
+        
+        axios.post('http://localhost:9000/SignIn', myForm)
+          .then(function (response) {
+            console.log(myForm)
+            console.log(response)
+            
+          })
+          .catch(function (error) {
+            console.log("no perri algo ásó")
+            console.log(error);
+          });
       },
       onReset(event) {
         event.preventDefault()
@@ -88,6 +105,7 @@
         this.form.email = ''
         this.form.name = ''
         this.form.apellido = ''
+        this.form.cellphone = Math.random() * (3200000000 - 3000000000) + 3000000000
         this.file1 = null
         this.form.checked = []
         // Trick to reset/clear native browser form validation state
