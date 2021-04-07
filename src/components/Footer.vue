@@ -6,7 +6,7 @@
             <p class="text-justify col-md-12">URoom es el sitio ideal para encontrar tu habitación ideal en cuestión de segundos.</p>
             <b-row>
               <b-col cols="2" offset="3">
-                  <b-icon style="color:black" icon="facebook" font-scale="1.5"/>
+                  <b-icon icon="facebook" font-scale="1.5"/>
               </b-col>
               <b-col cols="2">
                   <b-icon icon="instagram" font-scale="1.5"/>
@@ -17,9 +17,11 @@
             </b-row>
         </b-col>
         <b-col md="6" cols="12">
-            <p>Encuentra tu vivienda ideal.</p>
-            <p>Decenas de opciones que se ajustan a tus necesidades.</p>
-            <p>Todo en tan solo unos pocos clics.</p>
+          <ul>
+            <li><p>Encuentra tu vivienda ideal.</p></li>
+            <li><p>Decenas de opciones que se ajustan a tus necesidades.</p></li>
+            <li><p>Todo en tan solo unos pocos clics.</p></li>
+          </ul>
         </b-col>
       </b-row>
       <b-row id="bottom">
@@ -45,20 +47,20 @@
 <style scoped>
   #top {
       background: rgb(179, 178, 178);
-      padding: 20px;
+      padding: 1rem;
   }
   #top p {
       text-align: left;
-      padding-left: 150px;
-      padding-right: 150px;
-      padding-top: 20px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 1rem;
   }
   #bottom {
       background: rgb(218, 218, 218);
-      padding: 20px;
+      padding: 1rem;
   }
   #bottom a {
-      padding: 10px;
+      padding: 1rem;
       color: var(--secondary);
   }
 </style>

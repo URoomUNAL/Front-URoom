@@ -2,19 +2,21 @@
   <div>
     <b-navbar toggleable="lg">
       <b-container>
+        <b-container class="flex-nowrap">
           <b-navbar-brand>
-              <a href="/"><img src='../assets/images/uroom-logo.png' alt="URoom Logo"></a>
+              <a href="/"><b-img src='../assets/images/uroom-logo.png' fluid alt="URoom Logo"/></a>
           </b-navbar-brand>
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-          <b-collapse id="nav-collapse" is-nav>
+        </b-container>
+          <b-collapse id="nav-collapse" is-nav class="ml-auto">
               <b-navbar-nav class="ml-auto">
                   <b-nav-item to="/">Inicio</b-nav-item>
                   <b-nav-item to="/">Habitaciones</b-nav-item>
                   <b-nav-item to="/">Sobre nosotros</b-nav-item>
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto">
-                <b-nav-item @click="log_in_collapse" v-b-toggle.log-in><div class="primary">Inicia sesión</div></b-nav-item>
-                <b-button variant="primary" @click="closeAll" v-b-toggle.sign-up>Registrate</b-button>
+                <b-nav-item v-b-toggle.log-in><div class="primary">Inicia sesión</div></b-nav-item>
+                <b-button variant="primary" v-b-toggle.sign-up>Registrate</b-button>
               </b-navbar-nav>
           </b-collapse>
       </b-container>
@@ -34,16 +36,7 @@
 
   export default {
     name: 'Header',
-    app:{
-      log_in_collapse: false
-    },
-    methods: {
-      closeAll() {
-       this.collapses.forEach(collapse => {
-          collapse.show = false 
-       });
-      }
-    },
+    methods: { },
     components: {
       LogIn,
       SignUp

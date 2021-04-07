@@ -23,14 +23,6 @@
 </script>
 
 <style>
-@font-face {
-  font-family: "hey-august";
-  src: url(./assets/fonts/hey-august.ttf) format("truetype");
-}
-@font-face {
-  font-family: "jost";
-  src: url(./assets/fonts/jost.ttf) format("truetype");
-}
 #app {
   font-family: "jost";
   /*font-family: 'Jost', sans-serif;*/
