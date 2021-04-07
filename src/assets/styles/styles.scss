@@ -4,6 +4,7 @@
     padding-right: 1.3rem;
     padding-left: 1.3rem;
     border-radius: 1.5rem;
+    /*white-space: pre;*/
 }
 
 .form-control{
@@ -19,4 +20,8 @@
 
 .secondary{
     color: var(--secondary);
+}
+
+.form-width{
+    max-width: 75%;
 }
