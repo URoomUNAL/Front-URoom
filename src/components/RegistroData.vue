@@ -1,13 +1,20 @@
 <template>
   <b-container>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <h1 class="primary mb-3">Ingresa tus datos</h1>
       <b-row>
-        <b-col sm>
-          <h1 class="primary">Foto</h1>
-          <b-avatar src="" size="10rem" class="mb-4"/>
+        <b-col >
+          <b-row>
+            <h1 class="primary offset-4 col-6">Tu foto</h1>
+          </b-row>
+          <b-row>
+            <b-avatar src="" size="12rem" class="mb-4 offset-4"/>
+          </b-row>
           <!--<b-form-file v-model="file1" ref="file-input" class="mb-2" plain></b-form-file>
           <p class="mt-2">Selected file: <b>{{ file ? file.name : '' }}</b></p>-->
-          <b-button variant="primary">Cambiar foto</b-button>
+          <b-row>  
+            <b-button class="offset-4 col-6" variant="primary">Cambiar foto</b-button>
+          </b-row>
         </b-col>
         <b-col sm>
           <b-form-group id="input-group-2" label="Nombres:" label-for="input-2" 
