@@ -10,26 +10,26 @@
         <b-form>
           <b-container>
             <b-row class="justify-content-md-center">
-              <b-col sm='6'>
+              <b-col sm='12' md='6' lg='6' xl='6'>
                 <b-form-input label="Correo" placeholder="Correo" type="email" required/>
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
-              <b-col sm='6'>
+              <b-col sm='12' md='6' lg='6' xl='6'>
                 <b-form-input label="Contraseña" placeholder="Contraseña" type="password" required class="mt-3"/>
               </b-col>
             </b-row>
-            <b-row>
+            <b-row  >
               <b-col>
-                <b-button variant="primary" class="mt-3 col-6" type="submit">Iniciar sesión</b-button>
+                <b-button variant="primary" class="mt-3 col-12 col-md-6 col-lg-6" type="submit">Iniciar sesión</b-button>
               </b-col>
             </b-row>
             <hr/>
-            <b-row class="justify-content-md-center mb-3 col-8 offset-2">
-              <b-col sm='5' pd='0'>
-                <b-button variant="google" class="mt-1 col-md-12 col-12"><b-icon icon="google" font-scale="1.5" class="mr-3"/>Google </b-button>
+            <b-row  align-content="center" align-v="center" align-h="center" class=" mb-3 col-md-8 col-10 offset-1  offset-md-2">
+              <b-col sm='12' md='10' lg='5' >
+                <b-button variant="google" class="mt-1 col-md-12 col-12 "><b-icon icon="google" font-scale="1.5" class="mr-3"/>Google </b-button>
               </b-col>
-              <b-col sm='5' pd='0'>
+              <b-col sm='12' md='10' lg='5' >
                 <b-button variant="facebook" class="mt-1 col-md-12 col-12"><b-icon icon="facebook" font-scale="1.5" class="mr-3"/>Facebook</b-button>
               </b-col>
             </b-row>
