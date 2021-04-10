@@ -99,15 +99,15 @@
       onSubmit() {
         var user = {
           email: this.form.email,
-          name: this.form.name + this.form.surname,
+          name: this.form.name + ' ' + this.form.surname,
           password: this.user.password,
           cellphone: this.form.cellphone,
-          is_student: this.form.is_student,
-          age: this.form.age,
-          file1: this.form.file1
+          is_student: this.form.is_student == "true",
+          age: this.form.age//,
+          //file1: this.form.file1
         }
         //Petición post
-        AuthService.register(user)
+        AuthService.register(JSON.stringify(user));
       }
     }
   }

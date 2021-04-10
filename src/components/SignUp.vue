@@ -27,8 +27,8 @@
             <b-row>
               <b-col>
                 <b-form-radio-group required class="mt-3">
-                  <b-form-radio v-model="form.selected" value="1">Estudiante</b-form-radio>
-                  <b-form-radio v-model="form.selected" value="0">Arrendatario</b-form-radio>
+                  <b-form-radio v-model="form.selected" value="true">Estudiante</b-form-radio>
+                  <b-form-radio v-model="form.selected" value="false">Arrendatario</b-form-radio>
                 </b-form-radio-group>
           
               </b-col>
@@ -74,10 +74,10 @@ export default {
   data() {
     return{
       form: {
-        email: '',
-        password: '',
-        confirm: '',
-        selected: ''   
+        "email": '',
+        "password": '',
+        "confirm": '',
+        "selected": ''   
       },
       samePassword: '',
       showDismissibleAlert: false
