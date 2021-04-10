@@ -16,20 +16,21 @@
             </b-row>
             <b-row class="justify-content-md-center">
               <b-col lg="6">
-                <b-form-input label="Contraseña" v-model='form.password' placeholder="Contraseña" class="mt-3" required/>
+                <b-form-input type='password' label="Contraseña" v-model='form.password' placeholder="Contraseña" class="mt-3" required/>
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
               <b-col lg="6">
-                <b-form-input label="Confirmar contraseña" v-model='form.confirm' placeholder="Confirmar contraseña" class="mt-3" required/>
+                <b-form-input type='password' label="Confirmar contraseña" v-model='form.confirm' placeholder="Confirmar contraseña" class="mt-3" required/>
               </b-col>
             </b-row>
             <b-row>
               <b-col>
                 <b-form-radio-group required class="mt-3">
-                  <b-form-radio>Estudiante</b-form-radio>
-                  <b-form-radio>Arrendatario</b-form-radio>
+                  <b-form-radio v-model="form.selected" value="1">Estudiante</b-form-radio>
+                  <b-form-radio v-model="form.selected" value="0">Arrendatario</b-form-radio>
                 </b-form-radio-group>
+          
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
@@ -62,9 +63,9 @@
         </b-form>
       </b-col>
     </b-row>
-    <!--<b-card class="mt-3" header="Form Data Result">
+    <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
-    </b-card>-->
+    </b-card>
   </b-container>
 </template>
 
@@ -75,9 +76,10 @@ export default {
       form: {
         email: '',
         password: '',
-        confirm: ''        
+        confirm: '',
+        selected: ''   
       },
-      samePasswaord: '',
+      samePassword: '',
       showDismissibleAlert: false
     }
   },
@@ -89,7 +91,8 @@ export default {
         }else{
           const data = {
             email: this.form.email,
-            password: this.form.password
+            password: this.form.password,
+            selected: this.form.selected
           }
           this.$router.push({ name: 'RegistroData', params: {user: data}})
         }
