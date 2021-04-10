@@ -7,16 +7,16 @@
     </b-row>
     <b-row align-v="center" align-h="center" align-content="center">
       <b-col class="form-width">
-        <b-form>
+        <b-form @submit="OnSubmit">
           <b-container>
             <b-row class="justify-content-md-center">
               <b-col lg="6">
-                <b-form-input label="Correo" placeholder="Correo" type="email" required/>
+                <b-form-input label="Correo" v-model="form.email" placeholder="Correo" type="email" required/>
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
               <b-col lg="6">
-                <b-form-input label="Contraseña" placeholder="Contraseña" type="password" required class="mt-3"/>
+                <b-form-input label="Contraseña" v-model="form.password" placeholder="Contraseña" type="password" required class="mt-3"/>
               </b-col>
             </b-row>
             <b-row>
@@ -33,6 +33,9 @@
                 <b-button variant="facebook" class="mt-1 col-12"><b-icon icon="facebook" font-scale="1.5" class="mr-3"/>Facebook</b-button>
               </b-col>
             </b-row>
+            <!--<b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ form }}</pre>
+            </b-card>-->
           </b-container>
         </b-form>
       </b-col>
@@ -41,11 +44,24 @@
 </template>
 
 <script>
+
+import AuthService from '../services/principal_services'
+
 export default {
   name: 'LogIn',
-  props: {},
-  components: {
-
+  methods: {
+    OnSubmit(){
+      AuthService.sign_in(this.form);
+    }
+  },
+  data(){
+    return{
+      form: {
+        email: '',
+        password: ''
+      }
+    }
   }
+  
 }
 </script>
