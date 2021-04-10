@@ -3,7 +3,7 @@
     <!--Importación del header-->
     <Header/>
     <!--Importación del contenido-->
-    <router-view/>
+    <router-view :user="user"/>
     <!--Importación del footer-->
     <Footer/>
   </div>

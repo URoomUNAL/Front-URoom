@@ -65,8 +65,8 @@
               </b-col>
             </b-row>
             
-            <!--<b-card class="mt-3" header="Form Data Result">
-              <pre class="m-0">{{ form }}</pre>
+            <b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ user }}</pre>
             </b-card>-->
 
           </b-container>
@@ -80,14 +80,16 @@
   
   const axios = require('axios'); //El que hace peticiones http
   export default {
+    props: ['user'],
     data() {
       return {
         form: {
-          email: '',
+          email: this.user.email,
           name: '',
           apellido: '',
           checked: [],
           file1: null,
+          password: this.user.password,
           cellphone: String(parseInt(Math.random() * (3200000000 - 3000000000) + 3000000000)),
         },
         show: true

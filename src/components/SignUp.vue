@@ -83,11 +83,15 @@ export default {
   },
   methods: {
       handleSubmit(){
+        
         if (this.form.password != this.form.confirm){
           this.showDismissibleAlert=true
         }else{
-          
-          this.$router.push('/RegistroData')
+          const data = {
+            email: this.form.email,
+            password: this.form.password
+          }
+          this.$router.push({ name: 'RegistroData', params: {user: data}})
         }
 
       }
