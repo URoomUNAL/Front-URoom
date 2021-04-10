@@ -6,13 +6,13 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col>
+      <b-col class="mb-4">
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-          <b-container>
-            <b-row cols="2">
-              <b-col>
+          <b-container class="mb-3">
+            <b-row>
+              <b-col lg="4">
                 <b-row align-h="center" align-v="center">
-                  <h2 class="primary mb-4">Tu foto</h2>
+                  <h2 class="primary my-4">Tu foto</h2>
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-avatar src="" size="8rem" class="mb-2"/>
@@ -23,51 +23,51 @@
                   <b-button  variant="primary" class="mb-2">Cambiar foto</b-button>
                 </b-row>
               </b-col>
-              <b-col>
+              <b-col lg="8">
                 <b-row align-h="center" align-v="center">
-                  <h2 class="primary mb-4">Tus datos</h2>
+                  <h2 class="primary my-4">Tus datos</h2>
                 </b-row>
-                <b-row align-h="center" align-v="center">
-                  <b-form-group id="input-group-2" label="Nombres:" label-for="input-2">
-                      <b-form-input id="input-2" v-model="form.name" placeholder="Ingresar nombres" required/>
-                  </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <b-form-group id="input-group-1" label="Nombres:" label-for="input-1" description="¿Qué estas esperando?">
+                      <b-form-input id="input-1" v-model="form.name" placeholder="Ingresa tus nombres" required/>
+                    </b-form-group>
+                  </b-col>
+                  <b-col md="6">
+                    <b-form-group id="input-group-2" label="Apellidos:" label-for="input-2" description="Usa tus datos reales.">
+                      <b-form-input id="input-2" v-model="form.surname" placeholder="Ingresa tus apellidos" required />
+                    </b-form-group>
+                  </b-col>
                 </b-row>
-                <b-row align-h="center" align-v="center">
-                  <b-form-group id="input-group-1" label="Correo:" label-for="input-1" description="No compartiremos tu email con nadie más.">
-                    <b-form-input id="input-1" v-model="form.email" type="email" placeholder="Ingresar correo" required/>
-                  </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <b-form-group id="input-group-3" label="Correo:" label-for="input-3" description="No compartiremos tu información.">
+                      <b-form-input id="input-3" v-model="form.email" type="email" placeholder="Ingresa tu correo" required/>
+                    </b-form-group>
+                  </b-col>
+                  <b-col md="6">
+                    <b-form-group id="input-group-4" label="Celular:" label-for="input-4" description="">
+                      <b-form-input id="input-4" v-model="form.cellphone" type="tel" placeholder="Ingresa tu celular" required/>
+                    </b-form-group>
+                  </b-col>
                 </b-row>
+                <b-row>
+                  <b-col md="6">
+                    <b-form-group id="input-group-5" label="Edad:" label-for="input-5" description="Debes ser mayor de edad.">
+                      <b-form-spinbutton id="input-5" v-model="form.age" min="18"></b-form-spinbutton>
+                      <!--<b-form-input id="input-5" v-model="form.age" type="number" min="18" placeholder="Ingresa tu edad" required/>-->
+                    </b-form-group>
+                  </b-col>
+                  <b-col align-self="center" class="mt-3 mb-4" md="6">
+                    <b-button variant="primary" block type="submit" >Completar registro</b-button>
+                  </b-col>
+                </b-row> 
               </b-col>
-              
             </b-row>
-            <!--<div class="col-sm">
-              <b-form-group id="input-group-3" label="Apellidos:" label-for="input-3" 
-                description="Usa tus datos reales.">
-                <b-form-input
-                id="input-3"
-                v-model="form.apellido"
-                placeholder="Ingresar apellidos"
-                required
-                />
-              </b-form-group>
-                <label for="edad">Edad:</label>
-                <b-form-spinbutton id="edad" v-model="value" min="18" max="100"></b-form-spinbutton>
-                <p>Tienes que ser mayor de edad. (a revisar)</p>
-            </div>
-            <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-                <b-form-checkbox-group
-                v-model="form.checked"
-                id="checkboxes-4"
-                :aria-describedby="ariaDescribedby"/>
-            </b-form-group>
-            <div id="enviar">
-              <b-button variant="primary" type="submit">Confirmar</b-button>
-              <b-button variant="danger" type="reset">Reset</b-button>
-            </div>
-            <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-            </b-card>
-            -->
+            
+            <!--<b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ form }}</pre>
+            </b-card>-->
 
           </b-container>
         </b-form>

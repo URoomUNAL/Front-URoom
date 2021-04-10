@@ -46,7 +46,7 @@
             </b-row>
             <b-row>
               <b-col >
-                <b-button  variant="primary" class="mb-2 col-6" type="submit">Regístrate</b-button>            
+                <b-button variant="primary" class="mb-2 col-6" type="submit">Regístrate</b-button>            
               </b-col>
             </b-row>
             <hr/>
