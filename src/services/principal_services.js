@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8081'
+const API_URL = 'http://localhost:9000'
 class AuthService{
     
     register(user) { // Funcion de registro
@@ -14,18 +14,11 @@ class AuthService{
         })
     }
 
-    sign_in(form){
+    LogIn(form){
       return axios.post(API_URL + '/login', form, {
         headers: {
-          "Content-Type": "application/json"
-        }})
-        .then(function(response){
-            console.log(response);
-            console.log(form)
-        }).catch(function(error){
-            console.log(error);
-            console.log(form);
-        });
+            "Content-Type": "application/json"
+        }});
     }
     
 }
