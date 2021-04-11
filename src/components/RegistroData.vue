@@ -7,7 +7,7 @@
     </b-row>
     <b-row>
       <b-col class="mb-4">
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form @submit.prevent="onSubmit" v-if="show">
           <b-container class="mb-3">
             <b-row>
               <b-col lg="4">
@@ -15,7 +15,7 @@
                   <h2 class="primary my-4">Tu foto</h2>
                 </b-row>
                 <b-row align-h="center" align-v="center">
-                  <b-avatar src="" size="8rem" class="mb-2"/>
+                  <b-avatar src="" size="10rem" class="mb-4 mt-4"/>
                 </b-row>
                 <!--<b-form-file v-model="file1" ref="file-input" class="mb-2" plain></b-form-file>
                 <p class="mt-2">Selected file: <b>{{ file ? file.name : '' }}</b></p>-->
@@ -65,7 +65,7 @@
               </b-col>
             </b-row>
             
-            <!--<b-card class="mt-3" header="Form Data Result">
+            <b-card class="mt-3" header="Form Data Result">
               <pre class="m-0">{{ form }}</pre>
             </b-card>-->
 
@@ -77,58 +77,37 @@
 </template>
 
 <script>
-  
-  const axios = require('axios'); //El que hace peticiones http
+  import AuthService from '../services/principal_services.js'
   export default {
+    props: ['user'],
     data() {
       return {
         form: {
-          email: '',
+          email: this.user.email,
           name: '',
-          apellido: '',
-          checked: [],
+          surname: '',
           file1: null,
-          cellphone: String(parseInt(Math.random() * (3200000000 - 3000000000) + 3000000000)),
+          password: this.user.password,
+          cellphone: '',
+          age: '',
+          is_student: this.user.selected
         },
         show: true
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        var myForm = this.form
-        //alert(typeof myForm)
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        var user = {
+          email: this.form.email,
+          name: this.form.name + ' ' + this.form.surname,
+          password: this.user.password,
+          cellphone: this.form.cellphone,
+          is_student: this.form.is_student == "true",
+          age: this.form.age//,
+          //file1: this.form.file1
+        }
         //Petición post
-        
-        axios.post('http://localhost:9000/SignIn', myForm)
-          .then(function (response) {
-            console.log(myForm)
-            console.log(response)
-            
-          })
-          .catch(function (error) {
-            console.log("no perri algo ásó")
-            console.log(error);
-          });
-      },
-      onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.apellido = ''
-        this.form.cellphone = Math.random() * (3200000000 - 3000000000) + 3000000000
-        this.file1 = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      },
-      clearFiles() {
-        this.$refs['file-input'].reset()
+        AuthService.register(JSON.stringify(user));
       }
     }
   }

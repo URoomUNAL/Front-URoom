@@ -23,6 +23,7 @@ const routes=[
         path:'/RegistroData',//ruta (localhost:8080/)
         name:'RegistroData',//nombre de ruta
         component:()=>import('@/components/RegistroData.vue'),//componente que ocupa esa vista
+        props: true
     }
 ]
 
