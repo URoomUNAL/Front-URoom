@@ -39,7 +39,7 @@
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
-              <b-col v-if="error" sm='5'>
+              <b-col v-if="error" sm='12' md='12' lg='12' xl='12'>
               <b-alert  v-model="error"  variant="danger" dismissible>
                   {{mistake}}
               </b-alert>

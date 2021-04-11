@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg">
+    <b-navbar toggleable="lg" class="mt-4">
       <b-container>
         <b-container class="flex-nowrap">
           <b-navbar-brand>
