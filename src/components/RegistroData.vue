@@ -42,7 +42,7 @@
                 <b-row>
                   <b-col md="6">
                     <b-form-group id="input-group-3" label="Correo:" label-for="input-3" description="No compartiremos tu información.">
-                      <b-form-input id="input-3" v-model="form.email" type="email" placeholder="Ingresa tu correo" required/>
+                      <b-form-input id="input-3" v-model="form.email" type="email" placeholder="Ingresa tu correo" required value="test@test.com"/>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
