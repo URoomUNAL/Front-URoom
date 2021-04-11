@@ -12,7 +12,7 @@ class AuthService{
     }
 
     LogIn(form){
-      return axios.post(API_URL + '/login', form, {
+      return axios.post(API_URL + '/log-in', form, {
         headers: {
             "Content-Type": "application/json"
         }});
