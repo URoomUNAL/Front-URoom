@@ -7,16 +7,23 @@
     </b-row>
     <b-row align-v="center" align-h="center" align-content="center">
       <b-col class="form-width">
-        <b-form>
+        <b-form @submit.prevent="Login">
           <b-container>
             <b-row class="justify-content-md-center">
               <b-col lg="6">
-                <b-form-input label="Correo" placeholder="Correo" type="email" required/>
+                <b-alert v-model="alert.show" variant="danger" dismissible>
+                    {{alert.message}}
+                </b-alert>
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
               <b-col lg="6">
-                <b-form-input label="Contraseña" placeholder="Contraseña" type="password" required class="mt-3"/>
+                <b-form-input label="Correo" v-model="form.email" placeholder="Correo" type="email" required/>
+              </b-col>
+            </b-row>
+            <b-row class="justify-content-md-center">
+              <b-col lg="6">
+                <b-form-input label="Contraseña" v-model="form.password" placeholder="Contraseña" type="password" required class="mt-3"/>
               </b-col>
             </b-row>
             <b-row>
@@ -41,11 +48,42 @@
 </template>
 
 <script>
+
+import AuthService from '../services/principal_services'
+
 export default {
   name: 'LogIn',
-  props: {},
-  components: {
-
-  }
+  data(){
+    return{
+      form: {
+        email: '',
+        password: ''
+      },
+      alert: {
+        show: false,
+        message: ''
+      }
+    }
+  },
+  methods: {
+    Login(){
+      var self = this;
+      AuthService.LogIn(JSON.stringify(this.form))
+        .then(function(response){
+          console.log(response);
+          //TODO: Inicio de sesión correcto.
+        }).catch(function(error){
+          if(error.response){
+            self.alert.message = error.response.data;
+          }else if(error.request){
+            self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
+          }else{
+            self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+          }
+          self.alert.show = true;
+        });
+    }
+  } 
+  
 }
 </script>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 const API_URL = 'http://localhost:9000'
 
 class AuthService{
@@ -20,6 +21,13 @@ class AuthService{
           console.log(user);
         })
     }
+
+    LogIn(form){
+      return axios.post(API_URL + '/login', form, {
+        headers: {
+            "Content-Type": "application/json"
+        }});
+    }
     
 }
-export default new AuthService()
+export default new AuthService();
