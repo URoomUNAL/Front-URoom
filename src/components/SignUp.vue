@@ -39,9 +39,9 @@
               </b-col>
             </b-row>
             <b-row class="justify-content-md-center">
-              <b-col v-if="showDismissibleAlert" sm='5'>
-              <b-alert  v-model="showDismissibleAlert" variant="danger" dismissible>
-                  Las contraseñas no coinciden.
+              <b-col v-if="error" sm='5'>
+              <b-alert  v-model="error"  variant="danger" dismissible>
+                  {{mistake}}
               </b-alert>
               </b-col>
             </b-row>
@@ -80,14 +80,22 @@ export default {
         "selected": ''   
       },
       samePassword: '',
-      showDismissibleAlert: false
+      error: false,
+      mistake: ''
     }
   },
   methods: {
       handleSubmit(){
         
         if (this.form.password != this.form.confirm){
-          this.showDismissibleAlert=true
+          this.error=true
+          this.mistake = 'Las contraseñas no coinciden'
+        }else if(this.form.password.length<6 || this.form.password.length>=20){
+          this.error=true
+          this.mistake = 'Las contraseña debe estar entre 6-20 caracteres'
+        }else if(this.isNumeric(this.form.password) || this.isAlpha(this.form.password)){
+          this.error= true
+          this.mistake= 'Las contraseña debe contener al menos un número y una letra.'
         }else{
           const data = {
             email: this.form.email,
@@ -96,8 +104,14 @@ export default {
           }
           this.$router.push({ name: 'RegistroData', params: {user: data}})
         }
-
+      },
+      isNumeric( str ) { 
+        return /^[0-9]+$/.test(str); 
+      },
+      isAlpha( str ) { 
+        return /^[A-Za-z]+$/.test(str); 
       }
+
   }
 }
 </script>
