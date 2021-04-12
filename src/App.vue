@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <!--Importación del header-->
-    <Header/>
+    <Header :data="data"/>
     <!--Importación del contenido-->
-    <router-view :user="user"/>
+    <router-view/>
     <!--Importación del footer-->
     <Footer/>
   </div>
@@ -12,12 +12,24 @@
 <script>
   import Footer from './components/Footer.vue'
   import Header from './components/Header.vue'
+  import axios from 'axios'
 
   export default {
     name: 'App',
+    data(){
+      return{
+        data: false
+      }
+    },
     components: {
       Header,
       Footer
+    },
+    methods: {
+      created(){
+        const response = axios.get('data');
+        this.data = response;
+      }
     }
   }
 </script>

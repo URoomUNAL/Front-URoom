@@ -6,8 +6,15 @@
       </b-col>
     </b-row>
     <b-row>
+      <b-col>
+        <b-alert v-model="alert.show" variant="danger" dismissible>
+            {{alert.message}}
+        </b-alert>
+      </b-col>
+    </b-row>
+    <b-row>
       <b-col class="mb-4">
-        <b-form @submit.prevent="onSubmit" v-if="show">
+        <b-form @submit.prevent="onSubmit">
           <b-container class="mb-3">
             <b-row>
               <b-col lg="4">
@@ -17,10 +24,8 @@
                 <b-row align-h="center" align-v="center">
                   <b-avatar src="" size="10rem" class="mb-4 mt-4"/>
                 </b-row>
-                <!--<b-form-file v-model="file1" ref="file-input" class="mb-2" plain></b-form-file>
-                <p class="mt-2">Selected file: <b>{{ file ? file.name : '' }}</b></p>-->
                 <b-row align-h="center" align-v="center">  
-                  <b-button  variant="primary" class="mb-2">Cambiar foto</b-button>
+                  <b-form-file type="file" accept=".jpg, .png" placeholder="" class="mb-2 col-10"></b-form-file>
                 </b-row>
               </b-col>
               <b-col lg="8">
@@ -55,7 +60,6 @@
                   <b-col md="6">
                     <b-form-group id="input-group-5" label="Edad:" label-for="input-5" description="Debes ser mayor de edad.">
                       <b-form-spinbutton id="input-5" v-model="form.age" min="18"></b-form-spinbutton>
-                      <!--<b-form-input id="input-5" v-model="form.age" type="number" min="18" placeholder="Ingresa tu edad" required/>-->
                     </b-form-group>
                   </b-col>
                   <b-col align-self="center" class="mt-3 mb-4" md="6">
@@ -64,11 +68,9 @@
                 </b-row> 
               </b-col>
             </b-row>
-            
-            <b-card class="mt-3" header="Form Data Result">
+            <!--<b-card class="mt-3" header="Form Data Result">
               <pre class="m-0">{{ form }}</pre>
-            </b-card>
-
+            </b-card>-->
           </b-container>
         </b-form>
       </b-col>
@@ -92,7 +94,10 @@
           age: '',
           is_student: this.user.selected
         },
-        show: true
+        alert: {
+          show: false,
+          message: ''
+        }
       }
     },
     methods: {
@@ -103,11 +108,24 @@
           password: this.user.password,
           cellphone: this.form.cellphone,
           is_student: this.form.is_student == "true",
-          age: this.form.age//,
-          //file1: this.form.file1
+          age: this.form.age
         }
-        //Petición post
-        AuthService.register(JSON.stringify(user));
+
+        var self = this;
+        AuthService.register(JSON.stringify(user))
+        .then(function(response){
+          console.log(response);
+          //TODO: Registro correcto.
+        }).catch(function(error){
+          if(error.response){
+            self.alert.message = error.response.data;
+          }else if(error.request){
+            self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
+          }else{
+            self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+          }
+          self.alert.show = true;
+        });
       }
     }
   }
