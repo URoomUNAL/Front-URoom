@@ -20,9 +20,10 @@ const routes=[
         component:()=>import('@/components/LogIn.vue'),//componente que ocupa esa vista
     },
     {
-        path:'/RegistroData',//ruta (localhost:8080/)
-        name:'RegistroData',//nombre de ruta
-        component:()=>import('@/components/RegistroData.vue'),//componente que ocupa esa vista
+        path:'/CompleteData',//ruta (localhost:8080/)
+        name:'CompleteData',//nombre de ruta
+        component:()=>import('@/components/CompleteData.vue'),//componente que ocupa esa vista
+        props: true
     }
 ]
 

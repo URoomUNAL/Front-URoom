@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg">
+    <b-navbar toggleable="lg" class="mt-4">
       <b-container>
         <b-container class="flex-nowrap">
           <b-navbar-brand>
@@ -14,19 +14,18 @@
                   <b-nav-item to="/">Habitaciones</b-nav-item>
                   <b-nav-item to="/">Sobre nosotros</b-nav-item>
               </b-navbar-nav>
-              <b-navbar-nav class="ml-auto">
+              <b-navbar-nav class="ml-auto" v-if="!data">
                 <b-nav-item v-b-toggle.log-in><div class="primary">Inicia sesión</div></b-nav-item>
                 <b-button variant="primary" v-b-toggle.sign-up>Registrate</b-button>
+              </b-navbar-nav>
+              <b-navbar-nav class="ml-auto" v-if="data">
+                <b-button variant="primary">Cierra sesión</b-button>
               </b-navbar-nav>
           </b-collapse>
       </b-container>
     </b-navbar>
-    <b-collapse accordion="my-accordion" id="log-in">
-      <LogIn/>
-    </b-collapse>
-    <b-collapse accordion="my-accordion" id="sign-up">
-      <SignUp/>
-    </b-collapse>
+    <LogIn/>
+    <SignUp/>
   </div>
 </template>
 
@@ -35,6 +34,12 @@
   import SignUp from './SignUp';
 
   export default {
+    props: ['data'],
+    data(){
+      return{
+        
+      }
+    },
     name: 'Header',
     methods: { },
     components: {
