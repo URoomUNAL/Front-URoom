@@ -115,6 +115,7 @@
         AuthService.register(JSON.stringify(user))
         .then(function(response){
           console.log(response);
+          self.$router.push('/');
           //TODO: Registro correcto.
         }).catch(function(error){
           if(error.response){
@@ -124,7 +125,7 @@
             self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
             self.alert.show = true;
           }else{
-            //self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+            self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
           }
         });
       }
