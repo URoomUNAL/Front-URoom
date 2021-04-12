@@ -50,7 +50,7 @@
 </template>
 <script>
 
-import AuthService from '../services/principal_services'
+import AuthService from '../services/principal-services'
 
 export default {
   name: 'LogIn',

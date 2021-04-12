@@ -79,7 +79,7 @@
 </template>
 
 <script>
-  import AuthService from '../services/principal_services.js'
+  import AuthService from '../services/principal-services.js'
   export default {
     props: ['user'],
     data() {
