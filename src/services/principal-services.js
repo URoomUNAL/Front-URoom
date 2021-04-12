@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:9000'
+const API_URL = 'https://uroom.azurewebsites.net'
 
 class AuthService{
     
@@ -12,7 +12,7 @@ class AuthService{
     }
 
     LogIn(form){
-      return axios.post(API_URL + '/login', form, {
+      return axios.post(API_URL + '/log-in', form, {
         headers: {
             "Content-Type": "application/json"
         }});

@@ -1,5 +1,5 @@
 <template>
-  <b-collapse accordion="my-accordion" id="log-in">
+  <b-collapse accordion="my-accordion" v-model="visible" id="log-in">
     <b-container>
       <b-row>
         <b-col class="mb-3">
@@ -50,7 +50,7 @@
 </template>
 <script>
 
-import AuthService from '../services/principal_services'
+import AuthService from '../services/principal-services'
 
 export default {
   name: 'LogIn',
@@ -63,7 +63,8 @@ export default {
       alert: {
         show: false,
         message: ''
-      }
+      },
+      visible: false
     }
   },
   methods: {
@@ -72,21 +73,29 @@ export default {
       AuthService.LogIn(JSON.stringify(this.form))
         .then(function(response){
           console.log(response);
-          var data = {
-            logged: true
-          }
-          localStorage.setItem('data', data);
-          this.$router.push({ name: 'Home'});
+          //var data = {
+           // logged: true
+          //}
+          //localStorage.setItem('data', data);
+          //this.$router.push({ name: 'Home'});
           //TODO: Inicio de sesión correcto.
+          self.visible = !self.visible;
+          alert("Bienvendio")
         }).catch(function(error){
+          
+          /*if(response.status >= 200 && response.status < 300){
+            this.visible = !this.visible;
+            alert("Bienvendio")
+            //self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+          }*/
           if(error.response){
             self.alert.message = error.response.data;
+            self.alert.show = true;
           }else if(error.request){
             self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
-          }else{
-            self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+            self.alert.show = true;
           }
-          self.alert.show = true;
+          
         });
     }
   } 

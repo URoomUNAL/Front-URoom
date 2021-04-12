@@ -79,7 +79,7 @@
 </template>
 
 <script>
-  import AuthService from '../services/principal_services.js'
+  import AuthService from '../services/principal-services.js'
   export default {
     props: ['user'],
     data() {
@@ -119,12 +119,13 @@
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;
+            self.alert.show = true;
           }else if(error.request){
             self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
+            self.alert.show = true;
           }else{
-            self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+            //self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
           }
-          self.alert.show = true;
         });
       }
     }
