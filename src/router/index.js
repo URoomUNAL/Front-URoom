@@ -24,6 +24,11 @@ const routes=[
         name:'CompleteData',//nombre de ruta
         component:()=>import('@/components/CompleteData.vue'),//componente que ocupa esa vista
         props: true
+    },
+    {
+        path:'/Rooms',//ruta (localhost:8080/)
+        name:'Rooms',//nombre de ruta
+        component:()=>import('@/components/Rooms.vue'),//componente que ocupa esa vista
     }
 ]
 
