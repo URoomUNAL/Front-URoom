@@ -16,7 +16,7 @@
         <b-form @submit.prevent="OnSubmit">
           <b-container class="mt-4">
             <b-row align-h="center">
-              <b-col xl="4" md="8">
+              <b-col md="6">
                 <b-row align-h="center" class="mb-4">
                   <h2 class="primary mb-3">Datos principales</h2>
                 </b-row>
@@ -30,12 +30,12 @@
                 <b-row align-h="center">
                   <b-col>
                     <b-form-group label="Latitud:" label-for="input">
-                      <b-form-input id="input" v-model="form.lat" required/>
+                      <b-form-input id="input" v-model="form.lat" required readonly/>
                     </b-form-group>
                   </b-col>
                   <b-col>
                     <b-form-group label="Longitud:" label-for="input">
-                      <b-form-input id="input" v-model="form.lng" required/>
+                      <b-form-input id="input" v-model="form.lng" required readonly/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -49,19 +49,19 @@
                 <b-row align-h="center">
                   <b-col>
                     <b-form-group label="Descripción:" label-for="input">
-                      <b-textarea id="input" v-model="form.description" placeholder="Describe de manera general la habitación."/>
+                      <b-textarea id="input" v-model="form.description" placeholder="Describe de manera general la habitación. Puedes incluir información de la ubicación."/>
                     </b-form-group>
                   </b-col>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group  label="Precio:" label-for="input">
+                    <b-form-group label="Precio:" label-for="input">
                       <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
               </b-col>
-              <b-col xl="4" md="8">
+              <b-col md="6">
                 <b-row align-h="center" class="mb-4">
                   <h2 class="primary mb-3">Fotos de la habitación</h2>
                 </b-row>
@@ -70,12 +70,12 @@
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-img thumbnail center rounded src="https://picsum.photos/250/250/?image=54" />
+                    <b-img v-if="image" :src="imageSrc" thumbnail center rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-form-file type="file" accept=".jpg, .png" placeholder="" class="mb-2 col-10"></b-form-file>
+                    <b-form-file v-model="image" type="file" accept="image/jpeg, image/png" placeholder="" class="mb-2 col-10"></b-form-file>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
@@ -88,13 +88,13 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-file type="file" accept=".jpg, .png" multiple class="mb-2 col-10"></b-form-file>
+                    <b-form-file type="file" accept="image/jpeg, image/png" multiple class="mb-2 col-10"></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
-              <b-col xl="4" md="8">
+              <b-col md="8">
                 <b-row align-h="center" align-v="center" class="mb-4">
-                  <h2 class="primary mb-3">Restricciones de tu predio</h2>
+                  <h2 class="primary mb-3">Servicios y normas de la casa.</h2>
                 </b-row>
                 <b-row align-h="center">
                   <b-col sm="12" md="6">
@@ -120,22 +120,35 @@
           </b-container>
         </b-form>
       </b-col>
-  </b-container>    
+      {{form}}
+      {{fields}}
+  </b-container> 
 </template>
 
 <script>
+  const base64Encode = data =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(data);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   export default {
     data(){
       return{
+        image: null,
+        imageSrc: null,
         fields: {
-          price: false
+          price: false,
+          mainImg: ''
         },
         form: {
           address: '',
           lat: 0.0,
           lng: 0.0,
           description: '',
-          price: 0
+          price: 0,
+          mainImg: null
         },
         alert: {
           show: false,
@@ -173,7 +186,24 @@
           this.form.price = newValue;
         }
       }
+      
+    },
+    watch: {
+      image(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          if (newValue) {
+            base64Encode(newValue)
+              .then((value) => {
+                this.imageSrc = value;
+              })
+              .catch(() => {
+                this.imageSrc = null;
+              });
+          } else {
+            this.imageSrc = null;
+          }
+        }
+      }
     }
-
   }
 </script>
