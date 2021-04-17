@@ -16,32 +16,20 @@
         <b-form @submit.prevent="OnSubmit">
           <b-container class="mt-4">
             <b-row align-h="center">
-              <b-col md="6">
+              <b-col md="6" class="pr-4">
                 <b-row align-h="center" class="mb-4">
                   <h2 class="primary mb-3">Datos principales</h2>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Dirección:" label-for="input-1">
+                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para facilitar la experiencia de tus clientes.">
                       <b-form-input id="input-1" v-model="form.address" @change="findLocation" placeholder="Dirección del predio" required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Latitud:" label-for="input">
-                      <b-form-input id="input" v-model="form.lat" required readonly/>
-                    </b-form-group>
-                  </b-col>
-                  <b-col>
-                    <b-form-group label="Longitud:" label-for="input">
-                      <b-form-input id="input" v-model="form.lng" required readonly/>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center">
-                  <b-col>
-                    <b-form-group  label="Mapa:" label-for="input">
+                    <b-form-group label="Mapa:" label-for="input">
                       <b-card label="Mapa:" label-for="input"/>
                     </b-form-group>
                   </b-col>
@@ -55,59 +43,82 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Precio:" label-for="input">
-                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" required/>
+                    <b-form-group label="Precio:" label-for="input" description="Debes dar el precio en pesos colombianos">
+                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
               </b-col>
-              <b-col md="6">
-                <b-row align-h="center" class="mb-4">
-                  <h2 class="primary mb-3">Fotos de la habitación</h2>
+              <b-col md="3" class="pr-4">
+                <b-row align-h="center" align-v="center" class="mb-4">
+                  <h2 class="primary mb-3">Servicios de la casa.</h2>
                 </b-row>
+                <b-row align-h="center">
+                  <b-col>
+                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col md="3" class="pr-4">
+                <b-row align-h="center" align-v="center" class="mb-4">
+                  <h2 class="primary mb-3">Normas de la casa.</h2>
+                </b-row>
+                <b-row align-h="center">
+                  <b-col>
+                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <h2 class="primary mb-3">Fotos de la habitación</h2>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="6">
                 <b-row align-h="center">
                   <h3 class="primary mb-3">Foto principal</h3>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-img v-if="image" :src="imageSrc" thumbnail center rounded/>
+                    <b-img v-if="form.mainImg" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-form-file v-model="image" type="file" accept="image/jpeg, image/png" placeholder="" class="mb-2 col-10"></b-form-file>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center" class="mb-4">
-                  <h3 class="primary my-3">Fotos adicionales</h3>
-                </b-row>
-                <b-row align-h="center" class="mb-4">
-                  <b-col>
-                    <b-img thumbnail center rounded src="https://picsum.photos/250/250/?image=54" />
-                  </b-col>
-                </b-row>
-                <b-row align-h="center">
-                  <b-col>
-                    <b-form-file type="file" accept="image/jpeg, image/png" multiple class="mb-2 col-10"></b-form-file>
+                    <b-form-file v-model="form.mainImg" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left"></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
-              <b-col md="8">
-                <b-row align-h="center" align-v="center" class="mb-4">
-                  <h2 class="primary mb-3">Servicios y normas de la casa.</h2>
+              <b-col md="6">
+                <b-row align-h="center">
+                  <h3 class="primary mb-3">Fotos adicionales</h3>
+                </b-row>
+                <b-row align-h="center" class="mb-4">
+                  <b-col>
+                    <b-carousel fade controls>
+                      <b-carousel-slide v-for="item in fields.optionalImagesSrc" :key="item" :img-src="item"/>
+                    </b-carousel>
+                  </b-col>
                 </b-row>
                 <b-row align-h="center">
-                  <b-col sm="12" md="6">
-                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                  </b-col>
-                  <b-col sm="12" md="6">
-                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                  <b-col>
+                    <b-form-file v-model="form.optionalImg" type="file" accept="image/jpeg, image/png" placeholder="Selecciona las imágenes." class="mb-2 col-8 text-left" multiple></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
@@ -120,8 +131,6 @@
           </b-container>
         </b-form>
       </b-col>
-      {{form}}
-      {{fields}}
   </b-container> 
 </template>
 
@@ -136,11 +145,10 @@
   export default {
     data(){
       return{
-        image: null,
-        imageSrc: null,
         fields: {
           price: false,
-          mainImg: ''
+          mainImageSrc: '',
+          optionalImagesSrc: null
         },
         form: {
           address: '',
@@ -148,7 +156,8 @@
           lng: 0.0,
           description: '',
           price: 0,
-          mainImg: null
+          mainImg: null,
+          optionalImg: null
         },
         alert: {
           show: false,
@@ -186,21 +195,39 @@
           this.form.price = newValue;
         }
       }
-      
     },
     watch: {
-      image(newValue, oldValue) {
+      'form.mainImg'(newValue, oldValue) {
         if (newValue !== oldValue) {
           if (newValue) {
             base64Encode(newValue)
               .then((value) => {
-                this.imageSrc = value;
+                this.fields.mainImageSrc = value;
               })
               .catch(() => {
-                this.imageSrc = null;
+                this.fields.mainImageSrc = null;
               });
           } else {
-            this.imageSrc = null;
+            this.fields.mainImageSrc = null;
+          }
+        }
+      },
+      'form.optionalImg'(newValue, oldValue){
+        if (newValue !== oldValue) {
+          if(newValue){
+            this.fields.optionalImagesSrc = [];
+            for(var i = 0; i < newValue.length; i++){
+              base64Encode(newValue[i])
+              .then((value) => {
+                alert(value);
+                this.fields.optionalImagesSrc.push(value);
+              })
+              .catch(() => {
+                this.fields.optionalImagesSrc.push(null);
+              });  
+            }
+          }else {
+            this.fields.mainImageSrc = null;
           }
         }
       }
