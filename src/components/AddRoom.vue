@@ -13,7 +13,7 @@
       </b-col>
     </b-row>
       <b-col>
-        <b-form>
+        <b-form @submit.prevent="OnSubmit">
           <b-container class="mt-4">
             <b-row align-h="center">
               <b-col xl="4" md="8">
@@ -41,13 +41,6 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Descripción:" label-for="input">
-                      <b-textarea id="input" v-model="form.description" placeholder="Describe de manera general la habitación."/>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center">
-                  <b-col>
                     <b-form-group  label="Mapa:" label-for="input">
                       <b-card label="Mapa:" label-for="input"/>
                     </b-form-group>
@@ -55,8 +48,15 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
+                    <b-form-group label="Descripción:" label-for="input">
+                      <b-textarea id="input" v-model="form.description" placeholder="Describe de manera general la habitación."/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center">
+                  <b-col>
                     <b-form-group  label="Precio:" label-for="input">
-                      <b-form-input @click="onFocus" @ended="OnChangePrice" id="input" v-model="display.price" required/>
+                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -127,8 +127,8 @@
   export default {
     data(){
       return{
-        display: {
-          price: ''
+        fields: {
+          price: false
         },
         form: {
           address: '',
@@ -143,18 +143,37 @@
         }
       }
     },
-    methods:{
-      formatPrice() {
-        let val = (this.form.price/1).toFixed(2).replace('.', ',')
-        this.form.price = '$ ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-      },
+    methods: {
       findLocation(){
         // TODO: Update the center of map.
-      },
-      onFocus(){
-        alert("ola");
       }
-
+    },
+    computed: {
+      price: {
+        get: function(){
+          if(this.fields.price){
+            if(this.form.price > 0){
+              return this.form.price.toString();
+            }else{
+              return '';
+            }
+          }else{
+            if(this.form.price > 0){
+              return "$ " + this.form.price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+            }else{
+              return '';
+            }
+          }
+        },
+        set: function(modifiedValue){
+          let newValue = parseFloat(modifiedValue.replace(/[^\d]/g, ""))
+          if(isNaN(newValue)) {
+            newValue = 0;
+          }
+          this.form.price = newValue;
+        }
+      }
     }
+
   }
 </script>
