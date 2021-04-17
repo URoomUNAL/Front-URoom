@@ -5,24 +5,30 @@ Vue.use(VueRouter)
 
 const routes=[
     {
-        path:'/',//ruta (localhost:8080/)
-        name:'Home',//nombre de ruta
-        component:()=>import('@/components/Home.vue'),//componente que ocupa esa vista
+        path:'/',
+        name:'Home',
+        component:()=>import('@/components/Home.vue'),
     },
     {
-        path:'/SignUp',//ruta (localhost:8080/SignUp)
-        name:'SignUp',//nombre de ruta
-        component:()=>import('@/components/SignUp.vue'),//componente que ocupa esa vista
+        path:'/SignUp',
+        name:'SignUp',
+        component:()=>import('@/components/SignUp.vue'),
     },
     {
-        path:'/LogIn',//ruta (localhost:8080/LogIn)
-        name:'LogIn',//nombre de ruta
-        component:()=>import('@/components/LogIn.vue'),//componente que ocupa esa vista
+        path:'/LogIn',
+        name:'LogIn',
+        component:()=>import('@/components/LogIn.vue'),
     },
     {
-        path:'/CompleteData',//ruta (localhost:8080/)
-        name:'CompleteData',//nombre de ruta
-        component:()=>import('@/components/CompleteData.vue'),//componente que ocupa esa vista
+        path:'/CompleteData',
+        name:'CompleteData',
+        component:()=>import('@/components/CompleteData.vue'),
+        props: true
+    },
+    {
+        path:'/AddRoom',
+        name:'AddRoom',
+        component:()=>import('@/components/AddRoom.vue'),
         props: true
     }
 ]
