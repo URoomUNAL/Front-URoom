@@ -49,37 +49,21 @@
                   </b-col>
                 </b-row>
               </b-col>
-              <b-col md="3" class="pr-4">
+              <b-col xl="6" class="pr-4">
                 <b-row align-h="center" align-v="center" class="mb-4">
                   <h2 class="primary mb-3">Servicios de la casa.</h2>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <tag-select :options="options"/>
                   </b-col>
                 </b-row>
-              </b-col>
-              <b-col md="3" class="pr-4">
                 <b-row align-h="center" align-v="center" class="mb-4">
                   <h2 class="primary mb-3">Normas de la casa.</h2>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="mb-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
-                    <b-form-checkbox class="my-2"> Se permite tener mascotas. </b-form-checkbox>
+                    <tag-select :options="options"/>
                   </b-col>
                 </b-row>
               </b-col>
@@ -135,6 +119,8 @@
 </template>
 
 <script>
+import TagSelect from "./TagSelect.vue";
+
   const base64Encode = data =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -145,6 +131,7 @@
   export default {
     data(){
       return{
+        options: ['Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
         fields: {
           price: false,
           mainImageSrc: '',
@@ -157,7 +144,8 @@
           description: '',
           price: 0,
           mainImg: null,
-          optionalImg: null
+          optionalImg: null,
+          allowTags: []
         },
         alert: {
           show: false,
@@ -194,6 +182,9 @@
           }
           this.form.price = newValue;
         }
+      },
+      availableOptions() {
+        return this.options.filter(opt => this.value.indexOf(opt) === -1);
       }
     },
     watch: {
@@ -231,6 +222,9 @@
           }
         }
       }
+    },
+    components: {
+      TagSelect
     }
   }
 </script>
