@@ -63,7 +63,8 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <tag-select :options="options"/>
+                    <!--<tag-select :options="options"/>-->
+                    <b-img src="https://uroom20211.blob.core.windows.net/images/Pedro.jpg"/>
                   </b-col>
                 </b-row>
               </b-col>
@@ -115,6 +116,7 @@
           </b-container>
         </b-form>
       </b-col>
+      {{form}}
   </b-container> 
 </template>
 
