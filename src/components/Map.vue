@@ -15,31 +15,37 @@
                 :url="url"
                 :attribution="attribution"
             />
+            <l-marker
+              v-for="marker in markers"
+              :key="marker.id"
+              :lat-lng="[marker.latitude, marker.longitude]"
+            >
+              <l-popup>
+                <b-img class="col-8 offset-2" :src="marker.main_img"  v-bind="img" alt="Rounded image"></b-img>
+                <p>{{marker.description}}</p>
+              </l-popup>
+            </l-marker>
             <l-marker :lat-lng="withPopup">
                 <l-popup>
-                <div @click="innerClick">
-                    I am a popup
-                    <p v-show="showParagraph">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-                    Donec finibus semper metus id malesuada.
-                    </p>
+                <div>
+                    I am a room
                 </div>
                 </l-popup>
             </l-marker>
-            <l-marker :lat-lng="withTooltip">
+            <!-- <l-marker :lat-lng="withTooltip">
                 <l-tooltip :options="{ permanent: true, interactive: true }">
                 
                 </l-tooltip>
-            </l-marker>
+            </l-marker> --> 
             </l-map>
         </b-col>
     </b-row>
 </template>
 
 <script>
+import LocalService from '../services/local-services.js'
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
 import { Icon } from 'leaflet';
 delete Icon.Default.prototype._getIconUrl;
 
@@ -49,11 +55,11 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup,
-    LTooltip
+    LPopup
   },
   data() {
     return {
+      img: { width: 100, height: 75, class: 'm1' },
       zoom: 13,
       center: latLng(4.652732219293169, -74.09408522039406),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -63,26 +69,31 @@ export default {
       withTooltip: latLng(4.656732219293169, -74.09408522039406),
       currentZoom: 11.5,
       currentCenter: latLng(4.652732219293169, -74.09408522039406),
-      showParagraph: false,
       mapOptions: {
         zoomSnap: 0.5
       },
-      showMap: true
+      showMap: true,
+      markers: ''
     };
   },
+  created() {
+    this.getTodos()
+    // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
+    //   this.result = result.data;
+    // })
+  },
   methods: {
+    async getTodos() {
+      this.markers = await LocalService.getMaps()
+      console.log(this.markers)
+    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },
     centerUpdate(center) {
       this.currentCenter = center;
     },
-    showLongText() {
-      this.showParagraph = !this.showParagraph;
-    },
-    innerClick() {
-      alert("Click!");
-    }
+    
   }
 };
 Icon.Default.mergeOptions({
@@ -91,3 +102,12 @@ Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 </script>
+<style>
+/* css to customize Leaflet default styles  */
+.leaflet-popup-tip,
+.leaflet-popup-content-wrapper {
+    background: #525050;
+    font-family: 'Jost';
+    color: white
+}
+</style>
