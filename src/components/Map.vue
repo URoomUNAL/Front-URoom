@@ -16,13 +16,13 @@
                 :attribution="attribution"
             />
             <l-marker
-              v-for="marker in markers"
-              :key="marker.id"
-              :lat-lng="[marker.latitude, marker.longitude]"
+              v-for="room in rooms"
+              :key="room.id"
+              :lat-lng="[room.latitude, room.longitude]"
             >
               <l-popup>
-                <b-img class="col-8 offset-2" :src="marker.main_img"  v-bind="img" alt="Rounded image"></b-img>
-                <p>{{marker.description}}</p>
+                <b-img class="col-8 offset-2" :src="room.main_img"  v-bind="img" alt="Rounded image"></b-img>
+                <p>{{room.description}}</p>
               </l-popup>
             </l-marker>
             <l-marker :lat-lng="withPopup">
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import LocalService from '../services/local-services.js'
+
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
 import { Icon } from 'leaflet';
@@ -51,6 +51,7 @@ delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
+  props: ['markers','height'],
   components: {
     LMap,
     LTileLayer,
@@ -73,20 +74,16 @@ export default {
         zoomSnap: 0.5
       },
       showMap: true,
-      markers: ''
+      rooms: this.markers
     };
   },
   created() {
-    this.getTodos()
+    console.log(this.rooms)
     // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
     //   this.result = result.data;
     // })
   },
   methods: {
-    async getTodos() {
-      this.markers = await LocalService.getMaps()
-      console.log(this.markers)
-    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },

@@ -27,26 +27,10 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-row align-h="center" style="height: 500px">
-                  <b-col>
+                <b-row align-h="center" style="height: 425px" class="mb-3" >
+                  <b-col style='width:200%'>
                     <b-form-group label="Mapa:" label-for="input">
-                      <!--<l-map style="height: 80%" class="rounded">
-                      </l-map>-->
-                      <Map/>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center">
-                  <b-col>
-                    <b-form-group label="Descripción:" label-for="input">
-                      <b-textarea id="input" v-model="form.description" placeholder="Describe de manera general la habitación. Puedes incluir información de la ubicación."/>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center">
-                  <b-col>
-                    <b-form-group label="Precio:" label-for="input" description="Debes dar el precio en pesos colombianos">
-                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
+                      <Map :height="200"/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -66,6 +50,20 @@
                 <b-row align-h="center">
                   <b-col>
                     <tag-select :options="options"/>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center">
+                  <b-col>
+                    <b-form-group label="Descripción:" label-for="input">
+                      <b-textarea id="input" v-model="form.description" placeholder="Describe de manera general la habitación. Puedes incluir información de la ubicación."/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center">
+                  <b-col>
+                    <b-form-group label="Precio:" label-for="input" description="Debes dar el precio en pesos colombianos">
+                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
+                    </b-form-group>
                   </b-col>
                 </b-row>
               </b-col>
