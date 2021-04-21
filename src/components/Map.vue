@@ -94,8 +94,8 @@ export default {
   }
 };
 Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  iconRetinaUrl: require('../assets/images/icons/marker.png'),
+  iconUrl: require('../assets/images/icons/marker.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 </script>
