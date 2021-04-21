@@ -15,24 +15,24 @@
       <b-col>
         <b-form @submit.prevent="OnSubmit">
           <b-container class="mt-4">
-            <b-row align-h="center">
+            <b-row align-h="center" class="my-4">
               <b-col md="6" class="pr-4">
                 <b-row align-h="center" class="mb-4">
                   <h2 class="primary mb-3">Datos principales</h2>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para facilitar la experiencia de tus clientes.">
-                      <b-form-input id="input-1" v-model="form.address" @change="findLocation" placeholder="Dirección del predio" required/>
+                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para facilitar la experiencia de los usuarios.">
+                      <b-form-input id="input-1" v-model="form.address" @change="findLocation" placeholder="Dirección" required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-row align-h="center" style="height: 500px">
+                <b-row>
                   <b-col>
-                    <b-form-group label="Mapa:" label-for="input">
+                    <b-form-group label="Ubicación:" label-for="input" description="Indica la ubicación de la habitación en el mapa.">
                       <!--<l-map style="height: 80%" class="rounded">
-                      </l-map>-->
-                      <Map/>
+                      </l-map>
+                      <Map/>-->
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -45,7 +45,7 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Precio:" label-for="input" description="Debes dar el precio en pesos colombianos">
+                    <b-form-group label="Precio:" label-for="input" description="Precio en pesos colombianos (COP)">
                       <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
                     </b-form-group>
                   </b-col>
@@ -55,34 +55,35 @@
                 <b-row align-h="center" align-v="center" class="mb-4">
                   <h2 class="primary mb-3">Servicios de la casa.</h2>
                 </b-row>
-                <b-row align-h="center">
+                <b-row align-h="center" align-v="center">
                   <b-col>
                     <tag-select :options="options"/>
                   </b-col>
                 </b-row>
-                <b-row align-h="center" align-v="center" class="mb-4">
+                <b-row align-h="center" align-v="center" class="my-4">
                   <h2 class="primary mb-3">Normas de la casa.</h2>
                 </b-row>
-                <b-row align-h="center">
+                <b-row align-h="center" align-v="center">
                   <b-col>
-                    <tag-select :options="options"/>
+                    <tag-select :options="options" />
                   </b-col>
                 </b-row>
               </b-col>
             </b-row>
             <b-row>
               <b-col>
-                <h2 class="primary mb-3">Fotos de la habitación</h2>
+                <h2 class="primary my-4">Fotos de la habitación</h2>
               </b-col>
             </b-row>
-            <b-row>
+            <b-row class="my-4">
               <b-col md="6">
                 <b-row align-h="center">
                   <h3 class="primary mb-3">Foto principal</h3>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-img v-if="form.main_img" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
+                    <b-img v-if="fields.mainImageSrc" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
+                    <b-img v-if="!fields.mainImageSrc" src="https://uroom20211.blob.core.windows.net/images/default-image.png" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
@@ -97,9 +98,10 @@
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-carousel fade controls>
+                    <b-carousel fade controls v-if="fields.optionalImagesSrc">
                       <b-carousel-slide v-for="item in fields.optionalImagesSrc" :key="item" :img-src="item"/>
                     </b-carousel>
+                    <b-img v-if="!fields.optionalImagesSrc.length" src="https://uroom20211.blob.core.windows.net/images/default-image.png" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center">
@@ -109,23 +111,21 @@
                 </b-row>
               </b-col>
             </b-row>
-            <b-row align-h="center">
-              <b-col align-self="center" class="my-4" xl="8" lg="6">
+            <b-row align-h="center" class="mb-5">
+              <b-col align-self="center" class="my-4" md="6" xs="12">
                 <b-button variant="primary" block type="submit" >Completar registro</b-button>
               </b-col>
             </b-row>
           </b-container>
         </b-form>
       </b-col>
-      {{form}}
+      <!--{{form}}  -->
   </b-container> 
 </template>
 
 <script>
-import AuthService from '../services/principal-services';
+import PostService from "../services/post-services.js"
 import TagSelect from "./TagSelect.vue";
-import Map from "./Map.vue";
-//import { LMap} from "vue2-leaflet";
 
   const base64Encode = data =>
     new Promise((resolve, reject) => {
@@ -141,7 +141,7 @@ import Map from "./Map.vue";
         fields: {
           price: false,
           mainImageSrc: '',
-          optionalImagesSrc: null
+          optionalImagesSrc: []
         },
         form: {
           address: '',
@@ -150,7 +150,7 @@ import Map from "./Map.vue";
           description: '',
           price: 0,
           main_img: null,
-          optionalImg: null,
+          optionalImg: [],
           allowTags: []
         },
         alert: {
@@ -164,12 +164,13 @@ import Map from "./Map.vue";
         // TODO: Update the center of map.
       },
       OnSubmit(){
-        AuthService.AddRoom(JSON.stringify(this.form))
-        .then(function(response){
-          console.log(response);
-        }).catch(function(error){
-          console.log(error);
-        });
+        PostService.AddRoom(this.form)
+          .then(function(response){
+            console.log(response);
+          }).catch(function(error){
+            console.log(error);
+          }
+        );
       }
     },
     computed: {
@@ -224,7 +225,6 @@ import Map from "./Map.vue";
             for(var i = 0; i < newValue.length; i++){
               base64Encode(newValue[i])
               .then((value) => {
-                alert(value);
                 this.fields.optionalImagesSrc.push(value);
               })
               .catch(() => {
@@ -238,9 +238,11 @@ import Map from "./Map.vue";
       }
     },
     components: {
-      TagSelect,
-      //LMap,
-      Map
+      TagSelect
     }
   }
 </script>
+
+<style scoped>
+  
+</style>
