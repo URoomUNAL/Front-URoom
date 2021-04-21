@@ -1,12 +1,12 @@
 <template>
-    <b-row  style="height: 500px" >
+    <b-row  style="height: 400px" >
         <b-col style='width:100%' offset = '2' sm='8' md='8' lg='8'>
             <l-map
             v-if="showMap"
             :zoom="zoom"
             :center="center"
             :options="mapOptions"
-            style="height: 80%"
+            style="height: 100%"
             @update:center="centerUpdate"
             @update:zoom="zoomUpdate"
             class="rounded"
@@ -78,7 +78,6 @@ export default {
     };
   },
   created() {
-    console.log(this.rooms)
     // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
     //   this.result = result.data;
     // })
