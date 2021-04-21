@@ -27,10 +27,12 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-row align-h="center">
-                  <b-col>
+                <b-row align-h="center" style="height: 500px">
+                  <b-col style='width:100%' sm='8' md='8' lg='8'>
                     <b-form-group label="Mapa:" label-for="input">
-                      <b-card label="Mapa:" label-for="input"/>
+                      <l-map style="height: 80%" class="rounded">
+                         
+                      </l-map>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -122,6 +124,7 @@
 <script>
 import AuthService from '../services/principal-services';
 import TagSelect from "./TagSelect.vue";
+import { LMap} from "vue2-leaflet";
 
   const base64Encode = data =>
     new Promise((resolve, reject) => {
@@ -234,7 +237,8 @@ import TagSelect from "./TagSelect.vue";
       }
     },
     components: {
-      TagSelect
+      TagSelect,
+      LMap
     }
   }
 </script>
