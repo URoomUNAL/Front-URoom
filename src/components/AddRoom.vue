@@ -63,8 +63,7 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <!--<tag-select :options="options"/>-->
-                    <b-img src="https://uroom20211.blob.core.windows.net/images/Pedro.jpg"/>
+                    <tag-select :options="options"/>
                   </b-col>
                 </b-row>
               </b-col>
@@ -81,12 +80,12 @@
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-img v-if="form.mainImg" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
+                    <b-img v-if="form.main_img" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-form-file v-model="form.mainImg" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left"></b-form-file>
+                    <b-form-file v-model="form.main_img" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left"></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
@@ -121,6 +120,7 @@
 </template>
 
 <script>
+import AuthService from '../services/principal-services';
 import TagSelect from "./TagSelect.vue";
 
   const base64Encode = data =>
@@ -141,11 +141,11 @@ import TagSelect from "./TagSelect.vue";
         },
         form: {
           address: '',
-          lat: 0.0,
-          lng: 0.0,
+          latitude: 0.0,
+          longitude: 0.0,
           description: '',
           price: 0,
-          mainImg: null,
+          main_img: null,
           optionalImg: null,
           allowTags: []
         },
@@ -158,6 +158,14 @@ import TagSelect from "./TagSelect.vue";
     methods: {
       findLocation(){
         // TODO: Update the center of map.
+      },
+      OnSubmit(){
+        AuthService.AddRoom(JSON.stringify(this.form))
+        .then(function(response){
+          console.log(response);
+        }).catch(function(error){
+          console.log(error);
+        });
       }
     },
     computed: {
@@ -190,7 +198,7 @@ import TagSelect from "./TagSelect.vue";
       }
     },
     watch: {
-      'form.mainImg'(newValue, oldValue) {
+      'form.main_img'(newValue, oldValue) {
         if (newValue !== oldValue) {
           if (newValue) {
             base64Encode(newValue)

@@ -17,6 +17,13 @@ class AuthService{
             "Content-Type": "application/json"
         }});
     }
+
+    AddRoom(form){
+      return axios.post(API_URL + '/add-post', form, {
+        headers: {
+            "Content-Type": "application/json"
+        }});
+    }
     
 }
 export default new AuthService();
