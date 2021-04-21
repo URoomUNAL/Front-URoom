@@ -11,7 +11,7 @@
           <b-collapse id="nav-collapse" is-nav class="ml-auto">
               <b-navbar-nav class="ml-auto">
                   <b-nav-item to="/">Inicio</b-nav-item>
-                  <b-nav-item to="/">Habitaciones</b-nav-item>
+                  <b-nav-item to="Rooms">Habitaciones</b-nav-item>
                   <b-nav-item to="/">Sobre nosotros</b-nav-item>
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto" v-if="!data">
