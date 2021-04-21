@@ -28,11 +28,11 @@
                   </b-col>
                 </b-row>
                 <b-row align-h="center" style="height: 500px">
-                  <b-col style='width:100%' sm='8' md='8' lg='8'>
+                  <b-col>
                     <b-form-group label="Mapa:" label-for="input">
-                      <l-map style="height: 80%" class="rounded">
-                         
-                      </l-map>
+                      <!--<l-map style="height: 80%" class="rounded">
+                      </l-map>-->
+                      <Map/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -124,7 +124,8 @@
 <script>
 import AuthService from '../services/principal-services';
 import TagSelect from "./TagSelect.vue";
-import { LMap} from "vue2-leaflet";
+import Map from "./Map.vue";
+//import { LMap} from "vue2-leaflet";
 
   const base64Encode = data =>
     new Promise((resolve, reject) => {
@@ -238,7 +239,8 @@ import { LMap} from "vue2-leaflet";
     },
     components: {
       TagSelect,
-      LMap
+      //LMap,
+      Map
     }
   }
 </script>

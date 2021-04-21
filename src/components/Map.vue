@@ -50,7 +50,7 @@ import { Icon } from 'leaflet';
 delete Icon.Default.prototype._getIconUrl;
 
 export default {
-  name: "MapURoom",
+  name: "Map",
   components: {
     LMap,
     LTileLayer,
