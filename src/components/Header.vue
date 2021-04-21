@@ -11,12 +11,12 @@
           <b-collapse id="nav-collapse" is-nav class="ml-auto">
               <b-navbar-nav class="ml-auto">
                   <b-nav-item to="/">Inicio</b-nav-item>
-                  <b-nav-item to="/">Habitaciones</b-nav-item>
+                  <b-nav-item to="Rooms">Habitaciones</b-nav-item>
                   <b-nav-item to="/">Sobre nosotros</b-nav-item>
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto" v-if="!data">
                 <b-nav-item v-b-toggle.log-in><div class="primary">Inicia sesión</div></b-nav-item>
-                <b-button variant="primary" v-b-toggle.sign-up>Registrate</b-button>
+                <b-button variant="primary" v-b-toggle.sign-up>Regístrate</b-button>
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto" v-if="data">
                 <b-button variant="primary">Cierra sesión</b-button>

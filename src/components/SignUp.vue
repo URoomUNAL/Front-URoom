@@ -111,7 +111,7 @@ export default {
             is_student: this.form.is_student
           };
           this.visible = !this.visible;
-          this.$router.push({ name: 'RegistroData', params: {user: data}});
+          this.$router.push({ name: 'CompleteData', params: {user: data}});
         }
       },
       isNumeric(str) { 
