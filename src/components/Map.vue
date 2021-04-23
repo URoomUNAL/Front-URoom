@@ -1,7 +1,7 @@
 <template>
     <b-row style="height: 30rem" >
         <b-col style="width:100%" md="10" class="offset-1">
-            <l-map
+            <l-map 
             v-if="showMap"
             :zoom="zoom"
             :center="center"
@@ -49,12 +49,12 @@
 
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
-import { Icon } from 'leaflet';
+import { Icon } from "leaflet";
 delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
-  props: ['markers','height','page'],
+  props: ["markers","height","page"],
   components: {
     LMap,
     LTileLayer,
@@ -63,10 +63,10 @@ export default {
   },
   data() {
     return {
-      img: { width: 100, height: 75, class: 'm1' },
+      img: { width: 100, height: 75, class: "m1" },
       zoom: 12,
       center: latLng(4.652732219293169, -74.09408522039406),
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       withPopup: latLng(4.652732219293169, -74.09408522039406),
@@ -74,7 +74,8 @@ export default {
       currentZoom: 11.5,
       currentCenter: latLng(4.652732219293169, -74.09408522039406),
       mapOptions: {
-        zoomSnap: 0.5
+        zoomSnap: 0.5,
+        doubleClickZoom: false
       },
       showMap: true,
       rooms: this.markers,
@@ -102,7 +103,7 @@ export default {
       if(this.page && this.clicks==2){
         this.location = [event.latlng.lat,event.latlng.lng];
         this.clicks = 0
-        this.$emit('clicked', this.location)
+        this.$emit("clicked", this.location)
       }
     }
   }
