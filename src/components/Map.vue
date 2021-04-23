@@ -10,10 +10,12 @@
             @update:center="centerUpdate"
             @update:zoom="zoomUpdate"
             class="rounded"
+            v-on:click="addMarker"
             >
             <l-tile-layer
                 :url="url"
                 :attribution="attribution"
+                
             />
             <l-marker
               v-for="room in rooms"
@@ -25,13 +27,14 @@
                 <p>{{room.description}}</p>
               </l-popup>
             </l-marker>
-            <l-marker :lat-lng="withPopup">
-                <l-popup>
-                <div>
-                    I am a room
-                </div>
-                </l-popup>
+            
+            <div v-if="location">
+            <l-marker :lat-lng="location" v-on:click="removeMarker" >
+              <l-popup>
+                <p>Tu habitación</p>
+              </l-popup>
             </l-marker>
+            </div>
             <!-- <l-marker :lat-lng="withTooltip">
                 <l-tooltip :options="{ permanent: true, interactive: true }">
                 
@@ -51,7 +54,7 @@ delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
-  props: ['markers','height'],
+  props: ['markers','height','page'],
   components: {
     LMap,
     LTileLayer,
@@ -74,7 +77,9 @@ export default {
         zoomSnap: 0.5
       },
       showMap: true,
-      rooms: this.markers
+      rooms: this.markers,
+      location:'',
+      clicks: 0
     };
   },
   created() {
@@ -89,7 +94,17 @@ export default {
     centerUpdate(center) {
       this.currentCenter = center;
     },
-    
+    removeMarker() {
+      this.location = ''
+    },
+    addMarker(event) {
+      this.clicks+=1
+      if(this.page && this.clicks==2){
+        this.location = [event.latlng.lat,event.latlng.lng];
+        this.clicks = 0
+        this.$emit('clicked', this.location)
+      }
+    }
   }
 };
 Icon.Default.mergeOptions({

@@ -30,7 +30,7 @@
                 <b-row align-h="center" class="mb-3" >
                   <b-col>
                     <b-form-group label="Ubicación:" label-for="input" description="Indica la ubicación de la habitación en el mapa.">
-                      <Map/>
+                      <Map :page="true" @clicked="findLocation"/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -159,8 +159,8 @@ import Map from "./Map.vue";
       }
     },
     methods: {
-      findLocation(){
-        // TODO: Update the center of map.
+      findLocation (value) {
+        console.log(value) // someValue
       },
       OnSubmit(){
         PostService.AddRoom(this.form)
