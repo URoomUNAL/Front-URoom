@@ -1,6 +1,6 @@
 <template>
     <b-row style="height: 30rem" >
-        <b-col style="width:100%">
+        <b-col style="width:100%" md="10" class="offset-1">
             <l-map
             v-if="showMap"
             :zoom="zoom"
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       img: { width: 100, height: 75, class: 'm1' },
-      zoom: 13,
+      zoom: 12,
       center: latLng(4.652732219293169, -74.09408522039406),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
@@ -120,5 +120,8 @@ Icon.Default.mergeOptions({
     background: #525050;
     font-family: 'Jost';
     color: white
+}
+.leaflet-container {
+  cursor: crosshair;
 }
 </style>
