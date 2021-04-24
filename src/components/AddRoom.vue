@@ -17,39 +17,18 @@
           <b-container class="mt-4">
             <b-row align-h="center" class="my-4">
               <b-col xl="6" class="pr-4">
-                <b-row align-h="center" class="mb-4">
-                  <h2 class="primary mb-3">Datos principales</h2>
+                <b-row align-h="center">
+                  <b-col>
+                    <b-form-group label="Título de la publicación:" label-for="input-1" description="Pon un titulo llamativo para atraer a los usuarios.">
+                      <b-form-input id="input-1" v-model="form.title" placeholder="Título" required/>
+                    </b-form-group>
+                  </b-col>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para facilitar la experiencia de los usuarios.">
-                      <b-form-input id="input-1" v-model="form.address" @change="findLocation" placeholder="Dirección" required/>
+                    <b-form-group label="Precio:" label-for="input" description="Precio en pesos colombianos (COP)">
+                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
                     </b-form-group>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center" class="mb-3" >
-                  <b-col>
-                    <b-form-group label="Ubicación:" label-for="input" description="Indica la ubicación de la habitación en el mapa.">
-                      <Map :page="true" @clicked="findLocation"/>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-              </b-col>
-              <b-col xl="6" class="pr-4">
-                <b-row align-h="center" align-v="center" class="mb-4">
-                  <h2 class="primary mb-3">Servicios de la casa.</h2>
-                </b-row>
-                <b-row align-h="center" align-v="center">
-                  <b-col>
-                    <tag-select :options="options"/>
-                  </b-col>
-                </b-row>
-                <b-row align-h="center" align-v="center" class="my-4">
-                  <h2 class="primary mb-3">Normas de la casa.</h2>
-                </b-row>
-                <b-row align-h="center" align-v="center">
-                  <b-col>
-                    <tag-select :options="options" />
                   </b-col>
                 </b-row>
                 <b-row align-h="center">
@@ -59,10 +38,33 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
+                <b-row align-h="center" align-v="center">
+                  <b-col>
+                    <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
+                      <tag-select :options="fields.services" @value="PutServicesValues"/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center" align-v="center">
+                  <b-col>
+                    <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
+                      <tag-select :options="fields.rules" @value="PutRulesValues"/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col xl="6" class="pr-4">
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Precio:" label-for="input" description="Precio en pesos colombianos (COP)">
-                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
+                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para ser más visible a los usuarios.">
+                      <b-form-input id="input-1" v-model="form.address" placeholder="Dirección" required/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center" class="mb-3" >
+                  <b-col>
+                    <b-form-group label="Ubicación:" label-for="input" description="Indica la ubicación de la habitación en el mapa.">
+                      <Map :page="true" @clicked="UpdatePosition"/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -117,7 +119,6 @@
           </b-container>
         </b-form>
       </b-col>
-      <!--{{form}}  -->
   </b-container> 
 </template>
 
@@ -136,21 +137,24 @@ import Map from "./Map.vue";
   export default {
     data(){
       return{
-        options: ['Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
         fields: {
           price: false,
           mainImageSrc: '',
-          optionalImagesSrc: []
+          optionalImagesSrc: [],
+          services: ['service0', 'service1', 'service2'],
+          rules: ['rule0', 'rule1', 'rule2']
         },
         form: {
+          title: '',
+          price: 0,
+          description: '',
           address: '',
           latitude: 0.0,
           longitude: 0.0,
-          description: '',
-          price: 0,
           main_img: null,
-          optionalImg: [],
-          allowTags: []
+          images: [],
+          services: [],
+          rules: []
         },
         alert: {
           show: false,
@@ -159,8 +163,9 @@ import Map from "./Map.vue";
       }
     },
     methods: {
-      findLocation (value) {
-        console.log(value) // someValue
+      UpdatePosition(value) {
+        this.form.latitude = value[0];
+        this.form.longitude = value[1];
       },
       OnSubmit(){
         PostService.AddRoom(this.form)
@@ -170,6 +175,12 @@ import Map from "./Map.vue";
             console.log(error);
           }
         );
+      },
+      PutServicesValues(values){
+        this.form.services = values;
+      },
+      PutRulesValues(values){
+        this.form.rules = values;
       }
     },
     computed: {
@@ -203,8 +214,8 @@ import Map from "./Map.vue";
     },
     watch: {
       'form.main_img'(newValue, oldValue) {
-        if (newValue !== oldValue) {
-          if (newValue) {
+        if(newValue !== oldValue) {
+          if(newValue) {
             base64Encode(newValue)
               .then((value) => {
                 this.fields.mainImageSrc = value;
@@ -212,13 +223,13 @@ import Map from "./Map.vue";
               .catch(() => {
                 this.fields.mainImageSrc = null;
               });
-          } else {
+          }else{
             this.fields.mainImageSrc = null;
           }
         }
       },
       'form.optionalImg'(newValue, oldValue){
-        if (newValue !== oldValue) {
+        if(newValue !== oldValue) {
           if(newValue){
             this.fields.optionalImagesSrc = [];
             for(var i = 0; i < newValue.length; i++){
@@ -230,7 +241,7 @@ import Map from "./Map.vue";
                 this.fields.optionalImagesSrc.push(null);
               });  
             }
-          }else {
+          }else{
             this.fields.mainImageSrc = null;
           }
         }
@@ -242,7 +253,3 @@ import Map from "./Map.vue";
     }
   }
 </script>
-
-<style scoped>
-  
-</style>
