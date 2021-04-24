@@ -113,7 +113,7 @@
             </b-row>
             <b-row align-h="center" class="mb-5">
               <b-col align-self="center" class="my-4" md="6" xs="12">
-                <b-button variant="primary" block type="submit" >Completar registro</b-button>
+                <b-button variant="primary" block type="submit" @submit.prevent="OnSubmit">Completar registro</b-button>
               </b-col>
             </b-row>
           </b-container>
@@ -141,8 +141,8 @@ import Map from "./Map.vue";
           price: false,
           mainImageSrc: '',
           optionalImagesSrc: [],
-          services: ['service0', 'service1', 'service2'],
-          rules: ['rule0', 'rule1', 'rule2']
+          services: [],
+          rules: []
         },
         form: {
           title: '',
@@ -161,6 +161,20 @@ import Map from "./Map.vue";
           message: ''
         }
       }
+    },
+    async created(){
+      var services = await PostService.GetServices();
+      var list_services = [];
+      services.forEach((element) =>{
+        list_services.push(element.name);
+      })
+      this.fields.services = list_services;
+      var rules = await PostService.GetRules();
+      var list_rules = [];
+      rules.forEach((element) =>{
+        list_rules.push(element.name);
+      })
+      this.fields.rules = list_rules;
     },
     methods: {
       UpdatePosition(value) {
@@ -181,7 +195,7 @@ import Map from "./Map.vue";
       },
       PutRulesValues(values){
         this.form.rules = values;
-      }
+      }      
     },
     computed: {
       price: {
@@ -207,9 +221,6 @@ import Map from "./Map.vue";
           }
           this.form.price = newValue;
         }
-      },
-      availableOptions() {
-        return this.options.filter(opt => this.value.indexOf(opt) === -1);
       }
     },
     watch: {
