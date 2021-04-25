@@ -72,10 +72,10 @@ export default {
       var self = this;
       AuthService.LogIn(JSON.stringify(this.form))
         .then(function(response){
-          console.log(response);
-          //TODO: Inicio de sesión correcto.
+          localStorage.setItem("user_email", response.data.email);
+          console.log(localStorage.getItem("user_email"));
           self.visible = !self.visible;
-          alert("Bienvendio")
+          alert("Bienvenido, " + response.data.name + ".");
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

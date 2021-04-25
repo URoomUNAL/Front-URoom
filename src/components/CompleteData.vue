@@ -114,9 +114,9 @@
         var self = this;
         AuthService.register(JSON.stringify(user))
         .then(function(response){
-          console.log(response);
+          localStorage.setItem("user_email", response.data.email);
+          console.log(localStorage.getItem("user_email"));
           self.$router.push('/');
-          //TODO: Registro correcto.
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

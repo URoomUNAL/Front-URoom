@@ -88,7 +88,7 @@
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-form-file v-model="form.main_img" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left"></b-form-file>
+                    <b-form-file v-model="form.main_img" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left" required></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
@@ -106,7 +106,7 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-file v-model="form.optionalImg" type="file" accept="image/jpeg, image/png" placeholder="Selecciona las imágenes." class="mb-2 col-8 text-left" multiple></b-form-file>
+                    <b-form-file v-model="form.images" type="file" accept="image/jpeg, image/png" placeholder="Selecciona las imágenes." class="mb-2 col-8 text-left" multiple></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
@@ -149,8 +149,8 @@ import Map from "./Map.vue";
           price: 0,
           description: '',
           address: '',
-          latitude: 0.0,
-          longitude: 0.0,
+          latitude: null,
+          longitude: null,
           main_img: null,
           images: [],
           services: [],
@@ -175,6 +175,7 @@ import Map from "./Map.vue";
         list_rules.push(element.name);
       })
       this.fields.rules = list_rules;
+      console.log(localStorage.getItem("user_email"));
     },
     methods: {
       UpdatePosition(value) {
@@ -182,13 +183,31 @@ import Map from "./Map.vue";
         this.form.longitude = value[1];
       },
       OnSubmit(){
-        PostService.AddRoom(this.form)
-          .then(function(response){
-            console.log(response);
-          }).catch(function(error){
-            console.log(error);
-          }
-        );
+        var self = this;
+        if(this.form.latitude == null || this.form.longitude == null){
+          self.alert.message = "Debes indicar en el mapa la ubicación de la casa.";
+          self.alert.show = true;
+          window.scrollTo(0, 0);
+        }else{
+          PostService.AddRoom(this.form)
+            .then(function(response){
+              console.log(response);
+              alert("Publicación creada exitosamente");
+              //TODO: Peticion exitosa.
+            }).catch(function(error){
+              if(error.response){
+                self.alert.message = error.response.data;
+                self.alert.show = true;
+              }else if(error.request){
+                self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
+                self.alert.show = true;
+              }else{
+                self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+              }
+              window.scrollTo(0, 0);
+            }
+          );
+        }
       },
       PutServicesValues(values){
         this.form.services = values;
@@ -239,7 +258,7 @@ import Map from "./Map.vue";
           }
         }
       },
-      'form.optionalImg'(newValue, oldValue){
+      'form.images'(newValue, oldValue){
         if(newValue !== oldValue) {
           if(newValue){
             this.fields.optionalImagesSrc = [];

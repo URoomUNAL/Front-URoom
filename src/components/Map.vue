@@ -29,7 +29,8 @@
             </l-marker>
             
             <div v-if="location">
-            <l-marker :lat-lng="location" v-on:click="removeMarker" >
+              <!--v-on:click="removeMarker"-->
+            <l-marker :lat-lng="location">
               <l-popup>
                 <p>Tu habitación</p>
               </l-popup>

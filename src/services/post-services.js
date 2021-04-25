@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const API_URL = 'https://uroom.azurewebsites.net'
+//const API_URL = 'http://localhost:9000/'
 
 class PostService{
 
@@ -22,6 +23,8 @@ class PostService{
       form.rules.forEach(element => {
         formData.append("rules", element);
       });
+      formData.append("user", localStorage.getItem("user_email"));
+      console.log(formData);
       return axios.post(API_URL + '/add-post', formData);
     }
 
