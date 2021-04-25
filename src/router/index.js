@@ -3,38 +3,27 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter)
 
+// Enrutamiento de la plataforma.
 const routes=[
-    {
+    {   // Ruta Vacia: Vista Home
         path:'/',
         name:'Home',
-        component:()=>import('@/components/Home.vue'),
+        component:()=>import('@/components/Home.vue')
     },
-    {
-        path:'/SignUp',
-        name:'SignUp',
-        component:()=>import('@/components/SignUp.vue'),
-    },
-    {
-        path:'/LogIn',
-        name:'LogIn',
-        component:()=>import('@/components/LogIn.vue'),
-    },
-    {
+    {   // Ruta 'CompleteData' Formulario para la finalización de registro en la plataforma.
         path:'/CompleteData',
         name:'CompleteData',
-        component:()=>import('@/components/CompleteData.vue'),
-        props: true
+        component:()=>import('@/components/CompleteData.vue')
     },
-    {
+    {   // Ruta 'AddRoom' Formulario para inscribir una habitación en la plataforma.
         path:'/AddRoom',
         name:'AddRoom',
-        component:()=>import('@/components/AddRoom.vue'),
-        props: true
+        component:()=>import('@/components/AddRoom.vue')
     },
-    {
+    {   // Ruta 'Rooms' Buscador principal de la plataforma.
         path:'/Rooms',//ruta (localhost:8080/)
         name:'Rooms',//nombre de ruta
-        component:()=>import('@/components/Rooms.vue'),//componente que ocupa esa vista
+        component:()=>import('@/components/Rooms.vue')
     }
 ]
 

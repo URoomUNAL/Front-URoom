@@ -50,10 +50,9 @@
 </template>
 <script>
 
-import AuthService from '../services/principal-services'
+import AuthService from '../services/authentication-services.js'
 
 export default {
-  name: 'LogIn',
   data(){
     return{
       form: {
@@ -76,6 +75,11 @@ export default {
           console.log(localStorage.getItem("user_email"));
           self.visible = !self.visible;
           alert("Bienvenido, " + response.data.name + ".");
+          if(self.$route.path == '/'){
+            self.$router.go();
+          }else{
+            self.$router.push('/');
+          }
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

@@ -1,3 +1,4 @@
+// Definición de esquema de colores de la aplicación.
 $theme-colors: (
         "primary": #670071,
         "secondary": #3f3f41,
@@ -5,6 +6,7 @@ $theme-colors: (
         "facebook": #3b5998
 );
 
+// Importación de los estilos de bootstrap-vue
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
 

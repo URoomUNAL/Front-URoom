@@ -126,14 +126,8 @@
 import PostService from "../services/post-services.js"
 import TagSelect from "./TagSelect.vue";
 import Map from "./Map.vue";
+import filetoblob from "../libs/file-to-blob.js"
 
-  const base64Encode = data =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(data);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
   export default {
     data(){
       return{
@@ -246,7 +240,7 @@ import Map from "./Map.vue";
       'form.main_img'(newValue, oldValue) {
         if(newValue !== oldValue) {
           if(newValue) {
-            base64Encode(newValue)
+            filetoblob(newValue)
               .then((value) => {
                 this.fields.mainImageSrc = value;
               })
@@ -263,7 +257,7 @@ import Map from "./Map.vue";
           if(newValue){
             this.fields.optionalImagesSrc = [];
             for(var i = 0; i < newValue.length; i++){
-              base64Encode(newValue[i])
+              filetoblob(newValue[i])
               .then((value) => {
                 this.fields.optionalImagesSrc.push(value);
               })
