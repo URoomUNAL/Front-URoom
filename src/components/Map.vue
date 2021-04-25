@@ -1,37 +1,41 @@
 <template>
-    <b-row  style="height: 500px" >
-        <b-col style='width:100%' offset = '2' sm='8' md='8' lg='8'>
-            <l-map
+    <b-row style="height: 30rem">
+        <b-col>
+            <l-map 
             v-if="showMap"
             :zoom="zoom"
             :center="center"
             :options="mapOptions"
-            style="height: 80%"
+            style="height: 100%"
             @update:center="centerUpdate"
             @update:zoom="zoomUpdate"
             class="rounded"
+            v-on:click="addMarker"
             >
             <l-tile-layer
                 :url="url"
                 :attribution="attribution"
+                
             />
             <l-marker
-              v-for="marker in markers"
-              :key="marker.id"
-              :lat-lng="[marker.latitude, marker.longitude]"
+              v-for="room in rooms"
+              :key="room.id"
+              :lat-lng="[room.latitude, room.longitude]"
             >
               <l-popup>
-                <b-img class="col-8 offset-2" :src="marker.main_img"  v-bind="img" alt="Rounded image"></b-img>
-                <p>{{marker.description}}</p>
+                <b-img class="col-8 offset-2" :src="room.main_img"  v-bind="img" alt="Rounded image"></b-img>
+                <p>{{room.description}}</p>
               </l-popup>
             </l-marker>
-            <l-marker :lat-lng="withPopup">
-                <l-popup>
-                <div>
-                    I am a room
-                </div>
-                </l-popup>
+            
+            <div v-if="location">
+              <!--v-on:click="removeMarker"-->
+            <l-marker :lat-lng="location">
+              <l-popup>
+                <p>Tu habitación</p>
+              </l-popup>
             </l-marker>
+            </div>
             <!-- <l-marker :lat-lng="withTooltip">
                 <l-tooltip :options="{ permanent: true, interactive: true }">
                 
@@ -43,14 +47,15 @@
 </template>
 
 <script>
-import LocalService from '../services/local-services.js'
+
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
-import { Icon } from 'leaflet';
+import { Icon } from "leaflet";
 delete Icon.Default.prototype._getIconUrl;
 
 export default {
-  name: "MapURoom",
+  name: "Map",
+  props: ["markers","height","page"],
   components: {
     LMap,
     LTileLayer,
@@ -59,10 +64,10 @@ export default {
   },
   data() {
     return {
-      img: { width: 100, height: 75, class: 'm1' },
-      zoom: 13,
+      img: { width: 100, height: 75, class: "m1" },
+      zoom: 12,
       center: latLng(4.652732219293169, -74.09408522039406),
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       withPopup: latLng(4.652732219293169, -74.09408522039406),
@@ -70,35 +75,43 @@ export default {
       currentZoom: 11.5,
       currentCenter: latLng(4.652732219293169, -74.09408522039406),
       mapOptions: {
-        zoomSnap: 0.5
+        zoomSnap: 0.5,
+        doubleClickZoom: false
       },
       showMap: true,
-      markers: ''
+      rooms: this.markers,
+      location:'',
+      clicks: 0
     };
   },
   created() {
-    this.getTodos()
     // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
     //   this.result = result.data;
     // })
   },
   methods: {
-    async getTodos() {
-      this.markers = await LocalService.getMaps()
-      console.log(this.markers)
-    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },
     centerUpdate(center) {
       this.currentCenter = center;
     },
-    
+    removeMarker() {
+      this.location = ''
+    },
+    addMarker(event) {
+      this.clicks+=1
+      if(this.page && this.clicks==2){
+        this.location = [event.latlng.lat,event.latlng.lng];
+        this.clicks = 0
+        this.$emit("clicked", this.location)
+      }
+    }
   }
 };
 Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  iconRetinaUrl: require('../assets/images/icons/marker.png'),
+  iconUrl: require('../assets/images/icons/marker.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 </script>
@@ -109,5 +122,8 @@ Icon.Default.mergeOptions({
     background: #525050;
     font-family: 'Jost';
     color: white
+}
+.leaflet-container {
+  cursor: crosshair;
 }
 </style>
