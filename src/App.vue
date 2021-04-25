@@ -12,7 +12,6 @@
 <script>
   import Footer from './components/Footer.vue'
   import Header from './components/Header.vue'
-  import axios from 'axios'
 
   export default {
     name: 'App',
@@ -24,12 +23,6 @@
     components: {
       Header,
       Footer
-    },
-    methods: {
-      created(){
-        const response = axios.get('data');
-        this.data = response;
-      }
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <b-row style="height: 30rem">
-        <b-col>
+    <b-row style="height: 30rem;" class="p-0 m-0">
+        <b-col class="p-0 m-0">
             <l-map 
             v-if="showMap"
             :zoom="zoom"

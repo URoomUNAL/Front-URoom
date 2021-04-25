@@ -5,7 +5,7 @@ const API_URL = 'https://uroom.azurewebsites.net'
 
 class PostService{
 
-    AddRoom(form){
+    AddRoom(form){                                      // Peticion POST. Enviar la información de un nuevo post.
       var formData = new FormData();
       formData.append("title", form.title);
       formData.append("description", form.description);
@@ -28,7 +28,7 @@ class PostService{
       return axios.post(API_URL + '/add-post', formData);
     }
 
-    async GetServices(){
+    async GetServices(){                                // Petición GET. obtener la lista de posibles servicios.
       var services = []
       await axios.get(API_URL + '/get-services')
       .then(function(response){
@@ -39,7 +39,7 @@ class PostService{
       return services;
     }
 
-    async GetRules(){
+    async GetRules(){                                   // Petición GET. obtener la lista de posibles normas.
       var rules = []
       await axios.get(API_URL + '/get-rules')
       .then(function(response){

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <b-row>
-            <b-col>
+        <b-row class="m-0 p-0">
+            <b-col class="m-0 p-0">
                 <h1 class="primary mb-3">Encuentra tu habitación ideal</h1>
             </b-col>
         </b-row>
@@ -32,7 +32,7 @@ import RoomsGroup from './RoomsGroup.vue'
     },
     async created(){
       await this.getTodos()
-      console.log(this.markers)
+      console.log(this.markers);
     },
     methods: {
       async getTodos() {

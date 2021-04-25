@@ -40,16 +40,20 @@
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-col>
-                    <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
-                      <tag-select :options="fields.services" @value="PutServicesValues"/>
-                    </b-form-group>
+                    <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
+                      <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
+                        <tag-select :options="fields.services" @value="PutServicesValues"/>
+                      </b-form-group>
+                    </b-overlay>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-col>
-                    <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
-                      <tag-select :options="fields.rules" @value="PutRulesValues"/>
-                    </b-form-group>
+                    <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
+                      <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
+                        <tag-select :options="fields.rules" @value="PutRulesValues"/>
+                      </b-form-group>
+                    </b-overlay>
                   </b-col>
                 </b-row>
               </b-col>
@@ -126,18 +130,13 @@
 import PostService from "../services/post-services.js"
 import TagSelect from "./TagSelect.vue";
 import Map from "./Map.vue";
+import filetoblob from "../libs/file-to-blob.js"
 
-  const base64Encode = data =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(data);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
   export default {
     data(){
       return{
         fields: {
+          loading: true,
           price: false,
           mainImageSrc: '',
           optionalImagesSrc: [],
@@ -163,6 +162,7 @@ import Map from "./Map.vue";
       }
     },
     async created(){
+      this.fields.loading = true;
       var services = await PostService.GetServices();
       var list_services = [];
       services.forEach((element) =>{
@@ -176,6 +176,7 @@ import Map from "./Map.vue";
       })
       this.fields.rules = list_rules;
       console.log(localStorage.getItem("user_email"));
+      this.fields.loading = false;
     },
     methods: {
       UpdatePosition(value) {
@@ -246,7 +247,7 @@ import Map from "./Map.vue";
       'form.main_img'(newValue, oldValue) {
         if(newValue !== oldValue) {
           if(newValue) {
-            base64Encode(newValue)
+            filetoblob(newValue)
               .then((value) => {
                 this.fields.mainImageSrc = value;
               })
@@ -263,7 +264,7 @@ import Map from "./Map.vue";
           if(newValue){
             this.fields.optionalImagesSrc = [];
             for(var i = 0; i < newValue.length; i++){
-              base64Encode(newValue[i])
+              filetoblob(newValue[i])
               .then((value) => {
                 this.fields.optionalImagesSrc.push(value);
               })
