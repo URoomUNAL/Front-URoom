@@ -40,19 +40,19 @@
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-col>
-                    <b-overlay :show="fields.loading">
-                    <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
-                      <tag-select :options="fields.services" @value="PutServicesValues"/>
-                    </b-form-group>
+                    <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
+                      <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
+                        <tag-select :options="fields.services" @value="PutServicesValues"/>
+                      </b-form-group>
                     </b-overlay>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-col>
-                    <b-overlay :show="fields.loading">
-                    <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
-                      <tag-select :options="fields.rules" @value="PutRulesValues"/>
-                    </b-form-group>
+                    <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
+                      <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
+                        <tag-select :options="fields.rules" @value="PutRulesValues"/>
+                      </b-form-group>
                     </b-overlay>
                   </b-col>
                 </b-row>

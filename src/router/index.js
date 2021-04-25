@@ -13,7 +13,8 @@ const routes=[
     {   // Ruta 'CompleteData' Formulario para la finalización de registro en la plataforma.
         path:'/CompleteData',
         name:'CompleteData',
-        component:()=>import('@/components/CompleteData.vue')
+        component:()=>import('@/components/CompleteData.vue'),
+        props: true
     },
     {   // Ruta 'AddRoom' Formulario para inscribir una habitación en la plataforma.
         path:'/AddRoom',
