@@ -40,16 +40,20 @@
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-col>
+                    <b-overlay :show="fields.loading">
                     <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
                       <tag-select :options="fields.services" @value="PutServicesValues"/>
                     </b-form-group>
+                    </b-overlay>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" align-v="center">
                   <b-col>
+                    <b-overlay :show="fields.loading">
                     <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
                       <tag-select :options="fields.rules" @value="PutRulesValues"/>
                     </b-form-group>
+                    </b-overlay>
                   </b-col>
                 </b-row>
               </b-col>
@@ -132,6 +136,7 @@ import filetoblob from "../libs/file-to-blob.js"
     data(){
       return{
         fields: {
+          loading: true,
           price: false,
           mainImageSrc: '',
           optionalImagesSrc: [],
@@ -157,6 +162,7 @@ import filetoblob from "../libs/file-to-blob.js"
       }
     },
     async created(){
+      this.fields.loading = true;
       var services = await PostService.GetServices();
       var list_services = [];
       services.forEach((element) =>{
@@ -170,6 +176,7 @@ import filetoblob from "../libs/file-to-blob.js"
       })
       this.fields.rules = list_rules;
       console.log(localStorage.getItem("user_email"));
+      this.fields.loading = false;
     },
     methods: {
       UpdatePosition(value) {

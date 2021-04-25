@@ -75,11 +75,7 @@ export default {
           console.log(localStorage.getItem("user_email"));
           self.visible = !self.visible;
           alert("Bienvenido, " + response.data.name + ".");
-          if(self.$route.path == '/'){
-            self.$router.go();
-          }else{
-            self.$router.push('/');
-          }
+          self.$router.go();
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

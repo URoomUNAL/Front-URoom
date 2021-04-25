@@ -19,7 +19,7 @@
                 <b-button variant="primary" v-b-toggle.sign-up>Regístrate</b-button>
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto" v-if="logged">
-                <b-button variant="primary" @click="LogOut">Cierra sesión</b-button>
+                <b-button variant="primary" @click="LogOut">Cerrar sesión</b-button>
               </b-navbar-nav>
           </b-collapse>
       </b-container>
@@ -48,6 +48,7 @@
         if(this.$route.path == '/'){
           this.$router.go();
         }else{
+          this.$router.go('/');
           this.$router.push('/');
         }
       }

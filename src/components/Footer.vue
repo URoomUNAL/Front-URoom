@@ -1,5 +1,5 @@
 <template>
-    <footer style="position: sticky;"> 
+    <footer> 
       <b-row id="top" align-v="center" align-h="center" class="mr-0 ml-0">
           <b-col md="6" cols="12">
               <a href="/"><img src='../assets/images/uroom-logo.png' alt="URoom Logo"></a>
