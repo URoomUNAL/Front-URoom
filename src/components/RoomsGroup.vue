@@ -46,9 +46,9 @@
       }
     },
     watch: { 
-      markers: function(newVal,oldVal) { // watch it
-        this.markers = newVal
-        console.log(oldVal)
+      markers: function(newVal) { // watch it
+        this.markers = newVal;
+        this.toMatrix();
       }
     }
   }
