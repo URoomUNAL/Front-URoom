@@ -1,6 +1,6 @@
 <template>
     <div>
-      {{markers}}
+      <!-- {{markers}} -->
         <b-row class="m-0 p-0">
             <b-col class="m-0 p-0">
                 <h1 class="primary mb-3">Encuentra tu habitación ideal</h1>

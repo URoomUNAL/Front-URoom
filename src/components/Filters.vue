@@ -161,7 +161,7 @@ export default {
             this.form.rules = values;
         }, 
         async FilterFunction(){
-            console.log("ey");
+            this.form.distance.radius = parseFloat(this.form.distance.radius)
             this.$emit("filter", await PostService.FilterPost(this.form));
         }
     },

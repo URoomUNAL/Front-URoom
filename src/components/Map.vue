@@ -31,10 +31,16 @@
             <div v-if="location">
               <!--v-on:click="removeMarker"-->
             <l-marker :lat-lng="location">
+              <l-icon
+                icon-url="../assets/images/icons/marker.png"
+                :iconSize="iconSize"
+                :iconAnchor="iconAnchor"
+              />
               <l-popup>
                 <p>Tu habitación</p>
               </l-popup>
             </l-marker>
+            
             </div>
             <!-- <l-marker :lat-lng="withTooltip">
                 <l-tooltip :options="{ permanent: true, interactive: true }">
@@ -49,7 +55,7 @@
 <script>
 
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup, LIcon} from "vue2-leaflet";
 import { Icon } from "leaflet";
 delete Icon.Default.prototype._getIconUrl;
 
@@ -60,7 +66,8 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup
+    LPopup,
+    LIcon
   },
   data() {
     return {
@@ -81,7 +88,9 @@ export default {
       showMap: true,
       rooms: this.markers,
       location:'',
-      clicks: 0
+      clicks: 0,
+      iconSize: [32, 37],
+      iconAnchor: [16, 37]
     };
   },
   created() {
@@ -101,9 +110,6 @@ export default {
       this.location = ''
     },
     addMarker(event) {
-      if(this.filtro){
-        this.clicks = 0;
-      }
       this.clicks+=1
       if(this.page && this.clicks==2){
         this.location = [event.latlng.lat,event.latlng.lng];
@@ -111,7 +117,7 @@ export default {
         this.$emit("clicked", this.location)
       }
       
-      if(this.filtro && this.clicks%2){
+      if(this.filtro && this.clicks%2==0){
         this.location = [event.latlng.lat,event.latlng.lng];
         this.clicks = 0
         this.$emit("clicked", this.location)
