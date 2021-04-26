@@ -50,5 +50,13 @@ class PostService{
       return rules;
     }
     
+    async FilterPost(form){      
+        var markers = []
+        await  axios.post(API_URL + '/get-posts-filtered', form).then((result) => {
+            markers = result.data;
+        })
+        return markers;
+    }
+    
 }
 export default new PostService();

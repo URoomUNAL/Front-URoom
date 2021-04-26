@@ -1,6 +1,6 @@
 <template>
     <b-row style="height: 30rem;" class="p-0 m-0">
-        <b-col class="p-0 m-0">
+        <b-col class="col-10 offset-1">
             <l-map 
             v-if="showMap"
             :zoom="zoom"
@@ -55,7 +55,7 @@ delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
-  props: ["markers","height","page"],
+  props: ["markers","height","page", "filtro"],
   components: {
     LMap,
     LTileLayer,
@@ -88,6 +88,7 @@ export default {
     // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
     //   this.result = result.data;
     // })
+
   },
   methods: {
     zoomUpdate(zoom) {
@@ -100,13 +101,29 @@ export default {
       this.location = ''
     },
     addMarker(event) {
+      if(this.filtro){
+        this.clicks = 0;
+      }
       this.clicks+=1
       if(this.page && this.clicks==2){
         this.location = [event.latlng.lat,event.latlng.lng];
         this.clicks = 0
         this.$emit("clicked", this.location)
       }
+      
+      if(this.filtro && this.clicks%2){
+        this.location = [event.latlng.lat,event.latlng.lng];
+        this.clicks = 0
+        this.$emit("clicked", this.location)
+      }
     }
+  },
+  watch: { 
+      markers: function(newVal) { // watch it
+          this.markers = newVal
+          console.log("aqui los de mapa")
+          console.log(this.markers)
+      }
   }
 };
 Icon.Default.mergeOptions({

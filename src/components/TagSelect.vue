@@ -1,5 +1,4 @@
 <template>
-  <div>
     <b-form-group>
       <b-form-tags v-model="values" size="lg" add-on-change no-outer-focus>
         <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
@@ -16,7 +15,6 @@
         </template>
       </b-form-tags>
     </b-form-group>
-  </div>
 </template>
 
 <script>
