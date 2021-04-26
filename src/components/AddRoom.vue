@@ -15,22 +15,19 @@
       <b-col>
         <b-form @submit.prevent="OnSubmit">
           <b-container class="mt-4">
-            <b-row align-h="center">
-              <b-col md="6" class="pr-4">
-                <b-row align-h="center" class="mb-4">
-                  <h2 class="primary mb-3">Datos principales</h2>
-                </b-row>
+            <b-row align-h="center" class="my-4">
+              <b-col xl="6" class="pr-4">
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para facilitar la experiencia de tus clientes.">
-                      <b-form-input id="input-1" v-model="form.address" @change="findLocation" placeholder="Dirección del predio" required/>
+                    <b-form-group label="Título de la publicación:" label-for="input-1" description="Pon un titulo llamativo para atraer a los usuarios.">
+                      <b-form-input id="input-1" v-model="form.title" placeholder="Título" required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-group label="Mapa:" label-for="input">
-                      <b-card label="Mapa:" label-for="input"/>
+                    <b-form-group label="Precio:" label-for="input" description="Precio en pesos colombianos (COP)">
+                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -41,51 +38,61 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-row align-h="center">
+                <b-row align-h="center" align-v="center">
                   <b-col>
-                    <b-form-group label="Precio:" label-for="input" description="Debes dar el precio en pesos colombianos">
-                      <b-form-input @blur="fields.price = false" @focus="fields.price = true" id="input" v-model="price" placeholder="Escribe el costo mensual de tu habitación." required/>
-                    </b-form-group>
+                    <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
+                      <b-form-group label="Servicios de la casa:" description="Elige los servicios que incluye la habitación.">
+                        <tag-select :options="fields.services" @value="PutServicesValues"/>
+                      </b-form-group>
+                    </b-overlay>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center" align-v="center">
+                  <b-col>
+                    <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
+                      <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
+                        <tag-select :options="fields.rules" @value="PutRulesValues"/>
+                      </b-form-group>
+                    </b-overlay>
                   </b-col>
                 </b-row>
               </b-col>
               <b-col xl="6" class="pr-4">
-                <b-row align-h="center" align-v="center" class="mb-4">
-                  <h2 class="primary mb-3">Servicios de la casa.</h2>
-                </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <tag-select :options="options"/>
+                    <b-form-group label="Dirección:" label-for="input-1" description="Procura dar tu dirección exacta para ser más visible a los usuarios.">
+                      <b-form-input id="input-1" v-model="form.address" placeholder="Dirección" required/>
+                    </b-form-group>
                   </b-col>
                 </b-row>
-                <b-row align-h="center" align-v="center" class="mb-4">
-                  <h2 class="primary mb-3">Normas de la casa.</h2>
-                </b-row>
-                <b-row align-h="center">
+                <b-row align-h="center" class="mb-3" >
                   <b-col>
-                    <tag-select :options="options"/>
+                    <b-form-group label="Ubicación:" label-for="input" description="Indica la ubicación de la habitación en el mapa.">
+                      <Map :page="true" @clicked="UpdatePosition"/>
+                    </b-form-group>
                   </b-col>
                 </b-row>
               </b-col>
             </b-row>
             <b-row>
               <b-col>
-                <h2 class="primary mb-3">Fotos de la habitación</h2>
+                <h2 class="primary my-4">Fotos de la habitación</h2>
               </b-col>
             </b-row>
-            <b-row>
+            <b-row class="my-4">
               <b-col md="6">
                 <b-row align-h="center">
                   <h3 class="primary mb-3">Foto principal</h3>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-img v-if="form.main_img" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
+                    <b-img v-if="fields.mainImageSrc" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
+                    <b-img v-if="!fields.mainImageSrc" src="https://uroom20211.blob.core.windows.net/images/default-image.png" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-form-file v-model="form.main_img" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left"></b-form-file>
+                    <b-form-file v-model="form.main_img" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-8 text-left" required></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
@@ -95,59 +102,58 @@
                 </b-row>
                 <b-row align-h="center" class="mb-4">
                   <b-col>
-                    <b-carousel fade controls>
+                    <b-carousel fade controls v-if="fields.optionalImagesSrc">
                       <b-carousel-slide v-for="item in fields.optionalImagesSrc" :key="item" :img-src="item"/>
                     </b-carousel>
+                    <b-img v-if="!fields.optionalImagesSrc.length" src="https://uroom20211.blob.core.windows.net/images/default-image.png" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center">
                   <b-col>
-                    <b-form-file v-model="form.optionalImg" type="file" accept="image/jpeg, image/png" placeholder="Selecciona las imágenes." class="mb-2 col-8 text-left" multiple></b-form-file>
+                    <b-form-file v-model="form.images" type="file" accept="image/jpeg, image/png" placeholder="Selecciona las imágenes." class="mb-2 col-8 text-left" multiple></b-form-file>
                   </b-col>
                 </b-row>
               </b-col>
             </b-row>
-            <b-row align-h="center">
-              <b-col align-self="center" class="my-4" xl="8" lg="6">
-                <b-button variant="primary" block type="submit" >Completar registro</b-button>
+            <b-row align-h="center" class="mb-5">
+              <b-col align-self="center" class="my-4" md="6" xs="12">
+                <b-button variant="primary" block type="submit" @submit.prevent="OnSubmit">Completar registro</b-button>
               </b-col>
             </b-row>
           </b-container>
         </b-form>
       </b-col>
-      {{form}}
   </b-container> 
 </template>
 
 <script>
-import AuthService from '../services/principal-services';
+import PostService from "../services/post-services.js"
 import TagSelect from "./TagSelect.vue";
+import Map from "./Map.vue";
+import filetoblob from "../libs/file-to-blob.js"
 
-  const base64Encode = data =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(data);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
   export default {
     data(){
       return{
-        options: ['Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
         fields: {
+          loading: true,
           price: false,
           mainImageSrc: '',
-          optionalImagesSrc: null
+          optionalImagesSrc: [],
+          services: [],
+          rules: []
         },
         form: {
-          address: '',
-          latitude: 0.0,
-          longitude: 0.0,
-          description: '',
+          title: '',
           price: 0,
+          description: '',
+          address: '',
+          latitude: null,
+          longitude: null,
           main_img: null,
-          optionalImg: null,
-          allowTags: []
+          images: [],
+          services: [],
+          rules: []
         },
         alert: {
           show: false,
@@ -155,18 +161,61 @@ import TagSelect from "./TagSelect.vue";
         }
       }
     },
+    async created(){
+      this.fields.loading = true;
+      var services = await PostService.GetServices();
+      var list_services = [];
+      services.forEach((element) =>{
+        list_services.push(element.name);
+      })
+      this.fields.services = list_services;
+      var rules = await PostService.GetRules();
+      var list_rules = [];
+      rules.forEach((element) =>{
+        list_rules.push(element.name);
+      })
+      this.fields.rules = list_rules;
+      console.log(localStorage.getItem("user_email"));
+      this.fields.loading = false;
+    },
     methods: {
-      findLocation(){
-        // TODO: Update the center of map.
+      UpdatePosition(value) {
+        this.form.latitude = value[0];
+        this.form.longitude = value[1];
       },
       OnSubmit(){
-        AuthService.AddRoom(JSON.stringify(this.form))
-        .then(function(response){
-          console.log(response);
-        }).catch(function(error){
-          console.log(error);
-        });
-      }
+        var self = this;
+        if(this.form.latitude == null || this.form.longitude == null){
+          self.alert.message = "Debes indicar en el mapa la ubicación de la casa.";
+          self.alert.show = true;
+          window.scrollTo(0, 0);
+        }else{
+          PostService.AddRoom(this.form)
+            .then(function(response){
+              console.log(response);
+              alert("Publicación creada exitosamente");
+              //TODO: Peticion exitosa.
+            }).catch(function(error){
+              if(error.response){
+                self.alert.message = error.response.data;
+                self.alert.show = true;
+              }else if(error.request){
+                self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
+                self.alert.show = true;
+              }else{
+                self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+              }
+              window.scrollTo(0, 0);
+            }
+          );
+        }
+      },
+      PutServicesValues(values){
+        this.form.services = values;
+      },
+      PutRulesValues(values){
+        this.form.rules = values;
+      }      
     },
     computed: {
       price: {
@@ -192,49 +241,46 @@ import TagSelect from "./TagSelect.vue";
           }
           this.form.price = newValue;
         }
-      },
-      availableOptions() {
-        return this.options.filter(opt => this.value.indexOf(opt) === -1);
       }
     },
     watch: {
       'form.main_img'(newValue, oldValue) {
-        if (newValue !== oldValue) {
-          if (newValue) {
-            base64Encode(newValue)
+        if(newValue !== oldValue) {
+          if(newValue) {
+            filetoblob(newValue)
               .then((value) => {
                 this.fields.mainImageSrc = value;
               })
               .catch(() => {
                 this.fields.mainImageSrc = null;
               });
-          } else {
+          }else{
             this.fields.mainImageSrc = null;
           }
         }
       },
-      'form.optionalImg'(newValue, oldValue){
-        if (newValue !== oldValue) {
+      'form.images'(newValue, oldValue){
+        if(newValue !== oldValue) {
           if(newValue){
             this.fields.optionalImagesSrc = [];
             for(var i = 0; i < newValue.length; i++){
-              base64Encode(newValue[i])
+              filetoblob(newValue[i])
               .then((value) => {
-                alert(value);
                 this.fields.optionalImagesSrc.push(value);
               })
               .catch(() => {
                 this.fields.optionalImagesSrc.push(null);
               });  
             }
-          }else {
+          }else{
             this.fields.mainImageSrc = null;
           }
         }
       }
     },
     components: {
-      TagSelect
+      TagSelect,
+      Map
     }
   }
 </script>

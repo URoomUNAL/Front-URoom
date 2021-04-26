@@ -1,9 +1,11 @@
 import axios from 'axios'
+
 const API_URL = 'https://uroom.azurewebsites.net'
-axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('data');
+//const API_URL = 'http://localhost:9000/'
 
 class LocalService{
-    async getMaps() { // Funcion de registro
+
+    async getMaps() { // Petición GET. Obtener todas las publicaciones de la plataforma.
         var markers = []
         await axios.get(API_URL + "/get-posts").then((result) => {
             markers = result.data;
