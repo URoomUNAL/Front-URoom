@@ -25,12 +25,12 @@ const routes=[
         path:'/Rooms', 
         name:'Rooms',
         component:()=>import('@/components/Rooms.vue')
-    }/*,
+    },
     {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
         path:'/MyRooms', 
         name:'MyRooms',
         component:()=>import('@/components/MyRooms.vue')
-    }*/
+    }
 ]
 
 const router = new VueRouter({

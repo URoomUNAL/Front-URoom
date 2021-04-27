@@ -32,9 +32,7 @@
               <!--v-on:click="removeMarker"-->
             <l-marker :lat-lng="location">
               <l-icon
-                icon-url="../assets/images/icons/marker.png"
-                :iconSize="iconSize"
-                :iconAnchor="iconAnchor"
+                :icon-url="require('../assets/images/icons/redMarker.png')"
               />
               <l-popup>
                 <p>Tu habitación</p>

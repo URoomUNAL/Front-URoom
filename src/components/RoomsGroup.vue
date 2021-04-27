@@ -1,22 +1,44 @@
 <template>
-    <b-container class="col-8 offset-2">
-        
-        <b-card-group deck  v-for="(row,index) in rows" :key="index">
+    <b-container class="col-md-8 offset-md-2 col-12">
+      <b-row align-h="center" class="my-4">
+        <b-col v-for="marker in markers" xl="4" sm="12" md="6" class="pr-4" :key = marker.id>
         <b-card
-            v-for="marker in row"
-            :key = marker.id
             :title="marker.description"
             :img-src="marker.main_img"
-            img-alt="Image"
-            img-top>
+            img-alt="Card Image"
+            img-top
+            align="center"
+            sty>
             
-            <b-card-text>
-                {{marker.address}}
+             <b-card-text>
+              {{marker.address}}
             </b-card-text>
-            <b-btn variant="primary" block>Ver publicación</b-btn>
-            </b-card>
-            </b-card-group>
-        
+            <b-card-text>
+              {{marker.description}}
+            </b-card-text>
+            <b-card-text>
+              {{price_string}}
+            </b-card-text>
+
+            <b-card-text h3>
+              <h5> Servicios: </h5>
+              <span v-for="(service, index) in marker.services" :key="index">
+                <span>{{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
+              </span>
+            </b-card-text>
+            <b-card-text>
+            <h5> Normas: </h5>
+              <span v-for="(rule, index) in marker.rules" :key="index">
+                <span>{{rule.name}}</span><span v-if="index+1 < marker.rules.length">, </span>
+              </span>
+            <!-- <b-tag v-for="rule in markers.rules" :key="rule">
+                    {{rule}}
+                  </b-tag> -->
+            </b-card-text>
+          <b-button variant="primary">Ver Publicación</b-button>
+        </b-card>
+        </b-col>
+      </b-row>
     </b-container>
 </template>
 
@@ -32,18 +54,10 @@
       }
     },
     created(){
-        this.toMatrix()
+        
     },
     methods: {
-      toMatrix(){
-        this.rows = this.markers
-        this.rows = this.rows.reduce((c, n, i) => {
-              if (i % 3 === 0) c.push([]);
-              c[c.length - 1].push(n);
-              return c;
-          }, []);
-        
-      }
+      
     },
     watch: { 
       markers: function(newVal) { // watch it
@@ -54,8 +68,7 @@
   }
 </script>
 <style>
-.card-deck .card {
-    max-width: calc(33.33333% - 30px);
+.card {
     margin-bottom: 10px;
     border-radius: 20px;
 

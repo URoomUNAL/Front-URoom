@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-div>
     <b-row class="pb-6">
       <b-col>
         <h1 class="primary">Mis habitaciones</h1>
@@ -12,36 +12,16 @@
         </b-alert>
       </b-col>
     </b-row>
-      <b-col>
-        <b-button variant="secondary">Añade una Habitación</b-button>
-
-        <b-list-group>
-                <!-- <b-card img-src="https://placekitten.com/1000/300" img-alt="Card image" img-top>
-                    <b-card-text>
-                    Some quick example text to build on the card and make up the bulk of the card's content.
-                    </b-card-text>
-                </b-card>
-
-                <b-card img-src="https://placekitten.com/1000/300" img-alt="Card image" img-bottom>
-                    <b-card-text>
-                    Some quick example text to build on the card and make up the bulk of the card's content.
-                    </b-card-text>
-                </b-card> -->
-                  <b-list-group-item v-for="room in rooms" :key="room.id">
-                    <CardRoom 
-                      :room = "room"
-                    />
-                  </b-list-group-item>
-        </b-list-group>
-      </b-col>
-      <!--{{form}}  -->
-  </b-container> 
+    <b-button variant="primary" class = "col-8 my-2" >Añade una Habitación</b-button>
+    <CardRoom :markers = "rooms" num_per_row="1"/>
+  </b-div> 
 </template>
 
 <script>
 import PostService from "../services/post-services.js"
 import LocalService from "../services/local-services.js"
 import CardRoom from "./CardRoom.vue"
+// import RoomsGroup from "./RoomsGroup.vue"
 
   const base64Encode = data =>
     new Promise((resolve, reject) => {
