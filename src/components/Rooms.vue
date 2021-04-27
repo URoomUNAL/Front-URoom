@@ -11,22 +11,28 @@
           <p></p>
           <p></p>
         </b-overlay>
+        
         <div v-if="markers">
+          <b-overlay :show="loading" variant="white" spinner-variant="primary">
+          <b-row class="mt-2 p-0">
+            
+              <b-col class="m-0 p-0">
+                  <Filters @clicked="distancia" :distancia="form" @filter="showFilters" @loading="showLoading"/>
+              </b-col>
+           
+          </b-row>
+          </b-overlay>
           <b-row>
             <b-col>
-              <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition"/>
+              <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading"/>
             </b-col>
-          </b-row>
-          <b-row class="mt-2 p-0">
-              <b-col class="m-0 p-0">
-                  <Filters @clicked="distancia" :distancia="form" @filter="showFilters"/>
-              </b-col>
           </b-row>
           <hr/>
           <h1 class="primary mb-3">Publicaciones</h1>
           <RoomsGroup :markers="markers"/>
           
         </div>
+        
     </div>
 </template>
 
@@ -48,7 +54,8 @@ import Filters from './Filters.vue'
         markers: '',
         rows: '',
         filtro:false,
-        form:''
+        form:'',
+        loading: false
       }
     },
     async created(){
@@ -64,6 +71,7 @@ import Filters from './Filters.vue'
       },
       showFilters(value){
         this.markers = value;
+        this.loading = false;
         console.log(this.markers)
       },
       UpdatePosition(value) {
@@ -72,6 +80,10 @@ import Filters from './Filters.vue'
           longitude: value[1]
         }
       },
+      showLoading(value) {
+        this.loading = value
+        console.log(this.loading)
+      }
     }
   }
 </script>

@@ -2,6 +2,7 @@
     <b-col class="col-10 offset-1">
         <b-button block variant="primary" class="mb-3" v-b-toggle.filters>Filtrar publicaciones</b-button>
             <b-collapse accordion="my-accordion" id="filters" >
+
                 <b-form @submit.prevent="FilterFunction">
                     <b-row align-h="center" class="my-4">
                         <b-col sm="6" md="6" xl="3">
@@ -17,37 +18,32 @@
                         </b-col>
                         <b-col sm="6" md="6" xl="3">
                             <h3>Servicios</h3>
-                            <b-form-group label="Servicios:" description="Elige los servicios que incluye la habitación.">
+                            <b-form-group description="Elige los servicios que incluye la habitación.">
                                 <tag-select :options="fields.services" @value="PutServicesValues"/>
                             </b-form-group>
                         </b-col>
                         <b-col sm="6" md="6" xl="3">
                             <h3>Reglas</h3>
-                            <b-form-group label="Normas:" description="Elige las reglas.">
+                            <b-form-group description="Elige las reglas.">
                                 <tag-select :options="fields.rules" @value="PutRulesValues"/>
                             </b-form-group>
                         </b-col>
                         <b-col sm="6" md="6" xl="3">
-                            <b-button v-on:click="activate" block variant="primary" class="mb-3" v-b-toggle.filtersDistance>Filtrar por distancia</b-button>
+                            <b-button v-on:click="activate" block variant="primary" class="mb-1" v-b-toggle.filtersDistance>Filtrar por distancia</b-button>
                             <b-collapse accordion="my-accordion2" id="filtersDistance">
-                                <label for="range-3">Distancia: {{form.distance.radius}}km</label>
-                                <b-form-input id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.1"></b-form-input>
+                                <label for="range-3">Distancia: {{form.distance.radius}}km.</label>
+                                <b-form-input label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.1"></b-form-input>
+                              <label for="range-3">Pon tu pin en el mapa.</label>
                             </b-collapse>
                         </b-col>
                     </b-row>
-                    <div v-if="distancia" >                   
-                        <b-row class="mb-2">
-                            {{distancia}}                       
-                        </b-row>
-                    </div>
                     <b-row align-h="center" class="my-4">
                       <b-col md="4" lg="4">
-                          <b-button variant="primary" class="mt-3" type="submit" block>Filtrar</b-button>
+                          <b-button v-b-toggle.filters variant="primary" class="mt-3" type="submit" block>Aceptar</b-button>
                       </b-col> 
                     </b-row>
                 </b-form>
             </b-collapse>
-            {{form}}
     </b-col>
 </template>
 <script>
@@ -164,7 +160,9 @@ export default {
         }, 
         async FilterFunction(){
             this.form.distance.radius = parseFloat(this.form.distance.radius)
+            this.$emit("loading", true);
             this.$emit("filter", await PostService.FilterPost(this.form));
+            
         }
     },
     components:{

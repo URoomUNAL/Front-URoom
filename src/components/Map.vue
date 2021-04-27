@@ -1,5 +1,6 @@
 <template>
-    <b-row style="height: 30rem;" class="p-0 m-0">
+    <b-row style="height: 25rem;" class="p-0 m-0">
+      
         <b-col class="col-10 offset-1">
             <l-map 
             v-if="showMap"
@@ -34,19 +35,14 @@
               <l-icon
                 :icon-url="require('../assets/images/icons/redMarker.png')"
               />
-              <l-popup>
-                <p>Tu habitación</p>
-              </l-popup>
+              
             </l-marker>
             
             </div>
-            <!-- <l-marker :lat-lng="withTooltip">
-                <l-tooltip :options="{ permanent: true, interactive: true }">
-                
-                </l-tooltip>
-            </l-marker> --> 
+            
             </l-map>
         </b-col>
+        
     </b-row>
 </template>
 
@@ -92,9 +88,6 @@ export default {
     };
   },
   created() {
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
-    //   this.result = result.data;
-    // })
 
   },
   methods: {

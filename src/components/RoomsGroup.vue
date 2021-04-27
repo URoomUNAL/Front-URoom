@@ -1,5 +1,5 @@
 <template>
-    <b-container class="col-md-8 offset-md-2 col-12">
+    <b-container class="col-md-10 offset-1 col-12">
       <b-row align-h="center" class="my-4">
         <b-col v-for="marker in markers" xl="4" sm="12" md="6" class="pr-4" :key = marker.id>
         <b-card
@@ -7,35 +7,36 @@
             :img-src="marker.main_img"
             img-alt="Card Image"
             img-top
-            align="center"
-            sty>
-            
+            class="text-left"
+            >
              <b-card-text>
-              {{marker.address}}
+              {{marker.address}} 
             </b-card-text>
             <b-card-text>
-              {{marker.description}}
-            </b-card-text>
-            <b-card-text>
-              {{price_string}}
+              <strong>Precio:</strong> {{getFormatPrice(marker.price)}}
             </b-card-text>
 
             <b-card-text h3>
-              <h5> Servicios: </h5>
+              <strong>Servicios:</strong>
               <span v-for="(service, index) in marker.services" :key="index">
-                <span>{{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
+                <span> {{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
               </span>
             </b-card-text>
             <b-card-text>
-            <h5> Normas: </h5>
+              <strong>Normas:</strong>
               <span v-for="(rule, index) in marker.rules" :key="index">
-                <span>{{rule.name}}</span><span v-if="index+1 < marker.rules.length">, </span>
-              </span>
-            <!-- <b-tag v-for="rule in markers.rules" :key="rule">
-                    {{rule}}
-                  </b-tag> -->
+                <span> {{rule.name}}</span><span v-if="index+1 < marker.rules.length">, </span>
+              </span>            
             </b-card-text>
-          <b-button variant="primary">Ver Publicación</b-button>
+            <div>
+              <b-card-text  v-if="marker.score" class ="my-2">  
+                <b-form-rating v-model="marker.score" readonly show-value show-value-max inline no-border>
+                </b-form-rating>
+              </b-card-text>
+              <b-card-text v-if="!marker.score">Esta publicación no tiene calificaciones</b-card-text>
+              <b-button variant="primary">Ver Publicación</b-button>
+            </div>
+          
         </b-card>
         </b-col>
       </b-row>
@@ -57,12 +58,13 @@
         
     },
     methods: {
-      
+      getFormatPrice(price){
+        return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+      }
     },
     watch: { 
       markers: function(newVal) { // watch it
         this.markers = newVal;
-        this.toMatrix();
       }
     }
   }
