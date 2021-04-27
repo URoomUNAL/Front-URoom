@@ -1,7 +1,15 @@
 import axios from 'axios'
 
-const API_URL = 'https://uroom.azurewebsites.net'
-//const API_URL = 'http://localhost:9000/'
+
+let production = false
+let API_URL
+if(production == true){
+
+  API_URL = 'https://uroom.azurewebsites.net'
+}
+else{
+  API_URL = 'http://localhost:9000'
+}
 
 class PostService{
 
@@ -27,7 +35,11 @@ class PostService{
       console.log(formData);
       return axios.post(API_URL + '/add-post', formData);
     }
-
+  
+    ActivateDeactivateRoom(room){
+      console.log("la room es: ", room)
+      axios.post(API_URL + '/change-active', room)
+    }
     async GetServices(){                                // Petición GET. obtener la lista de posibles servicios.
       var services = []
       await axios.get(API_URL + '/get-services')
@@ -48,6 +60,14 @@ class PostService{
           console.log(error);
       });
       return rules;
+    }
+    
+    async FilterPost(form){      
+        var markers = []
+        await  axios.post(API_URL + '/get-posts-filtered', form).then((result) => {
+            markers = result.data;
+        })
+        return markers;
     }
     
 }

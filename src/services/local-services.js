@@ -1,7 +1,13 @@
 import axios from 'axios'
 
-const API_URL = 'https://uroom.azurewebsites.net'
-//const API_URL = 'http://localhost:9000/'
+let production = false;
+let API_URL;
+if(production == false){
+    API_URL = 'http://localhost:9000';
+}
+else{
+    API_URL = 'https://uroom.azurewebsites.net';
+}
 
 class LocalService{
 
@@ -11,7 +17,15 @@ class LocalService{
             markers = result.data;
         })
         return markers;
-      }
+    }
+
+    async getMyRooms(){
+        var my_rooms = []
+        await axios.post(API_URL + '/get-my-posts', {"username": localStorage.getItem("user_email")}).then((result) => {
+            my_rooms = result.data;
+        });
+        return my_rooms;
+    }
     
 }
 export default new LocalService();

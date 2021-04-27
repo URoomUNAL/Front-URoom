@@ -1,6 +1,7 @@
 <template>
-    <b-row style="height: 30rem;" class="p-0 m-0">
-        <b-col class="p-0 m-0">
+    <b-row style="height: 25rem;" class="p-0 m-0">
+      
+        <b-col class="col-10 offset-1">
             <l-map 
             v-if="showMap"
             :zoom="zoom"
@@ -31,36 +32,36 @@
             <div v-if="location">
               <!--v-on:click="removeMarker"-->
             <l-marker :lat-lng="location">
-              <l-popup>
-                <p>Tu habitación</p>
-              </l-popup>
+              <l-icon
+                :icon-url="require('../assets/images/icons/redMarker.png')"
+              />
+              
             </l-marker>
+            
             </div>
-            <!-- <l-marker :lat-lng="withTooltip">
-                <l-tooltip :options="{ permanent: true, interactive: true }">
-                
-                </l-tooltip>
-            </l-marker> --> 
+            
             </l-map>
         </b-col>
+        
     </b-row>
 </template>
 
 <script>
 
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup, LIcon} from "vue2-leaflet";
 import { Icon } from "leaflet";
 delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
-  props: ["markers","height","page"],
+  props: ["markers","height","page", "filtro"],
   components: {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup
+    LPopup,
+    LIcon
   },
   data() {
     return {
@@ -81,13 +82,13 @@ export default {
       showMap: true,
       rooms: this.markers,
       location:'',
-      clicks: 0
+      clicks: 0,
+      iconSize: [32, 37],
+      iconAnchor: [16, 37]
     };
   },
   created() {
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
-    //   this.result = result.data;
-    // })
+
   },
   methods: {
     zoomUpdate(zoom) {
@@ -106,7 +107,21 @@ export default {
         this.clicks = 0
         this.$emit("clicked", this.location)
       }
+      
+      if(this.filtro && this.clicks%2==0){
+        this.location = [event.latlng.lat,event.latlng.lng];
+        this.clicks = 0
+        this.$emit("clicked", this.location)
+      }
     }
+  },
+  watch: { 
+      markers: function(newVal) { // watch it
+          this.markers = newVal;
+          this.rooms = this.markers;
+          console.log("aqui los de mapa");
+          console.log(this.markers);
+      }
   }
 };
 Icon.Default.mergeOptions({
