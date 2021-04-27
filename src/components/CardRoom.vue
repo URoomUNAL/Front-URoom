@@ -8,7 +8,8 @@
             img-alt="Image"
             img-top
             justify="left"
-            class="text-left">
+            class="text-left"
+            >
             <b-card-title class = "text-center">
               {{marker.title}}
             </b-card-title>
@@ -25,7 +26,7 @@
             <b-card-text h3>
               <strong>Servicios:</strong>
               <span v-for="(service, index) in marker.services" :key="index">
-                <span>{{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
+                <span> {{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
               </span>
             </b-card-text>
             <b-card-text>
@@ -35,15 +36,15 @@
               </span>            
             </b-card-text>
             <div>
-              <b-card-text  v-if="marker.score" class ="my-2"><strong> Calificaión:</strong>  <b-form-rating v-model="marker.score" readonly show-value show-value-max inline no-border></b-form-rating>
+              <b-card-text  v-if="marker.score" class ="my-2"><strong> Calificación:</strong>  <b-form-rating v-model="marker.score" readonly show-value show-value-max inline no-border></b-form-rating>
               </b-card-text>
               <b-card-text v-if="!marker.score">Esta publiación no tiene calificaciones</b-card-text>
             </div>
-          <b-row>
+          <b-row fluid>
             <b-col>
               <b-button variant="primary">Editar Publicación</b-button>
             </b-col>
-            <b-col>
+            <b-col class="col-7">
               <b-button v-if="marker.is_active" variant="facebook">Ocultar</b-button>
               <b-button v-if="!marker.is_active" variant="google">Activar</b-button>
             </b-col>

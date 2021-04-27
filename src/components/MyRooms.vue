@@ -12,6 +12,7 @@
         </b-alert>
       </b-col>
     </b-row>
+    <cld-image
     <b-button variant="primary" class = "col-8 my-2" >Añade una Habitación</b-button>
     <CardRoom :markers = "rooms" num_per_row="1"/>
   </b-div> 
