@@ -13,13 +13,13 @@
       </b-col>
     </b-row>
     
-    <b-button variant="primary" class = "col-8 my-2" >Añade una Habitación</b-button>
+    <b-button variant="primary" class = "col-8 my-2" href="/AddRoom">Añade una Habitación</b-button>
     <CardRoom :markers = "rooms" num_per_row="1"/>
   </b-div> 
 </template>
 
 <script>
-import PostService from "../services/post-services.js"
+// import PostService from "../services/post-services.js"
 import LocalService from "../services/local-services.js"
 import CardRoom from "./CardRoom.vue"
 // import RoomsGroup from "./RoomsGroup.vue"
@@ -47,20 +47,7 @@ import CardRoom from "./CardRoom.vue"
     },
     methods: {
       async getTodos() {
-        this.rooms = await LocalService.getMaps()
-      },
-      findLocation(){
-        // TODO: Update the center of map.
-      },
-      OnSubmit(){
-          
-        PostService.AddRoom(this.form)
-          .then(function(response){
-            console.log(response);
-          }).catch(function(error){
-            console.log(error);
-          }
-        );
+        this.rooms = await LocalService.getMyRooms()
       }
     },
     computed: {
