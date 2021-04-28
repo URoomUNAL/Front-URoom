@@ -3,27 +3,33 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter)
 
+// Enrutamiento de la plataforma.
 const routes=[
-    {
-        path:'/',//ruta (localhost:8080/)
-        name:'Home',//nombre de ruta
-        component:()=>import('@/components/Home.vue'),//componente que ocupa esa vista
+    {   // Ruta Vacia: Vista Home
+        path:'/',
+        name:'Home',
+        component:()=>import('@/components/Home.vue')
     },
-    {
-        path:'/SignUp',//ruta (localhost:8080/SignUp)
-        name:'SignUp',//nombre de ruta
-        component:()=>import('@/components/SignUp.vue'),//componente que ocupa esa vista
-    },
-    {
-        path:'/LogIn',//ruta (localhost:8080/LogIn)
-        name:'LogIn',//nombre de ruta
-        component:()=>import('@/components/LogIn.vue'),//componente que ocupa esa vista
-    },
-    {
-        path:'/CompleteData',//ruta (localhost:8080/)
-        name:'CompleteData',//nombre de ruta
-        component:()=>import('@/components/CompleteData.vue'),//componente que ocupa esa vista
+    {   // Ruta 'CompleteData' Formulario para la finalización de registro en la plataforma.
+        path:'/CompleteData',
+        name:'CompleteData',
+        component:()=>import('@/components/CompleteData.vue'),
         props: true
+    },
+    {   // Ruta 'AddRoom' Formulario para inscribir una habitación en la plataforma.
+        path:'/AddRoom',
+        name:'AddRoom',
+        component:()=>import('@/components/AddRoom.vue')
+    },
+    {   // Ruta 'Rooms' Buscador principal de la plataforma.
+        path:'/Rooms', 
+        name:'Rooms',
+        component:()=>import('@/components/Rooms.vue')
+    },
+    {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
+        path:'/MyRooms', 
+        name:'MyRooms',
+        component:()=>import('@/components/MyRooms.vue')
     }
 ]
 

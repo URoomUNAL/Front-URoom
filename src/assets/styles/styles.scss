@@ -1,10 +1,9 @@
-
+// Sobreescritura de estilos de boostrap-vue
 .btn{
     letter-spacing: 0.5px;
     padding-right: 1.3rem;
     padding-left: 1.3rem;
     border-radius: 1.5rem;
-    /*white-space: pre;*/
 }
 
 .form-control{
@@ -24,4 +23,13 @@
 
 .form-width{
     max-width: 75%;
+}
+
+.rounded {
+    border-radius:.90rem!important
+}
+
+.carousel-control-prev, .carousel-control-next{
+    background-color: #464646b3;
+    width: 10%;
 }

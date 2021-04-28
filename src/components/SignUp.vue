@@ -11,24 +11,24 @@
           <b-form @submit.prevent="SignUp">
             <b-container> 
               <b-row class="justify-content-md-center">
-                <b-col lg="6">
+                <b-col md="12" lg="6">
                   <b-alert v-model="alert.show" variant="danger" dismissible>
-                      {{alert.message}}
+                    {{alert.message}}
                   </b-alert>
                 </b-col>
               </b-row>
               <b-row class="justify-content-md-center">
-                <b-col lg="6">
+                <b-col md="12" lg="6">
                   <b-form-input label="Correo" v-model="form.email" placeholder="Correo" type="email" required/>
                 </b-col>
               </b-row>
               <b-row class="justify-content-md-center">
-                <b-col lg="6">
+                <b-col md="12" lg="6">
                   <b-form-input type="password" label="Contraseña" v-model="form.password" placeholder="Contraseña" class="mt-3" required/>
                 </b-col>
               </b-row>
               <b-row class="justify-content-md-center">
-                <b-col lg="6">
+                <b-col md="12" lg="6">
                   <b-form-input type="password" label="Confirmar contraseña" v-model="form.confirmPassword" placeholder="Confirmar contraseña" class="mt-3" required/>
                 </b-col>
               </b-row>
@@ -45,19 +45,17 @@
                   <p class="mt-2">Al presionar el siguiente botón estás aceptando los <a class="primary" href="/">términos y condiciones</a>.</p>
                 </b-col>
               </b-row>
-              <b-row class="justify-content-md-center">
-              </b-row>
-              <b-row>
-                <b-col lg="12">
-                  <b-button variant="primary" class="mt-3 col-lg-6" type="submit">Regístrate</b-button>
+              <b-row align-h="center" align-v="center">
+                <b-col md="12" lg="6">
+                  <b-button variant="primary" class="mt-3" type="submit" block>Regístrate</b-button>
                 </b-col>
               </b-row>
               <hr/>
-              <b-row style="white-space: pre;" class="justify-content-md-center mb-3 col-8 offset-2">
-                <b-col md="12" lg="5" pd="0">
+              <b-row style="white-space: pre;" align-h="center" align-v="center" class="mb-3">
+                <b-col md="6" lg="3">
                   <b-button variant="google" class="mt-1 col-12"><b-icon icon="google" font-scale="1.5" class="mr-3"/>Google</b-button>
                 </b-col>
-                <b-col md="12" lg="5" pd="0">
+                <b-col md="6" lg="3">
                   <b-button variant="facebook" class="mt-1 col-12"><b-icon icon="facebook" font-scale="1.5" class="mr-3"/>Facebook</b-button>
                 </b-col>
               </b-row>
@@ -65,9 +63,6 @@
           </b-form>
         </b-col>
       </b-row>
-      <!--<b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>-->
     </b-container>
   </b-collapse>
 </template>
