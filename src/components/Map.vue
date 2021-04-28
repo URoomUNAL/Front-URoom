@@ -30,12 +30,12 @@
             
             <div v-if="location">
               <!--v-on:click="removeMarker"-->
-            <l-marker v-if="filtro" :lat-lng="location">
-              <l-icon
-                :icon-url="require('../assets/images/icons/redMarker.png')"
-              />
-              
-            </l-marker>
+              <l-marker v-if="filtro" :lat-lng="location">
+                <l-icon
+                  :icon-url="require('../assets/images/icons/redMarker.png')"
+                />
+              </l-marker>
+              <l-marker v-if="page" :lat-lng="location"> </l-marker>
             
             </div>
             
