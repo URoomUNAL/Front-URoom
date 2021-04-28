@@ -36,6 +36,7 @@ import LocalService from "../services/local-services.js"
 import CardRoom from "./CardRoom.vue"
 
   export default {
+    name: 'MyRooms',
     data(){
       return{
         loading: true,

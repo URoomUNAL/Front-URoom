@@ -81,6 +81,7 @@
   import AuthService from '../services/authentication-services.js'
   export default {
     props: ['user'],
+    name: 'CompleteData',
     data() {
       return {
         fields: {
