@@ -8,7 +8,7 @@
     <b-row>
       <b-col>
         <b-alert v-model="alert.show" variant="danger" dismissible>
-            {{alert.message}}
+          {{alert.message}}
         </b-alert>
       </b-col>
     </b-row>
@@ -120,6 +120,11 @@
                 <b-button variant="primary" block type="submit" @submit.prevent="OnSubmit">Completar registro</b-button>
               </b-col>
             </b-row>
+            <b-row align-h="center" class="mb-5" v-if="fields.loading">
+              <b-col align-self="center" class="my-4" md="6" xs="12">
+                <b-spinner variant="primary"/>
+              </b-col>
+            </b-row>
           </b-container>
         </b-form>
       </b-col>
@@ -141,7 +146,7 @@ import filetoblob from "../libs/file-to-blob.js"
           mainImageSrc: '',
           optionalImagesSrc: [],
           services: [],
-          rules: []
+          rules: [],
         },
         form: {
           title: '',
@@ -189,12 +194,20 @@ import filetoblob from "../libs/file-to-blob.js"
           self.alert.message = "Debes indicar en el mapa la ubicación de la casa.";
           self.alert.show = true;
           window.scrollTo(0, 0);
+        }else if(this.form.price.isNaN || this.form.price <= 0){
+          self.alert.message = "El precio debe ser un valor numérico mayor que cero.";
+          self.alert.show = true;
+          window.scrollTo(0, 0);
         }else{
+          self.fields.loading = true;
           PostService.AddRoom(this.form)
             .then(function(response){
               console.log(response);
               alert("Publicación creada exitosamente");
-              //TODO: Peticion exitosa.
+              self.$router.push("/MyRooms").then(function(){
+                self.$router.go();
+              });
+              self.fields.loading = false;
             }).catch(function(error){
               if(error.response){
                 self.alert.message = error.response.data;
@@ -206,6 +219,7 @@ import filetoblob from "../libs/file-to-blob.js"
                 self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
               }
               window.scrollTo(0, 0);
+              self.fields.loading = false;
             }
           );
         }

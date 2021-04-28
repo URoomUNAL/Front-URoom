@@ -1,39 +1,37 @@
 <template>
-    <div>
-      <!-- {{markers}} -->
-        <b-row class="m-0 p-0">
-            <b-col class="m-0 p-0">
-                <h1 class="primary mb-3">Encuentra tu habitación ideal</h1>
-            </b-col>
-        </b-row>
-        
-        <b-overlay :show="!markers" variant="white" spinner-variant="primary">
-          <p></p>
-          <p></p>
-        </b-overlay>
-        
-        <div v-if="markers">
-          <b-overlay :show="loading" variant="white" spinner-variant="primary">
-          <b-row class="mt-2 p-0">
-            
-              <b-col class="m-0 p-0">
-                  <Filters @clicked="distancia" :distancia="form" @filter="showFilters" @loading="showLoading"/>
-              </b-col>
-           
-          </b-row>
-          </b-overlay>
-          <b-row>
-            <b-col>
-              <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading"/>
-            </b-col>
-          </b-row>
-          <hr/>
-          <h1 class="primary mb-3">Publicaciones</h1>
-          <RoomsGroup :markers="markers"/>
-          
-        </div>
-        
-    </div>
+  <b-container>
+    <b-row>
+      <b-col>
+        <h1 class="primary mb-5">Encuentra tu habitación ideal</h1>
+      </b-col>
+    </b-row>       
+    <b-row>
+      <b-col>
+        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading"/>
+      </b-col>
+    </b-row>
+    <b-row align-h="center">
+      <b-col class="mt-4">
+        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading"/>
+      </b-col>
+    </b-row>
+    <hr class="my-5"/>
+    <b-row>
+      <b-col>
+        <h1 class="primary mb-5">Publicaciones</h1>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <RoomsGroup :posts="markers"/>
+      </b-col>
+    </b-row>
+    <b-row class="my-5" v-if="loading">
+      <b-col>
+        <b-spinner variant="primary"/>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -49,24 +47,21 @@ import Filters from './Filters.vue'
         RoomsGroup,
         Filters
     },
- data() {
+    data() {
       return {
         markers: '',
         rows: '',
         filtro:false,
-        form:'',
-        loading: false
+        form: '',
+        loading: true
       }
     },
     async created(){
-      await this.getTodos()
-      console.log(this.markers);
+      this.markers = await LocalService.getMaps();
+      this.loading = false;
     },
     methods: {
-      async getTodos() {
-        this.markers = await LocalService.getMaps()
-      },
-      distancia(value){
+      distance(value){
           this.filtro = value;
       },
       showFilters(value){
@@ -80,9 +75,8 @@ import Filters from './Filters.vue'
           longitude: value[1]
         }
       },
-      showLoading(value) {
-        this.loading = value
-        console.log(this.loading)
+      UpdateLoading(value){
+        this.loading = value;
       }
     }
   }

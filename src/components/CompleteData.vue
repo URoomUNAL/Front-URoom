@@ -8,7 +8,7 @@
     <b-row>
       <b-col>
         <b-alert v-model="alert.show" variant="danger" dismissible>
-            {{alert.message}}
+          {{alert.message}}
         </b-alert>
       </b-col>
     </b-row>
@@ -112,7 +112,6 @@
           is_student: this.form.is_student == "true",
           age: this.form.age
         }
-
         var self = this;
         self.fields.loading = true;
         AuthService.register(JSON.stringify(user))

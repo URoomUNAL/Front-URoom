@@ -13,7 +13,7 @@
               <b-row class="justify-content-md-center">
                 <b-col md="12" lg="6">
                   <b-alert v-model="alert.show" variant="danger" dismissible>
-                      {{alert.message}}
+                    {{alert.message}}
                   </b-alert>
                 </b-col>
               </b-row>

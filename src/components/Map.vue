@@ -1,7 +1,6 @@
 <template>
     <b-row style="height: 25rem;" class="p-0 m-0">
-      
-        <b-col class="col-10 offset-1">
+        <b-col>
             <l-map 
             v-if="showMap"
             :zoom="zoom"
@@ -31,7 +30,7 @@
             
             <div v-if="location">
               <!--v-on:click="removeMarker"-->
-            <l-marker :lat-lng="location">
+            <l-marker v-if="filtro" :lat-lng="location">
               <l-icon
                 :icon-url="require('../assets/images/icons/redMarker.png')"
               />
@@ -108,11 +107,16 @@ export default {
         this.$emit("clicked", this.location)
       }
       
+      if(this.filtro == false){
+        this.location = ''
+        this.$emit("clicked", this.location)
+      }
       if(this.filtro && this.clicks%2==0){
         this.location = [event.latlng.lat,event.latlng.lng];
         this.clicks = 0
         this.$emit("clicked", this.location)
       }
+      
     }
   },
   watch: { 

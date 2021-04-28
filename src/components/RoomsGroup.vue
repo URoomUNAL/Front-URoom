@@ -1,78 +1,68 @@
 <template>
-    <b-container class="col-md-10 offset-1 col-12">
-      <b-row align-h="center" class="my-4">
-        <b-col v-for="marker in markers" xl="4" sm="12" md="6" class="pr-4" :key = marker.id>
-        <b-card
-            :title="marker.description"
-            :img-src="marker.main_img"
-            img-alt="Card Image"
-            img-top
-            class="text-left"
-            >
-             <b-card-text>
-              {{marker.address}} 
-            </b-card-text>
-            <b-card-text>
-              <strong>Precio:</strong> {{getFormatPrice(marker.price)}}
-            </b-card-text>
-
-            <b-card-text h3>
-              <strong>Servicios:</strong>
-              <span v-for="(service, index) in marker.services" :key="index">
-                <span> {{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
-              </span>
-            </b-card-text>
-            <b-card-text>
-              <strong>Normas:</strong>
-              <span v-for="(rule, index) in marker.rules" :key="index">
-                <span> {{rule.name}}</span><span v-if="index+1 < marker.rules.length">, </span>
-              </span>            
-            </b-card-text>
-            <div>
-              <b-card-text  v-if="marker.score" class ="my-2">  
-                <b-form-rating v-model="marker.score" readonly show-value show-value-max inline no-border>
-                </b-form-rating>
-              </b-card-text>
-              <b-card-text v-if="!marker.score">Esta publicación no tiene calificaciones</b-card-text>
-              <b-button variant="primary">Ver Publicación</b-button>
-            </div>
-          
+  <b-container>
+    <b-row align-h="center" align-v="center" class="my-4">
+      <b-col v-for="post in posts" :key=post.id xl="4" md="6" sm="12" class="pr-4">
+        <b-card :title="post.title" :img-src="post.main_img" img-alt="Card Image" img-top class="text-left" title-text-variant="primary">
+          <b-card-text>
+            <p>{{post.address}}</p>
+          </b-card-text>
+          <b-card-text>
+            <strong>Precio: </strong>{{getFormatPrice(post.price)}}
+          </b-card-text>
+          <b-card-text>
+            <strong>Servicios: </strong>
+            <b-container v-if="post.services.length">
+              <b-tag v-for="service in post.services" :key="service.id" no-remove pill variant="primary" class="ml-1">{{service.name}}</b-tag>
+            </b-container>
+            <b-container v-if="!post.services.length">
+              <p>Esta publicación no tiene servicios</p>
+            </b-container>
+          </b-card-text>
+          <b-card-text>
+            <strong>Normas: </strong>
+            <b-container v-if="post.rules.length">
+              <b-tag v-for="rule in post.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
+            </b-container>
+            <b-container v-if="!post.rules.length">
+              <p>Esta publicación no tiene normas</p>
+            </b-container>
+          </b-card-text>
+          <b-card-text class="text-center">  
+            <b-form-rating class="align-items-center" v-if="post.score" v-model="post.score" readonly show-value inline no-border/>
+            <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
+          </b-card-text>
+          <b-card-text class="text-center"> 
+            <b-button block variant="primary">Ver Publicación</b-button>      
+          </b-card-text>
         </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
   export default {
-    props:['markers'],
+    props:['posts'],
     name: 'RoomsGroup',
-    components: {
-    },
-    data() {
-      return {
-        rows: ''
-      }
-    },
-    created(){
-        
-    },
     methods: {
       getFormatPrice(price){
         return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
       }
     },
     watch: { 
-      markers: function(newVal) { // watch it
-        this.markers = newVal;
+      posts: function(newVal) { 
+        this.posts = newVal;
       }
     }
   }
 </script>
+
 <style>
 .card {
     margin-bottom: 10px;
     border-radius: 20px;
-
 } 
+h4 {
+  color: var(--primary);
+}
 </style>

@@ -1,13 +1,7 @@
 import axios from 'axios'
 
-let production = false;
-let API_URL;
-if(production == false){
-    API_URL = 'http://localhost:9000';
-}
-else{
-    API_URL = 'https://uroom.azurewebsites.net';
-}
+// const API_URL = 'http://localhost:9000';
+const API_URL = 'https://uroom.azurewebsites.net';
 
 class LocalService{
 
