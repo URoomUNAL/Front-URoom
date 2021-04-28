@@ -50,7 +50,7 @@
                 <b-row align-h="center" align-v="center">
                   <b-col>
                     <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
-                      <b-form-group label="Nomas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
+                      <b-form-group label="Normas de la casa:" description="Elige las reglas que se deben cumplir en tu casa.">
                         <tag-select :options="fields.rules" @value="PutRulesValues"/>
                       </b-form-group>
                     </b-overlay>
@@ -204,10 +204,8 @@ import filetoblob from "../libs/file-to-blob.js"
           PostService.AddRoom(this.form)
             .then(function(response){
               console.log(response);
-              alert("Publicación creada exitosamente");
-              self.$router.push("/MyRooms").then(function(){
-                self.$router.go();
-              });
+              //alert("Publicación creada exitosamente");
+              self.$router.push("/MyRooms");
               self.fields.loading = false;
             }).catch(function(error){
               if(error.response){
