@@ -8,7 +8,7 @@
     <b-row>
       <b-col>
         <b-alert v-model="alert.show" variant="danger" dismissible>
-            {{alert.message}}
+          {{alert.message}}
         </b-alert>
       </b-col>
     </b-row>

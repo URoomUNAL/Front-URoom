@@ -1,62 +1,44 @@
 <template>
-    <b-container class="col-md-8 offset-md-2 col-12 ">
-      <b-row align-h="center" class="my-4">
-        <b-col v-for="marker in markers" sm="12" md="6" class="pr-4" :key = marker.id>
-        <b-card
-            
-            :img-src="marker.main_img"
-            img-alt="Image"
-            img-top
-            justify="left"
-            class="text-left"
-            >
-            <b-card-title class = "text-center">
-              {{marker.title}}
-            </b-card-title>
-             <b-card-text>
-              <strong>Dirección:</strong> {{marker.address}} 
-            </b-card-text>
-            <b-card-text>
-              <strong>Descripción:</strong>  {{marker.description}}
-            </b-card-text>
-            <b-card-text>
-              <strong>Precio:</strong> {{getFormatPrice(marker.price)}}
-            </b-card-text>
-
-            <b-card-text h3>
-              <strong>Servicios:</strong>
-              <span v-for="(service, index) in marker.services" :key="index">
-                <span> {{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
-              </span>
-            </b-card-text>
-            <b-card-text>
-              <strong>Normas:</strong>
-              <span v-for="(rule, index) in marker.rules" :key="index">
-                <span> {{rule.name}}</span><span v-if="index+1 < marker.rules.length">, </span>
-              </span>            
-            </b-card-text>
-              <b-card-text  v-if="marker.score" class ="my-2"><strong> Calificación:</strong>  <b-form-rating v-model="marker.score" readonly show-value show-value-max inline no-border></b-form-rating>
-              </b-card-text>
-              <b-card-text v-if="!marker.score">Esta publiación no tiene calificaciones</b-card-text>
-          <b-row fluid>
-            <b-col>
-              <b-button variant="primary">Editar Publicación</b-button>
-            </b-col>
-            <b-col class="col-7">
-              <b-button v-if="marker.is_active" variant="facebook" type="submit" @click="OnSubmit(marker, false)">Ocultar</b-button>
-              <b-button v-if="!marker.is_active" variant="google" type="submit" @click="OnSubmit(marker, true)">Activar</b-button>
-            </b-col>
-          </b-row>
+  <b-container>
+    <b-row align-h="center" align-v="center" class="my-4">
+      <b-col v-for="marker in markers" :key=marker.id xl="4" md="6" sm="12" class="pr-4">
+        <b-card :title="marker.title" :img-src="marker.main_img" img-alt="Card Image" img-top class="text-left" title-text-variant="primary">
+          <b-card-text>
+            <p>{{marker.address}}</p>
+          </b-card-text>
+          <b-card-text>
+            <strong>Descripción:</strong> {{marker.description}}
+          </b-card-text>
+          <b-card-text>
+            <strong>Precio:</strong> {{getFormatPrice(marker.price)}}
+          </b-card-text>
+          <b-card-text>
+            <strong>Servicios:</strong>
+            <b-tag v-for="service in marker.services" :key="service.id" no-remove variant="primary" class="ml-1">{{service.name}}</b-tag>
+          </b-card-text>
+          <b-card-text>
+            <strong>Normas:</strong>
+            <b-tag v-for="rule in marker.rules" :key="rule.id" no-remove variant="primary" class="ml-1">{{rule.name}}</b-tag>
+          </b-card-text>
+          <b-card-text class="text-center">  
+            <b-form-rating class="align-items-center" v-if="marker.score" v-model="marker.score" readonly show-value inline no-border/>
+            <p v-if="!marker.score">Esta publicación aún no tiene calificaciones</p>
+          </b-card-text>
+          <b-card-text class="text-center">     
+            <b-button variant="primary">Editar Publicación</b-button>
+            <b-button v-if="marker.is_active" variant="facebook" type="submit" @click="OnSubmit(marker, false)">Ocultar</b-button>
+            <b-button v-if="!marker.is_active" variant="google" type="submit" @click="OnSubmit(marker, true)">Activar</b-button>
+          </b-card-text>
         </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 import PostService from "../services/post-services.js"
   export default {
-    props:['markers', 'num_per_row'],
+    props:['markers'],
     name: 'RoomsGroup',
     components: {
     },
@@ -81,7 +63,6 @@ import PostService from "../services/post-services.js"
         let save_images = marker.images
         let save_services = marker.services
         let save_rules = marker.rules
-
         console.log(marker.rules)
         room_req.main_img = null
         room_req.images = []

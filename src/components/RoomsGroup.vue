@@ -1,46 +1,33 @@
 <template>
-    <b-container class="col-md-10 offset-1 col-12">
-      <b-row align-h="center" class="my-4">
-        <b-col v-for="marker in markers" xl="4" sm="12" md="6" class="pr-4" :key = marker.id>
-        <b-card
-            :title="marker.description"
-            :img-src="marker.main_img"
-            img-alt="Card Image"
-            img-top
-            class="text-left"
-            >
-             <b-card-text>
-              {{marker.address}} 
-            </b-card-text>
-            <b-card-text>
-              <strong>Precio:</strong> {{getFormatPrice(marker.price)}}
-            </b-card-text>
-
-            <b-card-text h3>
-              <strong>Servicios:</strong>
-              <span v-for="(service, index) in marker.services" :key="index">
-                <span> {{service.name}}</span><span v-if="index+1 < marker.services.length">, </span>
-              </span>
-            </b-card-text>
-            <b-card-text>
-              <strong>Normas:</strong>
-              <span v-for="(rule, index) in marker.rules" :key="index">
-                <span> {{rule.name}}</span><span v-if="index+1 < marker.rules.length">, </span>
-              </span>            
-            </b-card-text>
-            <div>
-              <b-card-text  v-if="marker.score" class ="my-2">  
-                <b-form-rating v-model="marker.score" readonly show-value show-value-max inline no-border>
-                </b-form-rating>
-              </b-card-text>
-              <b-card-text v-if="!marker.score">Esta publicación no tiene calificaciones</b-card-text>
-              <b-button variant="primary">Ver Publicación</b-button>
-            </div>
-          
+  <b-container>
+    <b-row align-h="center" align-v="center" class="my-4">
+      <b-col v-for="marker in markers" :key=marker.id xl="4" md="6" sm="12" class="pr-4">
+        <b-card :title="marker.title" :img-src="marker.main_img" img-alt="Card Image" img-top class="text-left" title-text-variant="primary">
+          <b-card-text>
+            <p>{{marker.address}}</p>
+          </b-card-text>
+          <b-card-text>
+            <strong>Precio:</strong>{{getFormatPrice(marker.price)}}
+          </b-card-text>
+          <b-card-text>
+            <strong>Servicios:</strong>
+            <b-tag v-for="service in marker.services" :key="service" no-remove variant="primary" class="ml-1">{{service.name}}</b-tag>
+          </b-card-text>
+          <b-card-text>
+            <strong>Normas:</strong>
+            <b-tag v-for="rule in marker.rules" :key="rule" no-remove variant="primary" class="ml-1">{{rule.name}}</b-tag>
+          </b-card-text>
+          <b-card-text class="text-center">  
+            <b-form-rating class="align-items-center" v-if="marker.score" v-model="marker.score" readonly show-value inline no-border/>
+            <p v-if="!marker.score">Esta publicación aún no tiene calificaciones</p>
+          </b-card-text>
+          <b-card-text class="text-center"> 
+            <b-button block variant="primary" >Ver Publicación</b-button>      
+          </b-card-text>
         </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -63,7 +50,7 @@
       }
     },
     watch: { 
-      markers: function(newVal) { // watch it
+      markers: function(newVal) { 
         this.markers = newVal;
       }
     }
@@ -73,6 +60,8 @@
 .card {
     margin-bottom: 10px;
     border-radius: 20px;
-
 } 
+h4 {
+  color: var(--primary);
+}
 </style>

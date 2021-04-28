@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <b-navbar toggleable="lg" class="mt-4">
       <b-container>
         <b-container class="flex-nowrap">
@@ -26,7 +26,7 @@
     </b-navbar>
     <LogIn/>
     <SignUp/>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -40,6 +40,9 @@
       }
     },
     created(){
+      this.logged = localStorage.getItem("user_email");
+    },
+    mounted(){
       this.logged = localStorage.getItem("user_email");
     },
     methods: {
