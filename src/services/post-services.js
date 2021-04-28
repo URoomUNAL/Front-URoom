@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-
-
-const  API_URL = 'https://uroom.azurewebsites.net';
+//const  API_URL = 'https://uroom.azurewebsites.net';
+const  API_URL = 'http://localhost:9000';
 
 class PostService{
 
@@ -30,8 +29,7 @@ class PostService{
     }
   
     ActivateDeactivateRoom(room){
-      console.log("la room es: ", room)
-      axios.post(API_URL + '/change-active', room)
+      return axios.post(API_URL + '/change-active', room);
     }
     async GetServices(){                                // Petición GET. obtener la lista de posibles servicios.
       var services = []

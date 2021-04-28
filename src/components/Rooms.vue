@@ -11,8 +11,8 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <b-col class="mt-4" lg="8">
-        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="showLoading"/>
+      <b-col class="mt-4">
+        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading"/>
       </b-col>
     </b-row>
     <hr class="my-5"/>
@@ -23,7 +23,12 @@
     </b-row>
     <b-row>
       <b-col>
-        <RoomsGroup :markers="markers"/>
+        <RoomsGroup :posts="markers"/>
+      </b-col>
+    </b-row>
+    <b-row class="my-5" v-if="loading">
+      <b-col>
+        <b-spinner variant="primary"/>
       </b-col>
     </b-row>
   </b-container>
@@ -42,23 +47,20 @@ import Filters from './Filters.vue'
         RoomsGroup,
         Filters
     },
- data() {
+    data() {
       return {
         markers: '',
         rows: '',
         filtro:false,
-        form:'',
-        loading: false
+        form: '',
+        loading: true
       }
     },
     async created(){
-      await this.getTodos()
-      console.log(this.markers);
+      this.markers = await LocalService.getMaps();
+      this.loading = false;
     },
     methods: {
-      async getTodos() {
-        this.markers = await LocalService.getMaps()
-      },
       distance(value){
           this.filtro = value;
       },
@@ -73,9 +75,8 @@ import Filters from './Filters.vue'
           longitude: value[1]
         }
       },
-      showLoading(value) {
-        this.loading = value
-        console.log(this.loading)
+      UpdateLoading(value){
+        this.loading = value;
       }
     }
   }

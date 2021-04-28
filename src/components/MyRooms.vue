@@ -19,7 +19,7 @@
     </b-row>
     <b-row align-h="center">
       <b-col>
-        <CardRoom v-if="rooms" :markers="rooms"/>
+        <CardRoom v-if="rooms" :posts="rooms"/>
         <h2 class="my-5" v-if="!rooms">Aún no has creado tu primera publicación ¿Qué estás esperando?</h2>
       </b-col>
     </b-row>
