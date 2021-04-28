@@ -19,8 +19,13 @@
     </b-row>
     <b-row align-h="center">
       <b-col>
-        <CardRoom v-if="rooms" :posts="rooms"/>
-        <h2 class="my-5" v-if="!rooms">Aún no has creado tu primera publicación ¿Qué estás esperando?</h2>
+        <CardRoom v-if="rooms && loading==false" :posts="rooms"/>
+        <h2 class="my-5" v-if="!rooms && loading ==false">Aún no has creado tu primera publicación ¿Qué estás esperando?</h2>
+      </b-col>
+    </b-row>
+    <b-row align-h="center" class="mb-5" v-if="loading">
+      <b-col align-self="center" class="my-4">
+        <b-spinner variant="primary"/>
       </b-col>
     </b-row>
   </b-container> 
@@ -33,6 +38,7 @@ import CardRoom from "./CardRoom.vue"
   export default {
     data(){
       return{
+        loading: true,
         rooms: null,
         alert: {
           show: false,
@@ -41,7 +47,9 @@ import CardRoom from "./CardRoom.vue"
       }
     },
     async created(){
+      this.loading = true;
       this.rooms = await LocalService.getMyRooms();
+      this.loading = false;
     },
     components: {
       CardRoom

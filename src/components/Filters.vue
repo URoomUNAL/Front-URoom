@@ -4,6 +4,11 @@
       <b-collapse accordion="my-accordion" id="filters">
         <b-form @submit.prevent="FilterFunction">
           <b-row align-h="center" class="my-4">
+            <b-col sm="6" md="4" xl="3">
+                <b-button variant="facebook" class="mt-3 ml-auto float-right" type="submit" block @click="Reset" >Borrar filtros</b-button>
+            </b-col>
+          </b-row>
+          <b-row align-h="center" class="my-4">
             <b-col sm="6" md="6" xl="3">
               <h3>Rango de precio</h3>
               <label for="min" >Precio mínimo</label>
@@ -33,13 +38,14 @@
                 <label for="range-3">Distancia: {{form.distance.radius}}km.</label>
                 <b-form-input label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.1"></b-form-input>
                 <label for="range-3">Pon tu pin en el mapa.</label>
-              </b-collapse>
-          </b-col>
+              </b-collapse>              
+            </b-col>
         </b-row>
         <b-row align-h="center" class="my-4">
           <b-col md="4" lg="4">
             <b-button v-b-toggle.filters variant="primary" class="mt-3" type="submit" block>Aceptar</b-button>
           </b-col> 
+          
         </b-row>
       </b-form>
     </b-collapse>
@@ -161,7 +167,24 @@ export default {
           this.form.distance.radius = parseFloat(this.form.distance.radius)
           this.$emit("loading", true);
           this.$emit("filter", await PostService.FilterPost(this.form));
-          
+          this.$emit("loading", false);
+      },
+      Reset(){
+        this.pin = false
+        this.$emit("clicked", this.pin)
+          this.form = {
+              min_score: null,
+              price:{
+                  min: 200000,
+                  max: 700000
+              },
+              distance:{
+                  origin: [],
+                  radius: 2
+              },
+              services: [],
+              rules: []
+          }
       }
   },
   components:{

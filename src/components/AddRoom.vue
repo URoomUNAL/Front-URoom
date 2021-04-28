@@ -194,6 +194,10 @@ import filetoblob from "../libs/file-to-blob.js"
           self.alert.message = "Debes indicar en el mapa la ubicación de la casa.";
           self.alert.show = true;
           window.scrollTo(0, 0);
+        }else if(this.form.price.isNaN || this.form.price <= 0){
+          self.alert.message = "El precio debe ser un valor numérico mayor que cero.";
+          self.alert.show = true;
+          window.scrollTo(0, 0);
         }else{
           self.fields.loading = true;
           PostService.AddRoom(this.form)
