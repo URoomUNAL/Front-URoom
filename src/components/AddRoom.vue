@@ -138,6 +138,7 @@ import Map from "./Map.vue";
 import filetoblob from "../libs/file-to-blob.js"
 
   export default {
+    name: 'AddRoom',
     data(){
       return{
         fields: {
