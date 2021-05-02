@@ -120,7 +120,7 @@
           localStorage.setItem("user_email", response.data.email);
           console.log(localStorage.getItem("user_email"));
           self.fields.loading = false;
-          self.$router.go();
+          self.$router.push('/');
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

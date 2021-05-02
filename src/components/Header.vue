@@ -19,6 +19,7 @@
             <b-button variant="primary" v-b-toggle.sign-up>Regístrate</b-button>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="logged">
+            <b-nav-item to="/MyRooms"><div class="primary">Mis Habitaciones</div></b-nav-item>
             <b-button variant="primary" @click="LogOut">Cerrar sesión</b-button>
           </b-navbar-nav>
         </b-collapse>
@@ -51,7 +52,6 @@
         if(this.$route.path == '/'){
           this.$router.go();
         }else{
-          this.$router.go('/');
           this.$router.push('/');
         }
       }
