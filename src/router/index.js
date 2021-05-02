@@ -9,7 +9,7 @@ const routes=[
         path:'/',
         name:'Home',
         component:()=>import('@/components/Home.vue'),
-        props: true
+        props: true,
     },
     {   // Ruta 'CompleteData' Formulario para la finalización de registro en la plataforma.
         path:'/CompleteData',
@@ -27,6 +27,12 @@ const routes=[
         path:'/Rooms', 
         name:'Rooms',
         component:()=>import('@/components/Rooms.vue'),
+        props: true
+    },
+    {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
+        path:'/MyRooms', 
+        name:'MyRooms',
+        component:()=>import('@/components/MyRooms.vue'),
         props: true
     },
     {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
