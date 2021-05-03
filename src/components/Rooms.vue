@@ -26,8 +26,8 @@
         <RoomsGroup :posts="markers"/>
       </b-col>
     </b-row>
-    <b-row class="my-5" v-if="loading">
-      <b-col>
+    <b-row class="mb-5" v-if="loading">
+      <b-col class="mb-5">
         <b-spinner variant="primary"/>
       </b-col>
     </b-row>
@@ -51,7 +51,7 @@ import Filters from './Filters.vue'
       return {
         markers: '',
         rows: '',
-        filtro:false,
+        filtro: false,
         form: '',
         loading: true
       }
@@ -81,6 +81,3 @@ import Filters from './Filters.vue'
     }
   }
 </script>
-<style>
-
-</style>
