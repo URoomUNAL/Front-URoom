@@ -168,6 +168,7 @@ export default {
           this.$emit("loading", true);
           this.$emit("filter", await PostService.FilterPost(this.form));
           this.$emit("loading", false);
+          this.$emit("radius", this.form.distance.radius);
       },
       Reset(){
         this.pin = false

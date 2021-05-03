@@ -7,12 +7,12 @@
     </b-row>       
     <b-row>
       <b-col>
-        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading"/>
+        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading" :radius="radius"/>
       </b-col>
     </b-row>
     <b-row align-h="center">
       <b-col class="mt-4">
-        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading"/>
+        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading" @radius="Radius"/>
       </b-col>
     </b-row>
     <hr class="my-5"/>
@@ -53,7 +53,8 @@ import Filters from './Filters.vue'
         rows: '',
         filtro:false,
         form: '',
-        loading: true
+        loading: true,
+        radius:0
       }
     },
     async created(){
@@ -77,6 +78,9 @@ import Filters from './Filters.vue'
       },
       UpdateLoading(value){
         this.loading = value;
+      },
+      Radius(value){
+        this.radius = value
       }
     }
   }

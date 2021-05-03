@@ -36,7 +36,15 @@
                 />
               </l-marker>
               <l-marker v-if="page" :lat-lng="location"> </l-marker>
-            
+            <div v-if="radius">
+                <l-circle
+                :lat-lng="location"
+                :radius="circle.rad*1000"
+                :color='circle.color'
+                :fillOpacity="circle.opacity"
+                :fillColor="circle.fillColor"
+                />
+            </div>
             </div>
             
             </l-map>
@@ -48,19 +56,20 @@
 <script>
 
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LIcon} from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup, LIcon, LCircle} from "vue2-leaflet";
 import { Icon } from "leaflet";
 delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
-  props: ["markers","height","page", "filtro"],
+  props: ["markers","height","page", "filtro","radius"],
   components: {
     LMap,
     LTileLayer,
     LMarker,
     LPopup,
-    LIcon
+    LIcon,
+    LCircle
   },
   data() {
     return {
@@ -83,7 +92,13 @@ export default {
       location:'',
       clicks: 0,
       iconSize: [32, 37],
-      iconAnchor: [16, 37]
+      iconAnchor: [16, 37],
+      circle: {
+        rad: this.radius,
+        color: '#7A16A5',
+        opacity: 0.1,
+        fillColor: '#7A16A5'
+      }
     };
   },
   created() {
@@ -116,7 +131,7 @@ export default {
         this.clicks = 0
         this.$emit("clicked", this.location)
       }
-      
+      console.log(this.radius)
     }
   },
   watch: { 
@@ -125,7 +140,10 @@ export default {
           this.rooms = this.markers;
           console.log("aqui los de mapa");
           console.log(this.markers);
-      }
+      },
+      radius: function(newVal) { // watch it
+          this.circle.rad = newVal
+      },
   }
 };
 Icon.Default.mergeOptions({
