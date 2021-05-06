@@ -61,5 +61,12 @@ class PostService{
         return markers;
     }
     
+    async getPost(id) { // Petición GET. Obtener todas las publicaciones de la plataforma.
+      var post = []
+      await axios.post(API_URL + "/get-post", id).then((result) => {
+          post = result.data;
+      })
+      return post;
+  }
 }
 export default new PostService();

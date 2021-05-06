@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row align-h="center" align-v="center" class="my-4">
-      <b-col v-for="post in posts" :key=post.id xl="4" md="6" sm="12" class="pr-4">
+      <b-col v-for="post in posts" :key="post.id" xl="4" md="6" sm="12" class="pr-4">
         <b-card :title="post.title" :img-src="post.main_img" img-alt="Card Image" img-top class="text-left" title-text-variant="primary">
           <b-card-text>
             <p>{{post.address}}</p>
@@ -32,7 +32,7 @@
             <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
           </b-card-text>
           <b-card-text class="text-center"> 
-            <b-button block variant="primary">Ver Publicación</b-button>      
+            <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
           </b-card-text>
         </b-card>
       </b-col>
@@ -41,12 +41,22 @@
 </template>
 
 <script>
+
+
   export default {
     props:['posts'],
+    data(){
+      return {
+        post: ''
+      }
+    },
     name: 'RoomsGroup',
     methods: {
       getFormatPrice(price){
         return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+      },
+      getCompletePost(id){  
+        this.$router.push({ name: 'Post', params: {id: id}});
       }
     },
     watch: { 

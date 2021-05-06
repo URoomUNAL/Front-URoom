@@ -13,6 +13,7 @@ class LocalService{
         return markers;
     }
 
+
     async getMyRooms(){
         var my_rooms = []
         await axios.post(API_URL + '/get-my-posts', {"username": localStorage.getItem("user_email")}).then((result) => {
