@@ -36,10 +36,10 @@
 
 <script>
 
-import Map from './Map.vue'
+import Map from '../components/Map.vue'
 import LocalService from '../services/local-services.js'
-import RoomsGroup from './RoomsGroup.vue'
-import Filters from './Filters.vue'
+import RoomsGroup from '../components/RoomsGroup.vue'
+import Filters from '../components/Filters.vue'
   export default {
     name: 'Rooms',
     components: {

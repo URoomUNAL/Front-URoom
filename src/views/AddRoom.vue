@@ -133,8 +133,8 @@
 
 <script>
 import PostService from "../services/post-services.js"
-import TagSelect from "./TagSelect.vue";
-import Map from "./Map.vue";
+import TagSelect from "../components/TagSelect.vue";
+import Map from "../components/Map.vue";
 import filetoblob from "../libs/file-to-blob.js"
 
   export default {

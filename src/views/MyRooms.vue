@@ -33,7 +33,7 @@
 
 <script>
 import LocalService from "../services/local-services.js"
-import CardRoom from "./CardRoom.vue"
+import CardRoom from "../components/CardRoom.vue"
 
   export default {
     name: 'MyRooms',
