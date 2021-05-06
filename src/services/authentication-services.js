@@ -24,6 +24,10 @@ class AuthService{
             "Content-Type": "application/json"
         }});
     }
+
+    LogOut(){
+      
+    }
     
 }
 export default new AuthService();

@@ -80,7 +80,6 @@ export default {
           localStorage.setItem("user_email", response.data.email);
           console.log(localStorage.getItem("user_email")); //
           self.visible = !self.visible;
-          //alert("Bienvenido, " + response.data.name + ".");
           self.$router.go();
           self.fields.loading = false;
         }).catch(function(error){

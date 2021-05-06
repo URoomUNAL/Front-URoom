@@ -26,8 +26,8 @@
         <RoomsGroup :posts="markers"/>
       </b-col>
     </b-row>
-    <b-row class="my-5" v-if="loading">
-      <b-col>
+    <b-row class="mb-5" v-if="loading">
+      <b-col class="mb-5">
         <b-spinner variant="primary"/>
       </b-col>
     </b-row>
@@ -36,10 +36,10 @@
 
 <script>
 
-import Map from './Map.vue'
+import Map from '../components/Map.vue'
 import LocalService from '../services/local-services.js'
-import RoomsGroup from './RoomsGroup.vue'
-import Filters from './Filters.vue'
+import RoomsGroup from '../components/RoomsGroup.vue'
+import Filters from '../components/Filters.vue'
   export default {
     name: 'Rooms',
     components: {
@@ -51,7 +51,7 @@ import Filters from './Filters.vue'
       return {
         markers: '',
         rows: '',
-        filtro:false,
+        filtro: false,
         form: '',
         loading: true,
         radius:0
@@ -85,6 +85,3 @@ import Filters from './Filters.vue'
     }
   }
 </script>
-<style>
-
-</style>

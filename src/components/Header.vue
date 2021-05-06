@@ -49,11 +49,11 @@
     methods: {
       LogOut(){
         localStorage.removeItem("user_email");
-        if(this.$route.path == '/'){
+        //if(this.$route.path == '/'){
           this.$router.go();
-        }else{
+        /*}else{
           this.$router.push('/');
-        }
+        }*/
       }
     },
     components: {
