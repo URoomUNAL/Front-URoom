@@ -31,29 +31,25 @@
 </template>
 
 <script>
+  import AuthService from '../services/authentication-services';
   import LogIn from './LogIn';
   import SignUp from './SignUp';
 
   export default {
     data(){
       return{
-        logged: null
+        logged: Boolean
       }
     },
     created(){
-      this.logged = localStorage.getItem("user_email");
-    },
-    mounted(){
-      this.logged = localStorage.getItem("user_email");
+      this.logged = localStorage.getItem('user') != null;
     },
     methods: {
       LogOut(){
-        localStorage.removeItem("user_email");
-        //if(this.$route.path == '/'){
+        AuthService.LogOut().then(function(){
+          localStorage.removeItem('user');
           this.$router.go();
-        /*}else{
-          this.$router.push('/');
-        }*/
+        });
       }
     },
     components: {
