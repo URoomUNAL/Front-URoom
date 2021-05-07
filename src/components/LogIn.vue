@@ -77,10 +77,10 @@ export default {
       self.fields.loading = true;
       AuthService.LogIn(JSON.stringify(this.form))
         .then(function(response){
-          localStorage.setItem('user', response.data);
+          localStorage.setItem('user', JSON.stringify(response.data));
           self.visible = false;
-          self.$router.go();
           self.fields.loading = false;
+          self.$router.go();
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

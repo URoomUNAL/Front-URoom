@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import AuthService from '../services/authentication-services';
+  //import AuthService from '../services/authentication-services';
   import LogIn from './LogIn';
   import SignUp from './SignUp';
 
@@ -46,10 +46,14 @@
     },
     methods: {
       LogOut(){
-        AuthService.LogOut().then(function(){
-          localStorage.removeItem('user');
+        localStorage.removeItem('user');
+        if(this.$route.path == '/'){
           this.$router.go();
-        });
+        }else{
+          this.$router.push('/').then(function(){
+            this.$router.go();
+          });  
+        }
       }
     },
     components: {

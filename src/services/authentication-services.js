@@ -1,7 +1,8 @@
 import axios from 'axios'
 import authHeader from '../services/authentication-header.js'
 
-const API_URL = 'https://uroom.azurewebsites.net'
+const  API_URL = 'http://localhost:9000';
+//const API_URL = 'https://uroom.azurewebsites.net'
 
 class AuthService{
     
