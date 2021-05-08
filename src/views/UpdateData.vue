@@ -64,7 +64,7 @@
                       </b-form-group>
                     </b-col>
                     <b-col align-self="center" class="mt-3 mb-4" md="6">
-                      <b-button variant="primary" block type="submit" >Completar registro</b-button>
+                      <b-button variant="primary" block type="submit" >Actualizar información</b-button>
                     </b-col>
                   </b-row> 
                 </b-col>
@@ -105,25 +105,33 @@
         this.form.age = localStorage.getItem('user_age');
         this.form.cellphone = localStorage.getItem('user_cellphone');
         this.form.is_student = localStorage.getItem('user_is_student');
+        //this.form.photo = localStorage.getItem("user_photo");
     },
     methods: {
       onSubmit() {
         var user = {
+          id: localStorage.getItem('user_id'),
+          name: this.form.name,
           email: this.form.email,
-          name: this.form.name + ' ' + this.form.surname,
-          password: this.user.password,
+          age: this.form.age,
           cellphone: this.form.cellphone,
           is_student: this.form.is_student == "true",
-          age: this.form.age
         }
         var self = this;
         self.fields.loading = true;
-        AuthService.register(JSON.stringify(user))
+        AuthService.ModifyProfile(JSON.stringify(user))
         .then(function(response){
-          localStorage.setItem("user_email", response.data.email);
-          console.log(localStorage.getItem("user_email"));
+          //localStorage.setItem("user_id", self.form.id);
+          localStorage.setItem("user_name", self.form.name);
+          localStorage.setItem("user_email", self.form.email);
+          localStorage.setItem("user_age", self.form.age);
+          localStorage.setItem("user_cellphone", self.form.cellphone);
+          localStorage.setItem("user_is_student", self.form.is_student);
+          localStorage.setItem("user_is_active", self.form.is_active);
           self.fields.loading = false;
-          self.$router.push('/');
+          self.alert.message = response.data;
+          self.alert.show = true;
+          // self.$router.push('/');
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;

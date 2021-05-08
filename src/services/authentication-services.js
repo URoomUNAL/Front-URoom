@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'https://uroom.azurewebsites.net'
-
+//const API_URL = 'https://uroom.azurewebsites.net'
+const API_URL = 'http://localhost:9000'
 class AuthService{
     
     register(user) { // Funcion de registro
@@ -27,6 +27,13 @@ class AuthService{
 
     LogOut(){
       
+    }
+
+    ModifyProfile(form){
+      return axios.post(API_URL + '/update-info', form, {
+        headers: {
+          "Content-Type": "application/json"
+      }});
     }
     
 }
