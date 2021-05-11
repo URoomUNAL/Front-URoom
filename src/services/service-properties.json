@@ -1,0 +1,4 @@
+{
+    "API_URL": "https://uroom.azurewebsites.net",
+    "LOCAL_API_URL": "http://localhost:9000"
+}

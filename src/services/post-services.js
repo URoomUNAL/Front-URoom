@@ -1,7 +1,5 @@
 import axios from 'axios'
-
-// const  API_URL = 'http://localhost:9000';
-const  API_URL = 'https://uroom.azurewebsites.net';
+import api from './service-properties.json'
 
 class PostService{
 
@@ -25,15 +23,15 @@ class PostService{
       });
       formData.append("user", localStorage.getItem("user_email"));
       console.log(formData);
-      return axios.post(API_URL + '/add-post', formData);
+      return axios.post(api.API_URL + '/add-post', formData);
     }
   
     ActivateDeactivateRoom(room){
-      return axios.post(API_URL + '/change-active', room);
+      return axios.post(api.API_URL + '/change-active', room);
     }
     async GetServices(){                                // Petición GET. obtener la lista de posibles servicios.
       var services = []
-      await axios.get(API_URL + '/get-services')
+      await axios.get(api.API_URL + '/get-services')
       .then(function(response){
         services = response.data;
       }).catch(function(error){
@@ -44,7 +42,7 @@ class PostService{
 
     async GetRules(){                                   // Petición GET. obtener la lista de posibles normas.
       var rules = []
-      await axios.get(API_URL + '/get-rules')
+      await axios.get(api.API_URL + '/get-rules')
       .then(function(response){
           rules = response.data;
       }).catch(function(error){
@@ -55,7 +53,7 @@ class PostService{
     
     async FilterPost(form){      
         var markers = []
-        await  axios.post(API_URL + '/get-posts-filtered', form).then((result) => {
+        await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
             markers = result.data;
         })
         return markers;
