@@ -34,6 +34,12 @@ const routes=[
         name:'MyRooms',
         component:()=>import('@/views/MyRooms.vue'),
         props: true
+    },
+    {   // Ruta comodín. Página para soportar el error 404.
+        path:'/*', 
+        name:'Error404',
+        component:()=>import('@/views/404.vue'),
+        props: true
     }
 ]
 
