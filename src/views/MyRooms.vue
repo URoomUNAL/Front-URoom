@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import LocalService from "../services/local-services.js"
-import CardRoom from "../components/CardRoom.vue"
+import CardRoom from '../components/CardRoom.vue'
+import PostService from '../services/post-services.js'
 
   export default {
     name: 'MyRooms',
@@ -47,10 +47,15 @@ import CardRoom from "../components/CardRoom.vue"
         }
       }
     },
-    async created(){
-      this.loading = true;
-      this.rooms = await LocalService.getMyRooms();
-      this.loading = false;
+    created(){
+      var self = this;
+      self.loading = true;
+      PostService.GetMyPosts()
+        .then(function(response){
+          self.rooms = response.data;
+          self.loading = false;
+        }
+      );
     },
     components: {
       CardRoom

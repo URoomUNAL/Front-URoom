@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import PostService from "../services/post-services.js"
+import PostService from '../services/post-services.js'
 
   export default {
     props:['posts'],
@@ -70,7 +70,7 @@ import PostService from "../services/post-services.js"
     },
     methods: {
       getFormatPrice(price){
-        return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+        return '$ ' + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
       },
       OnSubmit(post, new_active){
         post.is_active = new_active;
@@ -90,8 +90,8 @@ import PostService from "../services/post-services.js"
         .then(function(response){
           post.main_img = save_main_img;
           self.toast.message = response.data;
-          self.toast.variant = "success";
-          self.$bvToast.show("status");
+          self.toast.variant = 'success';
+          self.$bvToast.show('status');
           post.main_img = save_main_img;
           post.images = save_images;
           post.services = save_services;
@@ -101,11 +101,11 @@ import PostService from "../services/post-services.js"
           if(error.response){
             self.toast.message = error.response.data;
           }else if(error.request){
-            self.toast.message = "No se ha recibido una respuesta del servidor. Intentelo más tarde";
+            self.toast.message = 'No se ha recibido una respuesta del servidor. Intentelo más tarde';
           }
-          self.toast.variant = "danger";
+          self.toast.variant = 'danger';
           self.fields.loading = false;
-          self.$bvToast.show("status");
+          self.$bvToast.show('status');
         });
         post.main_img = save_main_img;
       }

@@ -46,12 +46,13 @@
     },
     methods: {
       LogOut(){
+        var self = this;
         localStorage.removeItem('user');
         if(this.$route.path == '/'){
           this.$router.go();
         }else{
           this.$router.push('/').then(function(){
-            this.$router.go();
+            self.$router.go();
           });  
         }
       }

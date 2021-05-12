@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter)
 
 // Enrutamiento de la plataforma.
-const routes=[
+const routes = [
     {   // Ruta Vacia: Vista Home
         path:'/',
         name:'Home',
@@ -33,6 +33,12 @@ const routes=[
         path:'/MyRooms', 
         name:'MyRooms',
         component:()=>import('@/views/MyRooms.vue'),
+        props: true
+    },
+    {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
+        path:'/Account', 
+        name:'Account',
+        component:()=>import('@/views/Account.vue'),
         props: true
     },
     {   // Ruta comodín. Página para soportar el error 404.

@@ -3,14 +3,24 @@ import api from './service-properties.json'
 
 class AuthService{
     
-    SignUp(user) { // Funcion de registro
-      return axios.post(api.API_URL + '/sign-up', user, {
+    SignUp(form) { // Registro de usuario en la plataforma.
+      var formData = new FormData();
+      formData.append('name', form.name + ' ' + form.surname);
+      formData.append('email', form.email);
+      formData.append('photo', form.photo);
+      formData.append('password', form.password);
+      formData.append('cellphone', form.cellphone);
+      formData.append('cellphone', form.cellphone);
+      formData.append('age', form.cellphone);
+      formData.append('is_student', form.is_student);
+      
+      return axios.post(api.API_URL + '/sign-up', formData, {
         headers:{
             'Content-Type': 'application/json'
         }});
     }
 
-    LogIn(form){
+    LogIn(form){  // Inicio de sesión de usuario en la plataforma.
       return axios.post(api.API_URL + '/log-in', form, {
         headers: {
             'Content-Type': 'application/json'

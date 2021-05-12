@@ -3,21 +3,29 @@ import api from './service-properties.json'
 
 class LocalService{
 
-    async getMaps() { // Petición GET. Obtener todas las publicaciones de la plataforma.
-        var markers = []
-        await axios.get(api.API_URL + "/get-posts").then((result) => {
-            markers = result.data;
-        })
-        return markers;
+    GetPosts() {     // Solicitud de todas las publicaciones de la plataforma.
+        return axios.get(api.API_URL + '/get-posts', {
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
-    async getMyRooms(){
-        var my_rooms = []
-        await axios.post(api.API_URL + '/get-my-posts', {"username": localStorage.getItem("user_email")}).then((result) => {
-            my_rooms = result.data;
+    GetServices(){  // Solicitud de todos los servicios.
+        return axios.get(api.API_URL + '/get-services', {
+            headers:{
+                'Content-Type': 'application/json'
+            }
         });
-        return my_rooms;
     }
-    
+  
+    GetRules(){  // Solicitud de todos los servicios.
+        return axios.get(api.API_URL + '/get-rules', {
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
 }
 export default new LocalService();

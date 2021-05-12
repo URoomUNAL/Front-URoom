@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <h1 class="primary mb-3">Completa tu registro</h1>
+        <h1 class="primary mb-3">Tu cuenta</h1>
       </b-col>
     </b-row>
     <b-row>
@@ -25,9 +25,9 @@
                   <b-row align-h="center" align-v="center">
                     <b-avatar :src="fields.photo" size="10rem" class="mb-4 mt-4"/>
                   </b-row>
-                  <b-row align-h="center" align-v="center">  
+                  <!--<b-row align-h="center" align-v="center">  
                     <b-form-file v-model="form.photo" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-10 text-left"></b-form-file>
-                  </b-row>
+                  </b-row>-->
                 </b-col>
                 <b-col lg="8">
                   <b-row align-h="center" align-v="center">
@@ -106,24 +106,25 @@
       }
     },
     created(){
-      var self = this;
+      /*var self = this;
       if(!this.user){
-        this.$router.push('/')
+        self.$router.push('/')
           .then(function(){
             self.$router.go();
-          });
+          })
       }else{
         this.form.email = this.user.email;
         this.form.password = this.user.password;
         this.is_student.email = this.user.selected;
-      }
+      }*/
     },
     methods: {
       onSubmit() {
         var self = this;
         self.fields.loading = true;
         AuthService.SignUp(JSON.stringify(this.form))
-        .then(function(){
+        .then(function(response){
+          localStorage.setItem('user', response.data);
           self.fields.loading = false;
           self.$router.push('/')
             .then(function(){

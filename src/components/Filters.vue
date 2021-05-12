@@ -53,7 +53,8 @@
 </template>
 <script>
 import TagSelect from './TagSelect.vue'
-import PostService from "../services/post-services.js"
+import PostService from '../services/post-services.js'
+import LocalServices from '../services/local-services.js'
 export default {
   props: ['distancia'],
   name: 'Filters',
@@ -84,21 +85,23 @@ export default {
       }
   },
   async created(){
-      this.fields.loading = true;
-      var services = await PostService.GetServices();
-      var list_services = [];
-      services.forEach((element) =>{
-          list_services.push(element.name);
-      })
-      this.fields.services = list_services;
-      var rules = await PostService.GetRules();
-      var list_rules = [];
-      rules.forEach((element) =>{
-          list_rules.push(element.name);
-      })
-      this.fields.rules = list_rules;
-      console.log(localStorage.getItem("user_email"));
-      this.fields.loading = false;
+      var self = this;
+      self.fields.loading = true;
+      LocalServices.GetServices()
+        .then(function(response){
+          response.data.forEach((element) =>{
+            self.fields.services.push(element.name);
+          });
+        }
+      );
+      LocalServices.GetRules()
+        .then(function(response){
+          response.data.forEach((element) =>{
+            self.fields.rules.push(element.name);
+            self.fields.loading = false;
+          });
+        }
+      );
   },
   computed: {
     price_min: {
@@ -111,7 +114,7 @@ export default {
           }
         }else{
           if(this.form.price.min > 0){
-            return "$ " + this.form.price.min.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+            return '$ ' + this.form.price.min.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
           }else{
             return '';
           }
@@ -155,7 +158,7 @@ export default {
   methods: {
       activate(){
           this.pin = true;
-          this.$emit("clicked", this.pin)
+          this.$emit('clicked', this.pin)
       },
       PutServicesValues(values){
           this.form.services = values;
@@ -165,13 +168,13 @@ export default {
       }, 
       async FilterFunction(){
           this.form.distance.radius = parseFloat(this.form.distance.radius)
-          this.$emit("loading", true);
-          this.$emit("filter", await PostService.FilterPost(this.form));
-          this.$emit("loading", false);
+          this.$emit('loading', true);
+          this.$emit('filter', await PostService.FilterPost(this.form));
+          this.$emit('loading', false);
       },
       Reset(){
         this.pin = false
-        this.$emit("clicked", this.pin)
+        this.$emit('clicked', this.pin);
           this.form = {
               min_score: null,
               price:{
