@@ -15,62 +15,54 @@
     <b-row>
       <b-col class="mb-4">
         <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
-          <b-form @submit.prevent="onSubmit">
-            <b-container class="mb-3">
-              <b-row>
-                <b-col lg="4">
-                  <b-row align-h="center" align-v="center">
-                    <h2 class="primary my-4">Tu foto</h2>
-                  </b-row>
-                  <b-row align-h="center" align-v="center">
-                    <b-avatar :src="fields.photo" size="10rem" class="mb-4 mt-4"/>
-                  </b-row>
-                  <!--<b-row align-h="center" align-v="center">  
-                    <b-form-file v-model="form.photo" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-10 text-left"></b-form-file>
-                  </b-row>-->
-                </b-col>
-                <b-col lg="8">
-                  <b-row align-h="center" align-v="center">
-                    <h2 class="primary my-4">Tus datos</h2>
-                  </b-row>
-                  <b-row>
-                    <b-col md="6">
-                      <b-form-group label="Nombres:" description="¿Qué estas esperando?">
-                        <b-form-input v-model="form.name" placeholder="Ingresa tus nombres" required/>
-                      </b-form-group>
-                    </b-col>
-                    <b-col md="6">
-                      <b-form-group label="Apellidos:" description="Usa tus datos reales.">
-                        <b-form-input v-model="form.surname" placeholder="Ingresa tus apellidos" required />
-                      </b-form-group>
-                    </b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col md="6">
-                      <b-form-group label="Correo:" description="No compartiremos tu información.">
-                        <b-form-input v-model="form.email" type="email" placeholder="Ingresa tu correo" required value="test@test.com"/>
-                      </b-form-group>
-                    </b-col>
-                    <b-col md="6">
-                      <b-form-group label="Celular:" description="">
-                        <b-form-input v-model="form.cellphone" type="tel" placeholder="Ingresa tu celular" required/>
-                      </b-form-group>
-                    </b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col md="6">
-                      <b-form-group id="input-group-5" label="Edad:" label-for="input-5" description="Debes ser mayor de edad.">
-                        <b-form-spinbutton id="input-5" v-model="form.age" min="18"></b-form-spinbutton>
-                      </b-form-group>
-                    </b-col>
-                    <b-col align-self="center" class="mt-3 mb-4" md="6">
-                      <b-button variant="primary" block type="submit" >Completar registro</b-button>
-                    </b-col>
-                  </b-row> 
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-form>
+          <b-container class="mb-3">
+            <b-row>
+              <b-col lg="4">
+                <b-row align-h="center" align-v="center">
+                  <h2 class="primary my-4">Tu foto</h2>
+                </b-row>
+                <b-row align-h="center" align-v="center">
+                  <b-avatar :src="fields.photo" size="10rem" class="mb-4 mt-4"/>
+                </b-row>
+              </b-col>
+              <b-col lg="8">
+                <b-row align-h="center" align-v="center">
+                  <h2 class="primary my-4">Tus datos</h2>
+                </b-row>
+                <b-row>
+                  <b-col md="12">
+                    <b-form-group label="Nombre:">
+                      <b-form-input v-model="form.name" readonly/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col md="12">
+                    <b-form-group label="Correo:">
+                      <b-form-input v-model="form.email" readonly/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col md="6">
+                    <b-form-group label="Edad:">
+                      <b-form-input v-model="form.age" readonly/>
+                    </b-form-group>
+                  </b-col>
+                  <b-col md="6">
+                    <b-form-group label="Celular:">
+                      <b-form-input v-model="form.cellphone" readonly/>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row align-h="center">
+                  <b-col align-self="center" class="mt-3 mb-4" md="6">
+                    <b-button variant="primary" block >Editar información de tu cuenta.</b-button>
+                  </b-col>
+                </b-row>
+              </b-col>
+            </b-row>
+          </b-container>
         </b-overlay>
       </b-col>
     </b-row>
@@ -78,26 +70,21 @@
 </template>
 
 <script>
-  import AuthService from '../services/authentication-services.js'
-  import filetoblob from '../libs/file-to-blob.js'
+import UserService from '../services/user-services.js'
   export default {
     props: ['user'],
     name: 'CompleteData',
     data() {
       return {
         fields: {
-          loading: false,
-          photo: null
+          loading: false
         },
         form: {
-          email: '',
           name: '',
-          surname: '',
-          photo: null,
-          password: '',
+          email: '',
+          photo: '',
           cellphone: '',
-          age: '',
-          is_student: ''
+          age: ''
         },
         alert: {
           show: false,
@@ -106,59 +93,33 @@
       }
     },
     created(){
-      /*var self = this;
-      if(!this.user){
-        self.$router.push('/')
-          .then(function(){
-            self.$router.go();
-          })
-      }else{
-        this.form.email = this.user.email;
-        this.form.password = this.user.password;
-        this.is_student.email = this.user.selected;
-      }*/
-    },
-    methods: {
-      onSubmit() {
-        var self = this;
-        self.fields.loading = true;
-        AuthService.SignUp(JSON.stringify(this.form))
+      var self = this;
+      self.fields.loading = true;
+      UserService.GetUser()
         .then(function(response){
-          localStorage.setItem('user', response.data);
+          self.form.name = response.data.name;
+          self.form.email = response.data.email;
+          self.form.age = response.data.age;
+          self.form.cellphone = response.data.cellphone;
+          //form.file = response.data.file;
           self.fields.loading = false;
-          self.$router.push('/')
-            .then(function(){
-              self.$router.go();
-            })
         }).catch(function(error){
           if(error.response){
-            self.alert.message = error.response.data;
+            if(error.response.status === 401){
+              self.alert.message = 'No estas autorizado para ver esta información.';  
+            }else{
+              self.alert.message = error.response.data;
+            }
+            self.alert.show = true;
           }else if(error.request){
             self.alert.message = 'No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde';
+            self.alert.show = true;
           }else{
             self.alert.message = 'Ha ocurrido un error desconocido. Intentalo de nuevo más tarde';
           }
-          self.alert.show = true;
+          window.scrollTo(0, 0);
           self.fields.loading = false;
-        });
-      }
-    },
-    watch : {
-      'form.photo'(newValue, oldValue) {
-        if(newValue !== oldValue) {
-          if(newValue) {
-            filetoblob(newValue)
-              .then((value) => {
-                this.fields.photo = value;
-              })
-              .catch(() => {
-                this.fields.photo = null;
-              });
-          }else{
-            this.fields.photo = null;
-          }
-        }
-      }
+        })
     }
   }
 </script>
