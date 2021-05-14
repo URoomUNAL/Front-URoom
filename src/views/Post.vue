@@ -1,74 +1,124 @@
 <template>
-  <b-col>
-    <b-button block variant="primary" class="mb-3" v-b-toggle.filters>Filtrar publicaciones</b-button>
-      <b-collapse accordion="my-accordion" id="filters">
-        <b-form @submit.prevent="FilterFunction">
-          <b-row align-h="center" class="my-4">
-            <b-col sm="6" md="4" xl="3">
-                <b-button variant="facebook" class="mt-3 ml-auto float-right" type="submit" block @click="Reset" >Borrar filtros</b-button>
+    <b-overlay :show="!room" variant="white" spinner-variant="primary">
+    <b-container v-if="room">
+        <b-row>
+            <b-col  sm="12" md="2" xl="2" >
+                <b-row>
+                    <b-button to="/Rooms" variant="primary" class="mt-3" type="submit" block>Volver</b-button>
+                </b-row>
             </b-col>
-          </b-row>
-          <b-row align-h="center" class="my-4">
-            <b-col sm="6" md="6" xl="3">
-              <h3>Rango de precio</h3>
-              <label for="min" >Precio mínimo</label>
-              <b-form-input @blur="fields.price.min = false" @focus="fields.price.min = true" class="mb-2" id="min" v-model="price_min" min="0" :max="form.price.max" step="10000"></b-form-input>
-              <label for="max">Precio máximo</label>
-              <b-form-input @blur="fields.price.max = false" @focus="fields.price.max = true" id="max" v-model="price_max" :min="form.price.min" max="1000000000" step="10000"></b-form-input>
-            </b-col>
-            <b-col sm="6" md="6" xl="3">
-              <h3>Mínimo puntaje: {{ form.min_score }}</h3>
-              <b-form-input id="range-2" v-model="form.min_score" type="range" min="0" max="5" step="0.1"></b-form-input>
-            </b-col>
-            <b-col sm="6" md="6" xl="3">
-              <h3>Servicios</h3>
-              <b-form-group description="Elige los servicios que incluye la habitación.">
-                <tag-select :options="fields.services" @value="PutServicesValues"/>
-              </b-form-group>
-            </b-col>
-            <b-col sm="6" md="6" xl="3">
-              <h3>Reglas</h3>
-              <b-form-group description="Elige las reglas.">
-                <tag-select :options="fields.rules" @value="PutRulesValues"/>
-              </b-form-group>
-            </b-col>
-            <b-col sm="6" md="6" xl="3">
-              <b-button v-on:click="activate" block variant="primary" class="mb-1" v-b-toggle.filtersDistance>Filtrar por distancia</b-button>
-              <b-collapse accordion="my-accordion2" id="filtersDistance">
-                <label for="range-3">Distancia: {{form.distance.radius}}km.</label>
-                <b-form-input label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.1"></b-form-input>
-                <label for="range-3">Pon tu pin en el mapa.</label>
-              </b-collapse>              
+            <b-col  sm="12" md="8" xl="8" >
+                <b-row align-h="center">
+                    <h1 class="primary mb-5">{{room.title}}</h1>
+                </b-row>
             </b-col>
         </b-row>
-        <b-row align-h="center" class="my-4">
-          <b-col md="4" lg="4">
-            <b-button v-b-toggle.filters variant="primary" class="mt-3" type="submit" block>Aceptar</b-button>
-          </b-col> 
-          
-        </b-row>
-      </b-form>
-    </b-collapse>
-  </b-col>
+        <b-col>
+            <b-row align-h="center" >
+                <b-col sm="12" md="12" xl="8">
+                    <b-carousel fade controls v-if="id">
+                        <b-carousel-slide :img-src="room.main_img"/>
+                        <b-carousel-slide v-for="item in room.images" :key="item" :img-src="item.url"/>
+                        
+                    </b-carousel>
+                    <b-row>
+                        <b-col>
+                            <h2>Descripción</h2>
+                            <p>{{room.description}}</p>
+                        </b-col>
+                    </b-row>
+                    <b-row class="mb-3">
+                        <b-col>
+                            <b-button variant="primary" class="mt-3" type="submit" block>Contactarse <b-icon variant="white" icon="telephone" font-scale="1.5"  /></b-button>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <Questions :questions="this.room.questions"/>
+                    </b-row>
+                </b-col>
+                <b-col sm="12" md="12" xl="4">
+                    <b-row class="mb-3">
+                        <b-col>
+                            <h2>Dirección</h2>
+                            <p>{{room.address}}</p>
+                            <Map :roomLocation="[room.latitude,room.longitude]"/>
+                            
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col>
+                            <h2>Precio</h2>
+                            <p><strong>{{getFormatPrice(room.price)}}</strong></p>
+                        </b-col>
+                    </b-row>
+                    <b-row >
+                        <b-col>
+                            <h2>Normas</h2>
+                            <b-container v-if="room.rules.length">
+                            <b-tag v-for="rule in room.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
+                            </b-container>
+                            <b-container v-if="!room.rules.length">
+                            <p>Esta publicación no tiene normas.</p>
+                            </b-container>
+                        </b-col>
+                    </b-row>
+                    <b-row >
+                        <b-col class="mt-3">
+                            <h2>Servicios</h2>
+                            <b-container v-if="room.services.length">
+                            <b-tag v-for="service in room.services" :key="service.id" no-remove pill variant="primary" class="ml-1">{{service.name}}</b-tag>
+                            </b-container>
+                            <b-container v-if="!room.services.length">
+                            <p>Esta publicación no tiene servicios.</p>
+                            </b-container>
+                        </b-col>
+                    </b-row>
+                    
+                    <b-row class="mt-3">
+                        <b-col>
+                            <b-form-rating class="align-items-center" v-if="room.score" v-model="room.score" readonly show-value inline no-border/>
+                            <p v-if="!room.score">Esta publicación aún no tiene calificaciones</p>
+                        </b-col>
+                    </b-row>
+                    
+                    
+                    
+                </b-col>
+            </b-row>
+        </b-col>
+    </b-container>
+    </b-overlay>
 </template>
 <script>
-import LocalService from '../services/local-services.js'
+import Map from "../components/Map.vue";
+import Questions from "../components/Questions.vue";
+import PostService from '../services/post-services.js'
 export default {
   props: ['id'],
   name: 'Post',
+  components: {
+      Map,
+      Questions
+  },
   data(){
       return{
-          
+          room: ''
       }
   },
-  created(){
-      
+  async created(){
+    this.room = await PostService.getPost(this.id);
+    console.log(this.room)
   },
   methods: {
-      
-  },
-  components:{
+      getFormatPrice(price){
+        return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+      }
   }
   
 }
 </script>
+<style>
+.carousel .item {
+  height: 200px;
+}
+</style>

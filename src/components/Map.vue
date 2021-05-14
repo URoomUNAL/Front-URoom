@@ -1,5 +1,5 @@
 <template>
-    <b-row style="height: 25rem;" class="p-0 m-0">
+    <b-row style="height: 20rem;" class="p-0 m-0">
         <b-col>
             <l-map 
             v-if="showMap"
@@ -47,6 +47,10 @@
             </div>
             </div>
             
+            <div v-if="roomLocation">
+              <l-marker :lat-lng="roomLocation">
+              </l-marker>
+            </div>
             </l-map>
         </b-col>
         
@@ -62,7 +66,7 @@ delete Icon.Default.prototype._getIconUrl;
 
 export default {
   name: "Map",
-  props: ["markers","height","page", "filtro","radius"],
+  props: ["markers","height","page", "filtro","radius","roomLocation"],
   components: {
     LMap,
     LTileLayer,
@@ -102,7 +106,9 @@ export default {
     };
   },
   created() {
-
+    if(this.roomLocation){
+      this.center = this.roomLocation
+    }
   },
   methods: {
     zoomUpdate(zoom) {

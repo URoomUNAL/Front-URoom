@@ -34,6 +34,12 @@ const routes=[
         name:'MyRooms',
         component:()=>import('@/views/MyRooms.vue'),
         props: true
+    },
+    {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
+        path:'/Post', 
+        name:'Post',
+        component:()=>import('@/views/Post.vue'),
+        props: true
     }
 ]
 
