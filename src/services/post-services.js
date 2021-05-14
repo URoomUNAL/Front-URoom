@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-// const  API_URL = 'http://localhost:9000';
-const  API_URL = 'https://uroom.azurewebsites.net';
+const  API_URL = 'http://localhost:9000';
+//const  API_URL = 'https://uroom.azurewebsites.net';
+
 
 class PostService{
 
@@ -61,9 +62,9 @@ class PostService{
         return markers;
     }
     
-    async getPost(id) { // Petición GET. Obtener todas las publicaciones de la plataforma.
+    async getPost(id) { 
       var post = []
-      await axios.post(API_URL + "/get-post", id).then((result) => {
+      await axios.get(API_URL + "/get-post", { params: { id: id } }).then((result) => {
           post = result.data;
       })
       return post;
