@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter)
 
 // Enrutamiento de la plataforma.
-const routes=[
+const routes = [
     {   // Ruta Vacia: Vista Home
         path:'/',
         name:'Home',
@@ -44,7 +44,18 @@ const routes=[
     {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
         path:'/Post', 
         name:'Post',
-        component:()=>import('@/views/Post.vue'),
+        component:()=>import('@/views/Post.vue')
+    },
+    {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
+        path:'/Account', 
+        name:'Account',
+        component:()=>import('@/views/Account.vue'),
+        props: true
+    },
+    {   // Ruta comodín. Página para soportar el error 404.
+        path:'/*', 
+        name:'Error404',
+        component:()=>import('@/views/404.vue'),
         props: true
     }
 ]

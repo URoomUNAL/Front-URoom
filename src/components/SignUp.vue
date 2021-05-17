@@ -72,12 +72,11 @@ export default {
   data() {
     return{
       form: {
-        "email": '',
-        "password": '',
-        "confirmPassword": '',
-        "is_student": ''   
+        'email': '',
+        'password': '',
+        'confirmPassword': '',
+        'is_student': ''   
       },
-      samePassword: '',
       alert: {
         show: false,
         message: ''
@@ -100,7 +99,7 @@ export default {
           this.alert.show = true;
         }else{
           this.alert.show = false;
-          var data = {
+          let data = {
             email: this.form.email,
             password: this.form.password,
             is_student: this.form.is_student

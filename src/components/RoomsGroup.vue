@@ -53,7 +53,7 @@
     name: 'RoomsGroup',
     methods: {
       getFormatPrice(price){
-        return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+        return '$ ' + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
       },
       getCompletePost(id){  
         console.log(id)

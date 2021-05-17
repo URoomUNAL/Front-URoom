@@ -57,9 +57,15 @@ import Filters from '../components/Filters.vue'
         radius:0
       }
     },
-    async created(){
-      this.markers = await LocalService.getMaps();
-      this.loading = false;
+    created(){
+      var self = this;
+      self.loading = true;
+      LocalService.GetPosts()
+        .then(function(response){
+          self.markers = response.data;
+          self.loading = false;
+        }
+      );
     },
     methods: {
       distance(value){

@@ -136,6 +136,7 @@ import PostService from "../services/post-services.js"
 import TagSelect from "../components/TagSelect.vue";
 import Map from "../components/Map.vue";
 import filetoblob from "../libs/file-to-blob.js"
+import LocalServices from '../services/local-services.js';
 
   export default {
     name: 'AddRoom',
@@ -167,22 +168,24 @@ import filetoblob from "../libs/file-to-blob.js"
         }
       }
     },
-    async created(){
-      this.fields.loading = true;
-      var services = await PostService.GetServices();
-      var list_services = [];
-      services.forEach((element) =>{
-        list_services.push(element.name);
-      })
-      this.fields.services = list_services;
-      var rules = await PostService.GetRules();
-      var list_rules = [];
-      rules.forEach((element) =>{
-        list_rules.push(element.name);
-      })
-      this.fields.rules = list_rules;
-      console.log(localStorage.getItem("user_email"));
-      this.fields.loading = false;
+    created(){
+      var self = this;
+      self.fields.loading = true;
+      LocalServices.GetServices()
+        .then(function(response){
+          response.data.forEach((element) =>{
+            self.fields.services.push(element.name);
+          });
+        }
+      );
+      LocalServices.GetRules()
+        .then(function(response){
+          response.data.forEach((element) =>{
+            self.fields.rules.push(element.name);
+            self.fields.loading = false;
+          });
+        }
+      );
     },
     methods: {
       UpdatePosition(value) {
@@ -192,19 +195,17 @@ import filetoblob from "../libs/file-to-blob.js"
       OnSubmit(){
         var self = this;
         if(this.form.latitude == null || this.form.longitude == null){
-          self.alert.message = "Debes indicar en el mapa la ubicación de la casa.";
+          self.alert.message = 'Debes indicar en el mapa la ubicación de la casa.';
           self.alert.show = true;
           window.scrollTo(0, 0);
         }else if(this.form.price.isNaN || this.form.price <= 0){
-          self.alert.message = "El precio debe ser un valor numérico mayor que cero.";
+          self.alert.message = 'El precio debe ser un valor numérico mayor que cero.';
           self.alert.show = true;
           window.scrollTo(0, 0);
         }else{
           self.fields.loading = true;
           PostService.AddRoom(this.form)
-            .then(function(response){
-              console.log(response);
-              //alert("Publicación creada exitosamente");
+            .then(function(){
               self.$router.push("/MyRooms");
               self.fields.loading = false;
             }).catch(function(error){
@@ -212,10 +213,10 @@ import filetoblob from "../libs/file-to-blob.js"
                 self.alert.message = error.response.data;
                 self.alert.show = true;
               }else if(error.request){
-                self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
+                self.alert.message = 'No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde';
                 self.alert.show = true;
               }else{
-                self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+                self.alert.message = 'Ha ocurrido un error desconocido. Intentalo de nuevo más tarde';
               }
               window.scrollTo(0, 0);
               self.fields.loading = false;

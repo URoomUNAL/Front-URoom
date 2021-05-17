@@ -1,39 +1,37 @@
 import axios from 'axios'
+import api from './service-properties.json'
 
-//const API_URL = 'https://uroom.azurewebsites.net'
-const API_URL = 'http://localhost:9000'
 class AuthService{
     
-    register(user) { // Funcion de registro
-      return axios.post(API_URL + '/sign-up', user,{
+    SignUp(form) { // Registro de usuario en la plataforma.
+      var formData = new FormData();
+      formData.append('name', form.name + ' ' + form.surname);
+      formData.append('email', form.email);
+      formData.append('photo', form.photo);
+      formData.append('password', form.password);
+      formData.append('cellphone', form.cellphone);
+      formData.append('cellphone', form.cellphone);
+      formData.append('age', form.cellphone);
+      formData.append('is_student', form.is_student);
+      
+      return axios.post(api.API_URL + '/sign-up', formData, {
         headers:{
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         }});
     }
 
-    LogIn(form){
-      return axios.post(API_URL + '/log-in', form, {
+    LogIn(form){  // Inicio de sesión de usuario en la plataforma.
+      return axios.post(api.API_URL + '/log-in', form, {
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         }});
     }
 
     AddRoom(form){
-      return axios.post(API_URL + '/add-post', form, {
+      return axios.post(api.API_URL + '/add-post', form, {
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         }});
-    }
-
-    LogOut(){
-      
-    }
-
-    ModifyProfile(form){
-      return axios.post(API_URL + '/update-info', form, {
-        headers: {
-          "Content-Type": "application/json"
-      }});
     }
     
 }

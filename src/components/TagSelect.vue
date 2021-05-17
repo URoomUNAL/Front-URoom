@@ -37,7 +37,7 @@
         },
         set: function(value){
           this.value = value;
-          this.$emit("value", this.value);
+          this.$emit('value', this.value);
         }
       }
     }
