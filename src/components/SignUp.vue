@@ -75,7 +75,7 @@ export default {
         'email': '',
         'password': '',
         'confirmPassword': '',
-        'is_student': ''   
+        'selected': ''   
       },
       alert: {
         show: false,
@@ -102,7 +102,7 @@ export default {
           let data = {
             email: this.form.email,
             password: this.form.password,
-            is_student: this.form.is_student
+            is_student: this.form.selected
           };
           this.visible = !this.visible;
           this.$router.push({ name: 'CompleteData', params: {user: data}});

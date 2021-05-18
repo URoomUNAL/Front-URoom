@@ -42,20 +42,20 @@ class PostService{
     }
     
     
-    async FilterPost(form){      
-        var markers = []
-        await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
-            markers = result.data;
-        })
-        return markers;
-    }
+    // async FilterPost(form){      
+    //     var markers = []
+    //     await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
+    //         markers = result.data;
+    //     })
+    //     return markers;
+    // }
     
-    async getPost(id) { 
-      var post = []
-      await axios.get(API_URL + "/get-post", { params: { id: id } }).then((result) => {
-          post = result.data;
-      })
-      return post;
-  }
+//     async getPost(id) { 
+//       var post = []
+//       await axios.get(api.API_URL + "/get-post", { params: { id: id } }).then((result) => {
+//           post = result.data;
+//       })
+//       return post;
+//   }
 }
 export default new PostService();

@@ -115,14 +115,16 @@
       }else{
         this.form.email = this.user.email;
         this.form.password = this.user.password;
-        this.is_student.email = this.user.selected;
+        this.form.is_student = this.user.is_student;
       }
+      console.log(this.form);
     },
     methods: {
       onSubmit() {
         var self = this;
         self.fields.loading = true;
-        AuthService.SignUp(JSON.stringify(this.form))
+        console.log(this.form);
+        AuthService.SignUp(this.form)
         .then(function(){
           self.fields.loading = false;
           self.$router.push('/')
