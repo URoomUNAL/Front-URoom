@@ -38,7 +38,11 @@ class PostService{
     }
 
     ActivateDeactivateRoom(room){
-      return axios.post(api.API_URL + '/change-active', room);
+      return axios.post(api.API_URL + '/change-active', room, {
+            headers:
+                authHeader()
+            }
+      );
     }
     
     
