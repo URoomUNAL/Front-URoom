@@ -54,12 +54,13 @@ class PostService{
     //     return markers;
     // }
     
-//     async getPost(id) { 
-//       var post = []
-//       await axios.get(api.API_URL + "/get-post", { params: { id: id } }).then((result) => {
-//           post = result.data;
-//       })
-//       return post;
-//   }
+    async getPost(id) { 
+       console.log('El id es:'+ id)
+       var post = []
+       await axios.get(api.API_URL + "/get-post", { params: { id: id } }).then((result) => {
+           post = result.data;
+       })
+       return post;
+    }
 }
 export default new PostService();

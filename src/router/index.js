@@ -39,12 +39,14 @@ const routes = [
         //Ruta 'UpdateData' Página para que un usuario actualice su información
         path:'/ap', 
         name:'UpdateData',
-        component:()=>import('@/views/UpdateData.vue')
+        component:()=>import('@/views/UpdateData.vue'),
+        props: true
     },
     {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
         path:'/Post', 
         name:'Post',
-        component:()=>import('@/views/Post.vue')
+        component:()=>import('@/views/Post.vue'),
+        props: true
     },
     {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
         path:'/Account', 

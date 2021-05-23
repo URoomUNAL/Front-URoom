@@ -55,9 +55,9 @@
       getFormatPrice(price){
         return '$ ' + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
       },
-      getCompletePost(id){  
-        console.log(id)
-        this.$router.push({ name: 'Post', params: {id: id}});
+      getCompletePost(idx){  
+        console.log(idx)
+        this.$router.push({ name: 'Post', params: {id: idx}});
       }
     },
     watch: { 
