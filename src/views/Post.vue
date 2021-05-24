@@ -106,12 +106,7 @@ export default {
       }
   },
   async created(){
-      
-    console.log(this.id)
     this.room = await PostService.getPost(this.id);
-    console.log(this.room)
-      
-    
   },
   methods: {
       getFormatPrice(price){

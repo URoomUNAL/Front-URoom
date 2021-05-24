@@ -31,9 +31,16 @@
             <b-form-rating class="align-items-center" v-if="post.score" v-model="post.score" readonly show-value inline no-border/>
             <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
           </b-card-text>
-          <b-card-text class="text-center"> 
-            <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
-          </b-card-text>
+
+          <b-row>
+            <b-col sm="12" md="8">
+              <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
+            </b-col>
+            <b-col sm="12" md="4">
+              <b-button v-b-hover="Hover" v-on:click="addFavorites(post.id)" block variant="danger"><b-icon v-if="ishovered" icon="heart-fill" scale="1"></b-icon>
+                <b-icon v-if="!ishovered" icon="heart" scale="1"></b-icon></b-button>      
+            </b-col>
+          </b-row>
         </b-card>
       </b-col>
     </b-row>
@@ -41,13 +48,13 @@
 </template>
 
 <script>
-
-
+import PostService from '../services/post-services.js'
   export default {
     props:['posts'],
     data(){
       return {
-        post: ''
+        post: '',
+        ishovered: false
       }
     },
     name: 'RoomsGroup',
@@ -56,9 +63,15 @@
         return '$ ' + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
       },
       getCompletePost(idx){  
-        console.log(idx)
         this.$router.push({ name: 'Post', params: {id: idx}});
-      }
+      },
+      addFavorites(idx){  
+        PostService.addFavorites(idx);
+      },
+      Hover(value) {
+        this.ishovered = value
+      },
+     
     },
     watch: { 
       posts: function(newVal) { 

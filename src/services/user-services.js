@@ -11,6 +11,11 @@ class UserService{
             }
         );
     }
-    
+    ModifyProfile(form){
+        return axios.post(api.API_URL + '/update-info', form, {
+            headers: {
+            "Content-Type": "application/json"
+        }});
+    }
 }
 export default new UserService();

@@ -44,6 +44,14 @@ class PostService{
             }
       );
     }
+
+    GetFavorites(){
+        return axios.get(api.API_URL + '/get-favorites', {
+            headers: 
+                authHeader()
+            }
+        );
+    }
     
     
     // async FilterPost(form){      
@@ -55,12 +63,21 @@ class PostService{
     // }
     
     async getPost(id) { 
-       console.log('El id es:'+ id)
        var post = []
        await axios.get(api.API_URL + "/get-post", { params: { id: id } }).then((result) => {
            post = result.data;
        })
        return post;
     }
+
+    addFavorites(id){
+        return axios.post(api.API_URL + '/add-favorite', id, {
+            headers:
+                authHeader()
+            }
+      );
+    }
+
+
 }
 export default new PostService();
