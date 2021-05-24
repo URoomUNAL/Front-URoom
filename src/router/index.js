@@ -38,8 +38,8 @@ const routes = [
     {
         //Ruta 'UpdateData' Página para que un usuario actualice su información
         path:'/ap', 
-        name:'UpdateData',
-        component:()=>import('@/views/UpdateData.vue'),
+        name:'MyFavorites',
+        component:()=>import('@/views/MyFavorites.vue'),
         props: true
     },
     {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.

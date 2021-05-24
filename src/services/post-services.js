@@ -46,6 +46,7 @@ class PostService{
     }
 
     GetFavorites(){
+        console.log(authHeader())
         return axios.get(api.API_URL + '/get-favorites', {
             headers: 
                 authHeader()
@@ -71,11 +72,13 @@ class PostService{
     }
 
     addFavorites(id){
-        return axios.post(api.API_URL + '/add-favorite', id, {
-            headers:
-                authHeader()
+        console.log(authHeader(), id);
+        return axios.post(api.API_URL + '/add-favorite', {flag:true}, { 
+                params: { id: id },
+                headers: 
+                    authHeader()
             }
-      );
+        );
     }
 
 
