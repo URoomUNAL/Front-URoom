@@ -29,7 +29,14 @@
                     </b-row>
                     <b-row class="mb-3">
                         <b-col>
-                            <b-button variant="primary" class="mt-3" type="submit" block>Contactarse <b-icon variant="white" icon="telephone" font-scale="1.5"  /></b-button>
+                            <b-button variant="primary" class="mt-3" @click.prevent="Contact" type="submit" block>Contactarse <b-icon variant="white" icon="telephone" font-scale="1.5"  /></b-button>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                      <b-col>
+                          <b-toast id="status" :variant="toast.variant" title="URoom" auto-hide-delay="3000" no-hover-pause static no-close-button>
+                            {{toast.message}}
+                          </b-toast>
                         </b-col>
                     </b-row>
                     <b-row>
@@ -102,7 +109,12 @@ export default {
   },
   data(){
       return{
-          room: ''
+          room: '',
+          toast:{
+            message: '',
+            variant: ''
+          }
+
       }
   },
   async created(){
@@ -114,9 +126,20 @@ export default {
     
   },
   methods: {
-      getFormatPrice(price){
-        return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+    getFormatPrice(price){
+      return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+    },
+    Contact(){
+      let user = JSON.parse(localStorage.getItem('user'));
+      if(user){
+        this.toast.message = 'Conectado';
+        this.toast.variant = 'success';
+      }else{
+        this.toast.message = 'Debes iniciar sesión antes de solicitar el contacto de un arrendador.';
+        this.toast.variant = 'danger';
       }
+      this.$bvToast.show('status');
+    }
   }
   
 }
