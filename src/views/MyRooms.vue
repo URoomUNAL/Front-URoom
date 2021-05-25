@@ -13,7 +13,7 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <b-col lg="8">
+      <b-col lg="8" class="mb-4">
         <b-button block variant="primary" to="/AddRoom">Añade una Habitación</b-button>
       </b-col>
     </b-row>
