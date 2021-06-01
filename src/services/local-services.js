@@ -18,13 +18,16 @@ class LocalService{
             }
         });
     }
-  
-    GetRules(){  // Solicitud de todos los servicios.
-        return axios.get(api.API_URL + '/get-rules', {
-            headers:{
-                'Content-Type': 'application/json'
+
+    GetContact(id){
+        return axios.get(api.API_URL + '/contact-owner', {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }, {
+                PostId: id 
             }
-        });
+        );
     }
 
 }

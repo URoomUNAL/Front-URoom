@@ -99,6 +99,7 @@
 <script>
 import Map from "../components/Map.vue";
 import Questions from "../components/Questions.vue";
+import localServices from '../services/local-services';
 import PostService from '../services/post-services.js'
 export default {
   props: ['id'],
@@ -130,15 +131,23 @@ export default {
       return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
     },
     Contact(){
-      let user = JSON.parse(localStorage.getItem('user'));
-      if(user){
-        this.toast.message = 'Conectado';
-        this.toast.variant = 'success';
-      }else{
-        this.toast.message = 'Debes iniciar sesión antes de solicitar el contacto de un arrendador.';
-        this.toast.variant = 'danger';
-      }
-      this.$bvToast.show('status');
+        localServices.GetContact(this.id)
+            .then(function(response){
+                let user = JSON.parse(localStorage.getItem('user'));
+                if(user){
+                    this.toast.message = response.data;
+                    this.toast.variant = 'success';
+                }else{
+                    this.toast.message = 'Debes iniciar sesión antes de solicitar el contacto de un arrendador.';
+                    this.toast.variant = 'danger';
+                }
+                this.$bvToast.show('status');
+            }).catch(function(error){
+                console.log(error);
+            });
+
+
+      
     }
   }
   
