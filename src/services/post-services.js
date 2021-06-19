@@ -45,6 +45,18 @@ class PostService{
       );
     }
     
+    GetContact(id){
+        return axios.get(api.API_URL + '/contact-owner', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    , ...authHeader()
+                },
+                params: {
+                    PostId: id
+                }
+            }
+        );
+    }
     
     // async FilterPost(form){      
     //     var markers = []

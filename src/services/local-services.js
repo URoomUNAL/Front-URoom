@@ -18,17 +18,5 @@ class LocalService{
             }
         });
     }
-
-    GetContact(id){
-        return axios.get(api.API_URL + '/contact-owner', {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }, {
-                PostId: id 
-            }
-        );
-    }
-
 }
 export default new LocalService();
