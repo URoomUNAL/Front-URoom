@@ -19,7 +19,8 @@
     </b-row>
     <b-row align-h="center">
       <b-col>
-        <CardRoom v-if="rooms && loading==false" :posts="rooms"/>
+        <!-- <CardRoom v-if="rooms && loading==false" :posts="rooms" :favorites="true"/> -->
+        <RoomsGroup v-if="rooms && loading==false" :posts="rooms" :favorites="true"/>
         <h2 class="my-5" v-if="!rooms && loading ==false">Aún no has agregado habitaciones favoritas ¡Ve a explorar!</h2>
       </b-col>
     </b-row>
@@ -32,9 +33,8 @@
 </template>
 
 <script>
-import CardRoom from '../components/CardRoom.vue'
+import RoomsGroup from '../components/RoomsGroup.vue'
 import PostService from '../services/post-services.js'
-
   export default {
     name: 'MyFavorites',
     data(){
@@ -48,6 +48,8 @@ import PostService from '../services/post-services.js'
       }
     },
     created(){
+
+      console.log(localStorage.getItem('user'))
       var self = this;
       self.loading = true;
       PostService.GetFavorites()
@@ -58,7 +60,7 @@ import PostService from '../services/post-services.js'
       );
     },
     components: {
-      CardRoom
+        RoomsGroup
     }
   }
 </script>

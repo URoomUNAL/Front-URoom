@@ -37,8 +37,16 @@
               <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
             </b-col>
             <b-col sm="12" md="4">
-              <b-button v-b-hover="Hover" v-on:click="addFavorites(post.id)" block variant="danger"><b-icon v-if="ishovered" icon="heart-fill" scale="1"></b-icon>
-                <b-icon v-if="!ishovered" icon="heart" scale="1"></b-icon></b-button>      
+              <div v-if="!favorites">
+                <b-button @mouseover="ishovered = post.id" @mouseleave="ishovered = ''" v-on:click="addFavorites(post.id)" block variant="danger"><b-icon v-if="ishovered==post.id" icon="heart-fill" scale="1"></b-icon>
+                  <b-icon v-if="ishovered!=post.id" icon="heart" scale="1"></b-icon></b-button>
+              </div>
+              <div v-if="favorites">
+                <b-button @click="$bvModal.show('modal_'+post.id)" block variant="danger"><b-icon icon="heart-fill" scale="1"></b-icon>
+                <b-modal :id="'modal_'+post.id">Seguro que desea eliminar{{post.address}}</b-modal>
+                {{quit_favorite}}
+                </b-button>
+              </div>
             </b-col>
           </b-row>
         </b-card>
@@ -50,11 +58,12 @@
 <script>
 import PostService from '../services/post-services.js'
   export default {
-    props:['posts'],
+    props:['posts', 'favorites'],
     data(){
       return {
         post: '',
-        ishovered: false
+        ishovered: '',
+        quit_favorite: ''
       }
     },
     name: 'RoomsGroup',
@@ -69,6 +78,7 @@ import PostService from '../services/post-services.js'
         PostService.addFavorites(idx);
       },
       Hover(value) {
+        console.log(value)
         this.ishovered = value
       },
      
