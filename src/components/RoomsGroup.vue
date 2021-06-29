@@ -43,7 +43,7 @@
               </div>
               <div v-if="favorites">
                 <b-button @click="$bvModal.show('modal_'+post.id)" block variant="danger"><b-icon icon="heart-fill" scale="1"></b-icon>
-                <b-modal :id="'modal_'+post.id">Seguro que desea eliminar{{post.address}}</b-modal>
+                <b-modal :id="'modal_'+post.id">Seguro que desea eliminar{{post.address}} </b-modal>
                 {{quit_favorite}}
                 </b-button>
               </div>
