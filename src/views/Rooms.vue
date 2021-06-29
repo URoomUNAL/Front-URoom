@@ -4,17 +4,19 @@
       <b-col>
         <h1 class="primary mb-5">Encuentra tu habitación ideal</h1>
       </b-col>
-    </b-row>       
-    <b-row>
-      <b-col>
-        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading" :radius="radius"/>
-      </b-col>
-    </b-row>
-    <b-row align-h="center">
+    </b-row>  
+     <b-row align-h="center">
       <b-col class="mt-4">
         <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading" @radius="Radius"/>
       </b-col>
     </b-row>
+         
+    <b-row>
+      <b-col class="mb-1">
+        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading" :radius="radius"/>
+      </b-col>
+    </b-row>
+   
     <hr class="my-5"/>
     <b-row>
       <b-col>

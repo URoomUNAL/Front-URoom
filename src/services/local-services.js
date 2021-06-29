@@ -1,12 +1,14 @@
 import axios from 'axios'
 import api from './service-properties.json'
+import authHeader from './authentication-header.js'
 
 class LocalService{
 
     GetPosts() {     // Solicitud de todas las publicaciones de la plataforma.
         return axios.get(api.API_URL + '/get-posts', {
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...authHeader()
             }
         });
     }

@@ -53,15 +53,17 @@ class PostService{
             }
         );
     }
+
     
     
-    // async FilterPost(form){      
-    //     var markers = []
-    //     await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
-    //         markers = result.data;
-    //     })
-    //     return markers;
-    // }
+    async FilterPost(form){ 
+        console.log(form)     
+         var markers = []
+         //await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
+         //    markers = result.data;
+         //})
+         return markers;
+    }
     
     async getPost(id) { 
        var post = []
@@ -80,7 +82,16 @@ class PostService{
             }
         );
     }
-
+    
+    removeFavorite(id){
+      console.log(authHeader(), id);
+        return axios.post(api.API_URL + '/remove-favorite', {flag:true}, { 
+                params: { id: id },
+                headers: 
+                    authHeader()
+            }
+        );
+    }
 
 }
 export default new PostService();
