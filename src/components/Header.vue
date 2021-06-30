@@ -11,7 +11,7 @@
         <b-collapse id="nav-collapse" is-nav class="ml-auto">
           <b-navbar-nav class="ml-auto">
             <b-nav-item to="/">Inicio</b-nav-item>
-            <b-nav-item to="Rooms">Habitaciones</b-nav-item>
+            <b-nav-item to="/Rooms">Habitaciones</b-nav-item>
             <b-nav-item to="/">Sobre nosotros</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="!logged">
@@ -19,8 +19,10 @@
             <b-button variant="primary" v-b-toggle.sign-up>Regístrate</b-button>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="logged">
-            <b-nav-item to="/MyRooms"><div class="primary">Mis Habitaciones</div></b-nav-item>
+            <b-nav-item to="/MyRooms" v-if="this.roles[0] != 'ROLE_STUDENT'"><div class="primary">Mis Habitaciones</div></b-nav-item>
+            <b-nav-item to="/MyFavorites" v-if="this.roles[0] == 'ROLE_STUDENT'"><div class="primary">Mis Favoritas</div></b-nav-item>
             <b-button variant="primary" @click="LogOut">Cerrar sesión</b-button>
+            
           </b-navbar-nav>
         </b-collapse>
       </b-container>
@@ -31,28 +33,33 @@
 </template>
 
 <script>
+  //import AuthService from '../services/authentication-services';
   import LogIn from './LogIn';
   import SignUp from './SignUp';
 
   export default {
     data(){
       return{
-        logged: null
+        logged: Boolean,
+        roles: ''
       }
     },
     created(){
-      this.logged = localStorage.getItem("user_email");
-    },
-    mounted(){
-      this.logged = localStorage.getItem("user_email");
+      this.logged = localStorage.getItem('user') != null;
+      if(this.logged){
+        this.roles = JSON.parse(localStorage.getItem('user')).roles
+      }
     },
     methods: {
       LogOut(){
-        localStorage.removeItem("user_email");
+        var self = this;
+        localStorage.removeItem('user');
         if(this.$route.path == '/'){
           this.$router.go();
         }else{
-          this.$router.push('/');
+          this.$router.push('/').then(function(){
+            self.$router.go();
+          });  
         }
       }
     },

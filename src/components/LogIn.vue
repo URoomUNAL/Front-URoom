@@ -77,20 +77,17 @@ export default {
       self.fields.loading = true;
       AuthService.LogIn(JSON.stringify(this.form))
         .then(function(response){
-          localStorage.setItem("user_email", response.data.email);
-          console.log(localStorage.getItem("user_email")); //
-          self.visible = !self.visible;
-          //alert("Bienvenido, " + response.data.name + ".");
-          self.$router.go();
+          localStorage.setItem('user', JSON.stringify(response.data));
+          self.visible = false;
           self.fields.loading = false;
+          self.$router.go();
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;
-            self.alert.show = true;
           }else if(error.request){
-            self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
-            self.alert.show = true;
+            self.alert.message = 'No se ha recibido respuesta del servidor, Intentalo de nuevo más tarde.';
           }
+          self.alert.show = true;
           self.fields.loading = false;
         }
       );

@@ -36,7 +36,7 @@
               <b-button v-on:click="activate" block variant="primary" class="mb-1" v-b-toggle.filtersDistance>Filtrar por distancia</b-button>
               <b-collapse accordion="my-accordion2" id="filtersDistance">
                 <label for="range-3">Distancia: {{form.distance.radius}}km.</label>
-                <b-form-input label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.1"></b-form-input>
+                <b-form-input @change="FilterFunction" label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.01"></b-form-input>
                 <label for="range-3">Pon tu pin en el mapa.</label>
               </b-collapse>              
             </b-col>
@@ -53,7 +53,8 @@
 </template>
 <script>
 import TagSelect from './TagSelect.vue'
-import PostService from "../services/post-services.js"
+import PostService from '../services/post-services.js'
+import LocalServices from '../services/local-services.js'
 export default {
   props: ['distancia'],
   name: 'Filters',
@@ -63,7 +64,7 @@ export default {
               min_score: null,
               price:{
                   min: 200000,
-                  max: 700000
+                  max: 90000000
               },
               distance:{
                   origin: [],
@@ -84,21 +85,23 @@ export default {
       }
   },
   async created(){
-      this.fields.loading = true;
-      var services = await PostService.GetServices();
-      var list_services = [];
-      services.forEach((element) =>{
-          list_services.push(element.name);
-      })
-      this.fields.services = list_services;
-      var rules = await PostService.GetRules();
-      var list_rules = [];
-      rules.forEach((element) =>{
-          list_rules.push(element.name);
-      })
-      this.fields.rules = list_rules;
-      console.log(localStorage.getItem("user_email"));
-      this.fields.loading = false;
+      var self = this;
+      self.fields.loading = true;
+      LocalServices.GetServices()
+        .then(function(response){
+          response.data.forEach((element) =>{
+            self.fields.services.push(element.name);
+          });
+        }
+      );
+      LocalServices.GetRules()
+        .then(function(response){
+          response.data.forEach((element) =>{
+            self.fields.rules.push(element.name);
+            self.fields.loading = false;
+          });
+        }
+      );
   },
   computed: {
     price_min: {
@@ -111,7 +114,7 @@ export default {
           }
         }else{
           if(this.form.price.min > 0){
-            return "$ " + this.form.price.min.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+            return '$ ' + this.form.price.min.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
           }else{
             return '';
           }
@@ -155,7 +158,7 @@ export default {
   methods: {
       activate(){
           this.pin = true;
-          this.$emit("clicked", this.pin)
+          this.$emit('clicked', this.pin)
       },
       PutServicesValues(values){
           this.form.services = values;
@@ -165,22 +168,26 @@ export default {
       }, 
       async FilterFunction(){
           this.form.distance.radius = parseFloat(this.form.distance.radius)
-          this.$emit("loading", true);
-          this.$emit("filter", await PostService.FilterPost(this.form));
-          this.$emit("loading", false);
+          this.$emit('radius', this.form.distance.radius);
+          this.$emit('loading', true);
+          this.$emit('filter', await PostService.FilterPost(this.form));
+          this.$emit('loading', false);
+          
       },
       Reset(){
         this.pin = false
-        this.$emit("clicked", this.pin)
+        this.form.distance.radius = 0;
+        this.$emit('radius', 0);
+        this.$emit('clicked', this.pin);
           this.form = {
               min_score: null,
               price:{
                   min: 200000,
-                  max: 700000
+                  max: 90000000
               },
               distance:{
                   origin: [],
-                  radius: 2
+                  radius: 0
               },
               services: [],
               rules: []

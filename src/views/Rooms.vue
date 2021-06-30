@@ -4,17 +4,19 @@
       <b-col>
         <h1 class="primary mb-5">Encuentra tu habitación ideal</h1>
       </b-col>
-    </b-row>       
-    <b-row>
-      <b-col>
-        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading"/>
-      </b-col>
-    </b-row>
-    <b-row align-h="center">
+    </b-row>  
+     <b-row align-h="center">
       <b-col class="mt-4">
-        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading"/>
+        <Filters @clicked="distance" :distancia="form" @filter="showFilters" @loading="UpdateLoading" @radius="Radius"/>
       </b-col>
     </b-row>
+         
+    <b-row>
+      <b-col class="mb-1">
+        <Map :markers="markers" :filtro="filtro" @clicked="UpdatePosition" :loading="loading" :radius="radius"/>
+      </b-col>
+    </b-row>
+   
     <hr class="my-5"/>
     <b-row>
       <b-col>
@@ -26,8 +28,8 @@
         <RoomsGroup :posts="markers"/>
       </b-col>
     </b-row>
-    <b-row class="my-5" v-if="loading">
-      <b-col>
+    <b-row class="mb-5" v-if="loading">
+      <b-col class="mb-5">
         <b-spinner variant="primary"/>
       </b-col>
     </b-row>
@@ -36,10 +38,10 @@
 
 <script>
 
-import Map from './Map.vue'
+import Map from '../components/Map.vue'
 import LocalService from '../services/local-services.js'
-import RoomsGroup from './RoomsGroup.vue'
-import Filters from './Filters.vue'
+import RoomsGroup from '../components/RoomsGroup.vue'
+import Filters from '../components/Filters.vue'
   export default {
     name: 'Rooms',
     components: {
@@ -51,14 +53,21 @@ import Filters from './Filters.vue'
       return {
         markers: '',
         rows: '',
-        filtro:false,
+        filtro: false,
         form: '',
-        loading: true
+        loading: true,
+        radius:0
       }
     },
-    async created(){
-      this.markers = await LocalService.getMaps();
-      this.loading = false;
+    created(){
+      var self = this;
+      self.loading = true;
+      LocalService.GetPosts()
+        .then(function(response){
+          self.markers = response.data;
+          self.loading = false;
+        }
+      );
     },
     methods: {
       distance(value){
@@ -67,7 +76,6 @@ import Filters from './Filters.vue'
       showFilters(value){
         this.markers = value;
         this.loading = false;
-        console.log(this.markers)
       },
       UpdatePosition(value) {
         this.form = {
@@ -77,10 +85,10 @@ import Filters from './Filters.vue'
       },
       UpdateLoading(value){
         this.loading = value;
+      },
+      Radius(value){
+        this.radius = value
       }
     }
   }
 </script>
-<style>
-
-</style>

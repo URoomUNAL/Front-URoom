@@ -72,12 +72,11 @@ export default {
   data() {
     return{
       form: {
-        "email": '',
-        "password": '',
-        "confirmPassword": '',
-        "is_student": ''   
+        'email': '',
+        'password': '',
+        'confirmPassword': '',
+        'selected': ''   
       },
-      samePassword: '',
       alert: {
         show: false,
         message: ''
@@ -88,8 +87,6 @@ export default {
   methods: {
       SignUp(){    
         if(this.form.password != this.form.confirmPassword){
-          console.log(this.form.password);
-          console.log(this.form.confirmPassword);
           this.alert.message = 'Las contraseñas no coinciden.';
           this.alert.show = true;
         }else if(this.form.password.length < 6 || this.form.password.length >= 20){
@@ -100,10 +97,10 @@ export default {
           this.alert.show = true;
         }else{
           this.alert.show = false;
-          var data = {
+          let data = {
             email: this.form.email,
             password: this.form.password,
-            is_student: this.form.is_student
+            is_student: this.form.selected
           };
           this.visible = !this.visible;
           this.$router.push({ name: 'CompleteData', params: {user: data}});
