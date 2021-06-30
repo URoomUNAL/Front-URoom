@@ -87,8 +87,6 @@ export default {
   methods: {
       SignUp(){    
         if(this.form.password != this.form.confirmPassword){
-          console.log(this.form.password);
-          console.log(this.form.confirmPassword);
           this.alert.message = 'Las contraseñas no coinciden.';
           this.alert.show = true;
         }else if(this.form.password.length < 6 || this.form.password.length >= 20){

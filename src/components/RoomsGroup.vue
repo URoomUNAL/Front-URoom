@@ -91,7 +91,6 @@ import PostService from '../services/post-services.js'
         }
       },
       Hover(value) {
-        console.log(value)
         this.ishovered = value
       },
       async removeFavorite(id, index){

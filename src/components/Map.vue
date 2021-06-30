@@ -144,8 +144,6 @@ export default {
       markers: function(newVal) { // watch it
           this.markers = newVal;
           this.rooms = this.markers;
-          console.log("aqui los de mapa");
-          console.log(this.markers);
       },
       radius: function(newVal) { // watch it
           this.circle.rad = newVal

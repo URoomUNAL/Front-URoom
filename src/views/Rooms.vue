@@ -76,7 +76,6 @@ import Filters from '../components/Filters.vue'
       showFilters(value){
         this.markers = value;
         this.loading = false;
-        console.log(this.markers)
       },
       UpdatePosition(value) {
         this.form = {
