@@ -87,7 +87,7 @@
                 <b-row align-h="center" class="mb-4">
                   <b-col>
                     <b-img v-if="fields.mainImageSrc" :src="fields.mainImageSrc" thumbnail center fluid rounded/>
-                    <b-img v-if="!fields.mainImageSrc" src="https://uroom20211.blob.core.windows.net/images/default-image.png" thumbnail center fluid rounded/>
+                    <b-img v-if="!fields.mainImageSrc" src="https://uroomstorage2021.blob.core.windows.net/userimages/default-image.jpg" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center" class="mb-4">
@@ -105,7 +105,7 @@
                     <b-carousel fade controls v-if="fields.optionalImagesSrc">
                       <b-carousel-slide v-for="item in fields.optionalImagesSrc" :key="item" :img-src="item"/>
                     </b-carousel>
-                    <b-img v-if="!fields.optionalImagesSrc.length" src="https://uroom20211.blob.core.windows.net/images/default-image.png" thumbnail center fluid rounded/>
+                    <b-img v-if="!fields.optionalImagesSrc.length" src="https://uroomstorage2021.blob.core.windows.net/userimages/default-image.jpg" thumbnail center fluid rounded/>
                   </b-col>
                 </b-row>
                 <b-row align-h="center">

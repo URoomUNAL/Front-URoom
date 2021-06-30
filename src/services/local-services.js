@@ -18,14 +18,5 @@ class LocalService{
             }
         });
     }
-  
-    GetRules(){  // Solicitud de todos los servicios.
-        return axios.get(api.API_URL + '/get-rules', {
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        });
-    }
-
 }
 export default new LocalService();

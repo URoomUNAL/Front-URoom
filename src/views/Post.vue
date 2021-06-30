@@ -29,7 +29,14 @@
                     </b-row>
                     <b-row class="mb-3">
                         <b-col>
-                            <b-button variant="primary" class="mt-3" type="submit" block>Contactarse <b-icon variant="white" icon="telephone" font-scale="1.5"  /></b-button>
+                            <b-button variant="primary" class="mt-3" @click.prevent="Contact" type="submit" block>Contactarse <b-icon variant="white" icon="telephone" font-scale="1.5"  /></b-button>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                      <b-col>
+                          <b-toast id="status" :variant="toast.variant" title="URoom" auto-hide-delay="3000" no-hover-pause static no-close-button>
+                            {{toast.message}}
+                          </b-toast>
                         </b-col>
                     </b-row>
                     <b-row>
@@ -92,7 +99,7 @@
 <script>
 import Map from "../components/Map.vue";
 import Questions from "../components/Questions.vue";
-import PostService from '../services/post-services.js'
+import PostServices from '../services/post-services.js'
 export default {
   props: ['id'],
   name: 'Post',
@@ -102,21 +109,41 @@ export default {
   },
   data(){
       return{
-          room: ''
+          room: '',
+          toast:{
+            message: '',
+            variant: ''
+          }
+
       }
   },
   async created(){
       
-    console.log(this.id)
-    this.room = await PostService.getPost(this.id);
+    console.log(this.$route.params.id)
+    this.room = await PostServices.getPost(this.$route.params.id);
     console.log(this.room)
       
     
   },
   methods: {
-      getFormatPrice(price){
-        return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
-      }
+    getFormatPrice(price){
+      return "$ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+    },
+    Contact(){
+        let self = this;
+        PostServices.GetContact(this.id)        
+            .then(function(response){                
+                self.toast.message = response.data;
+                self.toast.variant = 'success';
+                self.$bvToast.show('status');
+            }).catch(function(error){
+
+                console.log(error);
+                self.toast.message = 'Debes iniciar sesión antes de solicitar el contacto de un arrendador.';
+                self.toast.variant = 'danger';
+                self.$bvToast.show('status');
+            });
+    }
   }
   
 }
