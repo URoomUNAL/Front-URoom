@@ -36,7 +36,7 @@
                 />
               </l-marker>
               <l-marker v-if="page" :lat-lng="location"> </l-marker>
-            <div v-if="radius">
+            <div v-if="radius>0">
                 <l-circle
                 :lat-lng="location"
                 :radius="circle.rad*1000"

@@ -44,6 +44,16 @@ class PostService{
             }
       );
     }
+
+    GetFavorites(){
+        console.log(authHeader())
+        return axios.get(api.API_URL + '/get-favorites', {
+            headers: 
+                authHeader()
+            }
+        );
+    }
+
     
     GetContact(id){
         return axios.get(api.API_URL + '/contact-owner', {
@@ -58,21 +68,42 @@ class PostService{
         );
     }
     
-    // async FilterPost(form){      
-    //     var markers = []
-    //     await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
-    //         markers = result.data;
-    //     })
-    //     return markers;
-    // }
+    async FilterPost(form){ 
+        console.log(form)     
+         var markers = []
+         //await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
+         //    markers = result.data;
+         //})
+         return markers;
+    }
     
     async getPost(id) { 
-       console.log('El id es:'+ id)
        var post = []
        await axios.get(api.API_URL + "/get-post", { params: { id: id } }).then((result) => {
            post = result.data;
        })
        return post;
     }
+
+    addFavorites(id){
+        console.log(authHeader(), id);
+        return axios.post(api.API_URL + '/add-favorite', {flag:true}, { 
+                params: { id: id },
+                headers: 
+                    authHeader()
+            }
+        );
+    }
+    
+    removeFavorite(id){
+      console.log(authHeader(), id);
+        return axios.post(api.API_URL + '/remove-favorite', {flag:true}, { 
+                params: { id: id },
+                headers: 
+                    authHeader()
+            }
+        );
+    }
+
 }
 export default new PostService();

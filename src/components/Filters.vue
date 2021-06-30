@@ -36,7 +36,7 @@
               <b-button v-on:click="activate" block variant="primary" class="mb-1" v-b-toggle.filtersDistance>Filtrar por distancia</b-button>
               <b-collapse accordion="my-accordion2" id="filtersDistance">
                 <label for="range-3">Distancia: {{form.distance.radius}}km.</label>
-                <b-form-input label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.1"></b-form-input>
+                <b-form-input @change="FilterFunction" label="Pon tu pin en el mapa" id="range-3" v-model="form.distance.radius" type="range" min="0" max="10" step="0.01"></b-form-input>
                 <label for="range-3">Pon tu pin en el mapa.</label>
               </b-collapse>              
             </b-col>
@@ -168,13 +168,16 @@ export default {
       }, 
       async FilterFunction(){
           this.form.distance.radius = parseFloat(this.form.distance.radius)
+          this.$emit('radius', this.form.distance.radius);
           this.$emit('loading', true);
           this.$emit('filter', await PostService.FilterPost(this.form));
           this.$emit('loading', false);
-          this.$emit('radius', this.form.distance.radius);
+          
       },
       Reset(){
         this.pin = false
+        this.form.distance.radius = 0;
+        this.$emit('radius', 0);
         this.$emit('clicked', this.pin);
           this.form = {
               min_score: null,
@@ -184,7 +187,7 @@ export default {
               },
               distance:{
                   origin: [],
-                  radius: 2
+                  radius: 0
               },
               services: [],
               rules: []

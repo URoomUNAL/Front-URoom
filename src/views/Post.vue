@@ -117,13 +117,10 @@ export default {
 
       }
   },
-  async created(){
-      
+  async created(){ 
     console.log(this.$route.params.id)
     this.room = await PostServices.getPost(this.$route.params.id);
     console.log(this.room)
-      
-    
   },
   methods: {
     getFormatPrice(price){

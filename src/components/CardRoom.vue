@@ -36,9 +36,22 @@
             <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
           </b-card-text>
           <b-card-text class="text-center">     
-            <b-button variant="primary">Editar Publicación</b-button>
-            <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)">Ocultar</b-button>
-            <b-button v-if="!post.is_active" variant="info" type="submit" @click="OnSubmit(post, true)">Activar</b-button>
+            <!-- <div v-if='!favorites'> -->
+              <b-button variant="primary">Editar Publicación</b-button>
+              <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)">Ocultar</b-button>
+              <b-button v-if="!post.is_active" variant="info" type="submit" @click="OnSubmit(post, true)">Activar</b-button>
+            <!-- </div> -->
+            <!-- <div v-if='favorites'> -->
+              <!-- <b-row>
+                <b-col sm="12" md="8">
+                  <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
+                </b-col>
+                <b-col sm="12" md="4">
+                  <b-button block variant="danger"><b-icon icon="heart-fill" scale="1"></b-icon>
+                  </b-button>      
+                </b-col>
+              </b-row>
+            </div> -->
             <b-toast v-if="post.id==fields.id" id="status" :variant="toast.variant" title="URoom" auto-hide-delay="3000" no-hover-pause static no-close-button>
               {{toast.message}}
             </b-toast>
@@ -54,7 +67,7 @@
 import PostService from '../services/post-services.js'
 
   export default {
-    props:['posts'],
+    props:['posts', 'favorites'],
     name: 'RoomsGroup',
     data(){
       return{

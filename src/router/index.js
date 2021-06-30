@@ -37,9 +37,9 @@ const routes = [
     },
     {
         //Ruta 'UpdateData' Página para que un usuario actualice su información
-        path:'/ap', 
-        name:'UpdateData',
-        component:()=>import('@/views/UpdateData.vue'),
+        path:'/MyFavorites', 
+        name:'MyFavorites',
+        component:()=>import('@/views/MyFavorites.vue'),
         props: true
     },
     
