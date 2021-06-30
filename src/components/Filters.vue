@@ -64,7 +64,7 @@ export default {
               min_score: null,
               price:{
                   min: 200000,
-                  max: 700000
+                  max: 90000000
               },
               distance:{
                   origin: [],
@@ -183,7 +183,7 @@ export default {
               min_score: null,
               price:{
                   min: 200000,
-                  max: 700000
+                  max: 90000000
               },
               distance:{
                   origin: [],

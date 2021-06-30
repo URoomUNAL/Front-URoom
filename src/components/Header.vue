@@ -20,7 +20,7 @@
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="logged">
             <b-nav-item to="/MyRooms" v-if="this.roles[0] != 'ROLE_STUDENT'"><div class="primary">Mis Habitaciones</div></b-nav-item>
-            <b-nav-item to="/Myfavorites" v-if="this.roles[0] == 'ROLE_STUDENT'"><div class="primary">Mis Favoritas</div></b-nav-item>
+            <b-nav-item to="/MyFavorites" v-if="this.roles[0] == 'ROLE_STUDENT'"><div class="primary">Mis Favoritas</div></b-nav-item>
             <b-button variant="primary" @click="LogOut">Cerrar sesión</b-button>
             
           </b-navbar-nav>
