@@ -37,10 +37,11 @@ class PostService{
         );
     }
 
-    ActivateDeactivateRoom(room){
-      return axios.post(api.API_URL + '/change-active', room, {
+    ActivateDeactivateRoom(id){
+      return axios.post(api.API_URL + '/change-active', {flag:true}, {
             headers:
-                authHeader()
+                authHeader(),
+            params: {id: id}
             }
       );
     }
@@ -71,9 +72,9 @@ class PostService{
     async FilterPost(form){ 
         console.log(form)     
          var markers = []
-         //await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
-         //    markers = result.data;
-         //})
+         await  axios.post(api.API_URL + '/get-posts-filtered', form).then((result) => {
+             markers = result.data;
+         })
          return markers;
     }
     
@@ -86,7 +87,6 @@ class PostService{
     }
 
     addFavorites(id){
-        console.log(authHeader(), id);
         return axios.post(api.API_URL + '/add-favorite', {flag:true}, { 
                 params: { id: id },
                 headers: 

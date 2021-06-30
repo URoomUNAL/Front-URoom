@@ -87,28 +87,14 @@ import PostService from '../services/post-services.js'
       },
       OnSubmit(post, new_active){
         post.is_active = new_active;
-        let room_req = post;
-        let save_main_img = post.main_img;
-        let save_images = post.images;
-        let save_services = post.services;
-        let save_rules = post.rules;
-        room_req.main_img = null;
-        room_req.images = [];
-        room_req.services = [];
-        room_req.rules = [];
         var self = this;
         this.fields.loading = true;
         this.fields.id = post.id;
-        PostService.ActivateDeactivateRoom(room_req)
+        PostService.ActivateDeactivateRoom(post.id)
         .then(function(response){
-          post.main_img = save_main_img;
           self.toast.message = response.data;
           self.toast.variant = 'success';
           self.$bvToast.show('status');
-          post.main_img = save_main_img;
-          post.images = save_images;
-          post.services = save_services;
-          post.rules = save_rules;
           self.fields.loading = false;
         }).catch(function(error){
           if(error.response){
@@ -120,7 +106,6 @@ import PostService from '../services/post-services.js'
           self.fields.loading = false;
           self.$bvToast.show('status');
         });
-        post.main_img = save_main_img;
       }
     }
   }
