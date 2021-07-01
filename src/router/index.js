@@ -36,13 +36,19 @@ const routes = [
         props: true
     },
     {
-        //Ruta 'UpdateData' Página para que un usuario actualice su información
+        //Ruta 'MyFavorites' Página para que un usuario visualice sus habitaciones favoritas
         path:'/MyFavorites', 
         name:'MyFavorites',
         component:()=>import('@/views/MyFavorites.vue'),
         props: true
     },
-    
+    {
+        //Ruta 'UpdateData' Página para que un usuario edite su información personal.
+        path:'/UpdateData', 
+        name:'UpdateData',
+        component:()=>import('@/views/UpdateData.vue'),
+        props: true
+    },
     {   // Ruta 'MyRooms' Página para que un usuario que inicia sesión pueda ver sus publicaciones.
         path:'/Post/:id', 
         name:'Post',
