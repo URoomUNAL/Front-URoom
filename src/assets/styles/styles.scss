@@ -14,11 +14,15 @@
 }
 
 .primary{
-    color: var(--primary);
+    color: var(--primary) !important;
 }
 
 .secondary{
-    color: var(--secondary);
+    color: var(--secondary) !important;
+}
+
+.white{
+    color: #FFFFFF !important;
 }
 
 .form-width{

@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <h1 class="primary mb-3">Tu cuenta</h1>
+        <h1 class="primary mb-3">Mi cuenta</h1>
       </b-col>
     </b-row>
     <b-row>
@@ -57,7 +57,7 @@
                 </b-row>
                 <b-row align-h="center">
                   <b-col align-self="center" class="mt-3 mb-4" md="6">
-                    <b-button variant="primary" block >Editar información de tu cuenta.</b-button>
+                    <b-button to="/UpdateData" variant="primary" block >Editar información de tu cuenta.</b-button>
                   </b-col>
                 </b-row>
               </b-col>
