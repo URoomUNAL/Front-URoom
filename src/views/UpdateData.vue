@@ -74,7 +74,6 @@
 
 <script>
   import filetoblob from '../libs/file-to-blob.js'
-  import AuthService from '../services/authentication-services.js'
   import UserService from '../services/user-services.js'
   export default {
     name: 'UpdateData',
@@ -111,7 +110,7 @@
           self.form.age = response.data.age;
           self.form.cellphone = response.data.cellphone;
           self.form.is_student = response.data.is_student;
-          //self.form.photo = response.data.photo;
+          self.fields.photo = response.data.photo;
           self.fields.loading = false;
         }).catch(function(error){
           if(error.response){
@@ -128,9 +127,16 @@
     },
     methods: {
       onSubmit() {
+        var user = {
+          name: this.form.name,
+          email: this.form.email,
+          age: this.form.age,
+          cellphone: this.form.cellphone,
+          photo: this.form.photo
+        }
         var self = this;
         self.fields.loading = true;
-        AuthService.ModifyProfile()
+        UserService.ModifyProfile(user)
         .then(function(response){
           console.log(response); //TODO:
           self.alert.message = 'Se ha actualizado satisfactoriamente la información del usuario.';
@@ -151,7 +157,7 @@
         });
       }
     },
-    watch : {
+    watch: {
       'form.photo'(newValue, oldValue) {
         if(newValue !== oldValue) {
           if(newValue) {

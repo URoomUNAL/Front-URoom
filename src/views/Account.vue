@@ -22,7 +22,7 @@
                   <h2 class="primary my-4">Tu foto</h2>
                 </b-row>
                 <b-row align-h="center" align-v="center">
-                  <b-avatar :src="fields.photo" size="10rem" class="mb-4 mt-4"/>
+                  <b-avatar :src="form.photo" size="10rem" class="mb-4 mt-4"/>
                 </b-row>
               </b-col>
               <b-col lg="8">
@@ -101,7 +101,7 @@ import UserService from '../services/user-services.js'
           self.form.email = response.data.email;
           self.form.age = response.data.age;
           self.form.cellphone = response.data.cellphone;
-          //form.file = response.data.file;
+          self.form.photo = response.data.photo;
           self.fields.loading = false;
         }).catch(function(error){
           if(error.response){
