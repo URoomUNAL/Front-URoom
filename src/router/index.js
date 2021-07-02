@@ -61,6 +61,12 @@ const routes = [
         component:()=>import('@/views/Account.vue'),
         props: true
     },
+    {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
+        path:'/UpdateData', 
+        name:'UpdateDate',
+        component:()=>import('@/views/UpdateData.vue'),
+        props: true
+    },
     {   // Ruta comodín. Página para soportar el error 404.
         path:'/*', 
         name:'Error404',
