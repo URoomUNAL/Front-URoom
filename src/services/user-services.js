@@ -12,10 +12,17 @@ class UserService{
         );
     }
     ModifyProfile(form){
-        return axios.post(api.API_URL + '/update-info', form, {
+        var formData = new FormData();
+        formData.append('name', form.name);
+        formData.append('email', form.email);
+        formData.append('age', form.age);
+        formData.append('cellphone', form.cellphone);
+        formData.append('photo_file', form.photo);
+        return axios.post(api.API_URL + '/update-info', formData, {
             headers: {
-            "Content-Type": "application/json"
-        }});
+                "Content-Type": "application/json", ...authHeader()
+            }
+        });
     }
 }
 export default new UserService();

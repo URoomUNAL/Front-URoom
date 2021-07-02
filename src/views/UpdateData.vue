@@ -5,13 +5,13 @@
         <h1 class="primary mb-3">Actualiza tu información personal</h1>
       </b-col>
     </b-row>
-    <!-- <b-row>
+    <b-row>
       <b-col>
-        <b-alert v-model="alert.show" variant="danger" dismissible>
+        <b-alert v-model="alert.show" :variant="alert.variant" dismissible>
           {{alert.message}}
         </b-alert>
       </b-col>
-    </b-row> -->
+    </b-row>
     <b-row>
       <b-col class="mb-4">
         <b-overlay :show="fields.loading" variant="white" spinner-variant="primary">
@@ -23,10 +23,10 @@
                     <h2 class="primary my-4">Tu foto</h2>
                   </b-row>
                   <b-row align-h="center" align-v="center">
-                    <b-avatar src="" size="10rem" class="mb-4 mt-4"/>
+                    <b-avatar :src="fields.photo" size="10rem" class="mb-4 mt-4"/>
                   </b-row>
                   <b-row align-h="center" align-v="center">  
-                    <b-form-file type="file" accept=".jpg, .png" placeholder="" class="mb-2 col-10"></b-form-file>
+                    <b-form-file v-model="form.photo" type="file" accept="image/jpeg, image/png" placeholder="Selecciona la imágen." class="mb-2 col-10 text-left"></b-form-file>
                   </b-row>
                 </b-col>
                 <b-col lg="8">
@@ -39,11 +39,6 @@
                         <b-form-input id="input-1" v-model="form.name" placeholder="Ingresa tus nombres y apellidos" required/>
                       </b-form-group>
                     </b-col>
-                    <!-- <b-col md="6">
-                      <b-form-group id="input-group-2" label="Apellidos:" label-for="input-2" description="Usa tus datos reales.">
-                        <b-form-input id="input-2" v-model="form.surname" placeholder="Ingresa tus apellidos" required />
-                      </b-form-group>
-                    </b-col> -->
                   </b-row>
                   <b-row>
                     <b-col md="6">
@@ -78,72 +73,105 @@
 </template>
 
 <script>
-  import AuthService from '../services/authentication-services.js'
+  import filetoblob from '../libs/file-to-blob.js'
+  import UserService from '../services/user-services.js'
   export default {
     name: 'UpdateData',
     data() {
       return {
         fields: {
+          photo: null,
           loading: false
         },
         form: {
-          name: '',
           email: '',
-          age: '',
+          name: '',
+          surname: '',
+          photo: null,
+          password: '',
           cellphone: '',
+          age: '',
           is_student: ''
         },
         alert: {
           show: false,
-          message: ''
+          variant: '',
+          message: '',
         }
       }
     },
-    created(){                
-        this.form.name = localStorage.getItem('user_name');
-        this.form.email = localStorage.getItem('user_email');
-        this.form.age = localStorage.getItem('user_age');
-        this.form.cellphone = localStorage.getItem('user_cellphone');
-        this.form.is_student = localStorage.getItem('user_is_student');
-        //this.form.photo = localStorage.getItem("user_photo");
+    created(){
+      var self = this;
+      self.fields.loading = true;
+      UserService.GetUser()
+        .then(function(response){
+          self.form.name = response.data.name;
+          self.form.email = response.data.email;
+          self.form.age = response.data.age;
+          self.form.cellphone = response.data.cellphone;
+          self.form.is_student = response.data.is_student;
+          self.fields.photo = response.data.photo;
+          self.fields.loading = false;
+        }).catch(function(error){
+          if(error.response){
+            self.alert.message = error.response.data;
+          }else if(error.request){
+            self.alert.message = 'No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde';
+          }else{
+            self.alert.message = 'Ha ocurrido un error desconocido. Intentalo de nuevo más tarde';
+          }
+          self.alert.show = true;
+          self.fields.loading = false;
+        }
+      );
     },
     methods: {
       onSubmit() {
         var user = {
-          id: localStorage.getItem('user_id'),
           name: this.form.name,
           email: this.form.email,
           age: this.form.age,
           cellphone: this.form.cellphone,
-          is_student: this.form.is_student == "true",
+          photo: this.form.photo
         }
         var self = this;
         self.fields.loading = true;
-        AuthService.ModifyProfile(JSON.stringify(user))
+        UserService.ModifyProfile(user)
         .then(function(response){
-          //localStorage.setItem("user_id", self.form.id);
-          localStorage.setItem("user_name", self.form.name);
-          localStorage.setItem("user_email", self.form.email);
-          localStorage.setItem("user_age", self.form.age);
-          localStorage.setItem("user_cellphone", self.form.cellphone);
-          localStorage.setItem("user_is_student", self.form.is_student);
-          localStorage.setItem("user_is_active", self.form.is_active);
-          self.fields.loading = false;
-          self.alert.message = response.data;
+          console.log(response); //TODO:
+          self.alert.message = 'Se ha actualizado satisfactoriamente la información del usuario.';
           self.alert.show = true;
-          // self.$router.push('/');
+          self.alert.variant = 'success';
+          self.fields.loading = false;
         }).catch(function(error){
           if(error.response){
             self.alert.message = error.response.data;
-            self.alert.show = true;
           }else if(error.request){
-            self.alert.message = "No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde";
-            self.alert.show = true;
+            self.alert.message = 'No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde';
           }else{
-            self.alert.message = "Ha ocurrido un error desconocido. Intentalo de nuevo más tarde";
+            self.alert.message = 'Ha ocurrido un error desconocido. Intentalo de nuevo más tarde';
           }
+          self.alert.show = true;
+          self.alert.variant = 'danger';
           self.fields.loading = false;
         });
+      }
+    },
+    watch: {
+      'form.photo'(newValue, oldValue) {
+        if(newValue !== oldValue) {
+          if(newValue) {
+            filetoblob(newValue)
+              .then((value) => {
+                this.fields.photo = value;
+              })
+              .catch(() => {
+                this.fields.photo = null;
+              });
+          }else{
+            this.fields.photo = null;
+          }
+        }
       }
     }
   }
