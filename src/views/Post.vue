@@ -38,6 +38,17 @@
                                 </b-toast>
                             </b-col>
                         </b-row>
+                        <b-row class="my-4">
+                            <b-col>
+                                <h3 class="primary">Preguntas y respuestas</h3>
+                                <!--TODO: tarjeta de pregunta-->
+                                <p> No hay aún preguntas para esta publicación, ¡Se el primero en preguntar!</p>
+                                <b-button variant="primary" v-b-toggle.new-question>Añadir nueva pregunta</b-button>
+                                <b-collapse accordion="new-question-accordeon" v-model="fields.new_question" id="new-question">
+                                    <CreateQuestion/>
+                                </b-collapse>
+                            </b-col>
+                        </b-row>
                         <b-row>
                             <Questions :questions="this.room.questions"/>
                         </b-row>
@@ -98,6 +109,7 @@
 <script>
 import Map from "../components/Map.vue";
 import AuthenticationPanel from "../components/AuthenticationPanel.vue";
+import CreateQuestion from "../components/CreateQuestion.vue";
 import Questions from "../components/Questions.vue";
 import PostServices from '../services/post-services.js'
 export default {
@@ -106,10 +118,14 @@ export default {
   components: {
       Map,
       Questions,
-      AuthenticationPanel
+      AuthenticationPanel,
+      CreateQuestion
   },
   data(){
       return{
+          fields:{
+              new_question: false
+          },
           room: '',
           toast:{
             message: '',

@@ -105,5 +105,21 @@ class PostService{
         );
     }
 
+    CreateQuestion(form){
+        return axios.post(api.API_URL + '/create-question', form, {
+            params: {id: form.id},
+            headers:
+                authHeader()
+        });
+    }
+
+    RespondQuestion(form){
+        return axios.post(api.API_URL + '/respond-question', form, {
+            params: {id: form.id},
+            headers:
+                authHeader()
+        });
+    }
+
 }
 export default new PostService();
