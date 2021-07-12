@@ -20,7 +20,7 @@
     <b-row align-h="center">
       <b-col>
         <!-- <CardRoom v-if="rooms && loading==false" :posts="rooms" :favorites="true"/> -->
-        <RoomsGroup v-if="rooms && loading==false" :posts="rooms" :favorites="false"/>
+        <HorizontalRoom v-if="rooms && loading==false" :posts="rooms"/>
         <h2 class="my-5" v-if="!rooms && loading ==false">Aún no has estado en ninguna residencia ¡Ve a explorar!</h2>
       </b-col>
     </b-row>
@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import RoomsGroup from '../components/RoomsGroup.vue'
+import HorizontalRoom from '../components/HorizontalRoom.vue'
 import PostService from '../services/post-services.js'
   export default {
-    name: 'MyFavorites',
+    name: 'MyResidences',
     data(){
       return{
         loading: true,
@@ -60,7 +60,7 @@ import PostService from '../services/post-services.js'
       );
     },
     components: {
-        RoomsGroup
+        HorizontalRoom
     }
   }
 </script>
