@@ -22,14 +22,26 @@
               <p>Esta publicación no tiene servicios</p>
             </b-container>
           </b-card-text>
-          <b-card-text>
+          <!--<<b-card-text>
             <strong>Normas: </strong>
             <b-container v-if="post.rules.length">
               <b-tag v-for="rule in post.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
             </b-container>
-            <b-container v-if="!post.rules.length">
+            b-container v-if="!post.rules.length">
               <p>Esta publicación no tiene normas</p>
             </b-container>
+          </b-card-text>-->
+          <b-card-text>
+            <b-row align-h="center">
+              <b-col cols="6" class="text-center mt-3" style="border-right: 1px dashed;">
+                <strong>Visualizaciones</strong>
+                <h3 class="primary">{{post.visits}}</h3>
+              </b-col>
+              <b-col cols="6" class="text-center mt-3" style="border-left: 1px dashed;">
+                <strong> Interesados </strong>
+                <h3 class="primary">{{post.interested}}</h3>
+              </b-col>
+            </b-row>
           </b-card-text>
           <b-card-text class="text-center">  
             <b-form-rating class="align-items-center" v-if="post.score" v-model="post.score" readonly show-value inline no-border/>
@@ -37,9 +49,9 @@
           </b-card-text>
           <b-card-text class="text-center">     
             <!-- <div v-if='!favorites'> -->
-              <b-button variant="primary">Editar Publicación</b-button>
-              <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)">Ocultar</b-button>
-              <b-button v-if="!post.is_active" variant="info" type="submit" @click="OnSubmit(post, true)">Activar</b-button>
+              <b-button variant="primary" class="mt-2">Editar Publicación</b-button>
+              <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)" class="mt-2">Ocultar</b-button>
+              <b-button v-if="!post.is_active" variant="info" type="submit" @click="OnSubmit(post, true)" class="mt-2">Activar</b-button>
             <!-- </div> -->
             <!-- <div v-if='favorites'> -->
               <!-- <b-row>

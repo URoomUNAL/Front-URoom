@@ -52,6 +52,7 @@ import PostService from '../services/post-services.js'
       self.loading = true;
       PostService.GetMyPosts()
         .then(function(response){
+          console.log(response.data);
           self.rooms = response.data;
           self.loading = false;
         }

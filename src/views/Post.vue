@@ -40,17 +40,14 @@
                         </b-row>
                         <b-row class="my-4">
                             <b-col>
-                                <h3 class="primary">Preguntas y respuestas</h3>
-                                <!--TODO: tarjeta de pregunta-->
-                                <p> No hay aún preguntas para esta publicación, ¡Se el primero en preguntar!</p>
-                                <b-button variant="primary" v-b-toggle.new-question>Añadir nueva pregunta</b-button>
+                                <h2 class="primary my-5">Preguntas y respuestas</h2>
+                                <Questions :questions="this.room.questions" v-if="this.room.questions.length > 0"/>
+                                <p v-if="this.room.questions.length <= 1"> No hay aún preguntas para esta publicación, ¡Se el primero en preguntar!</p>
+                                <b-button variant="primary" class="mt-3" v-b-modal.new-question>Añadir nueva pregunta</b-button>
                                 <b-collapse accordion="new-question-accordeon" v-model="fields.new_question" id="new-question">
                                     <CreateQuestion/>
                                 </b-collapse>
                             </b-col>
-                        </b-row>
-                        <b-row>
-                            <Questions :questions="this.room.questions"/>
                         </b-row>
                     </b-col>
                     <b-col sm="12" md="12" xl="4">
@@ -104,6 +101,9 @@
                 </b-container>
             </b-modal>
         </b-container>
+        <b-modal title="Haz una pregunta" id="new-question" title-class="primary" hide-footer>
+            <CreateQuestion/>
+        </b-modal>
     </b-overlay>
 </template>
 <script>
