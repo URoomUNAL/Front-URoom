@@ -19,7 +19,7 @@
             
             <b-form-rating @change="value(index)" variant="warning" required v-model="posts[index].score"></b-form-rating>
             <b-row class="mt-3">
-              <b-col sm="12" md="12">
+              <b-col sm="12" md="12" class="text-center">
                   <b-form-textarea
                   id="textarea"
                   v-model="posts[index].comment"
@@ -33,8 +33,9 @@
               </b-col>
             </b-row>
             <b-row class="mt-3">
-              <b-col sm="12" md="6">
-                      <b-form-textarea
+              <b-col sm="12" md="6" class="text-center">
+                <h4>Pros</h4>
+                 <b-form-textarea
                   id="textarea"
                   v-model="posts[index].pros"
                   placeholder="Pros."
@@ -42,7 +43,8 @@
                   max-rows="6"
                   ></b-form-textarea>
               </b-col>
-              <b-col sm="12" md="6">
+              <b-col sm="12" md="6" class="text-center">
+                <h4>Contras</h4>
                   <b-form-textarea
                   id="textarea"
                   v-model="posts[index].contras"
@@ -80,16 +82,16 @@
                   
               </b-col>
             </b-row>
-            <b-row class="mt-3">
-              <b-col sm="12" md="6">
-                  <h4>Pros</h4>
+            <b-row class="mt-3" >
+              <b-col sm="12" md="6" class="text-center">
+                <b-row ><h4>Pros</h4></b-row>
                   <div v-if ="typeof posts[index].pros == 'undefined'" >
                     <p>No indicó pros</p> 
                   </div>
                   <p>{{posts[index].pros}}</p> 
               </b-col>
-              <b-col sm="12" md="6">
-                  <h4>Contras</h4>
+              <b-col sm="12" md="6" class="text-center" >
+                  <h4 md="12">Contras</h4>
                   <div v-if ="typeof posts[index].contras == 'undefined'" >
                     <p>No indicó contras</p> 
                   </div>
@@ -97,10 +99,7 @@
               </b-col>
             </b-row>
             <b-row class="mt-3">
-              <b-col sm="12" md="6">
-                <b-button type="submit" block variant="primary">Calificar</b-button>      
-              </b-col>
-              <b-col sm="12" md="6">
+              <b-col sm="12" md="12">
                 <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
               </b-col>
             </b-row>
