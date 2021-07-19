@@ -50,8 +50,8 @@
           <b-card-text class="text-center">     
               <b-row align-v="center">
                 <b-col>
-                  <b-button variant="primary" class="mt-2" block @click="OnRent(post)">Arrendar</b-button>
-                  <!--<b-button variant="info" class="mt-2" block>Desarrendar</b-button>-->
+                  <b-button v-if="!post.rented" variant="primary" class="mt-2" block @click="OnRent(post)">Arrendar</b-button>
+                  <b-button v-if="post.rented" variant="info" class="mt-2" block @click="OnUnrent(post)">Desarrendar</b-button>
                 </b-col>
               </b-row>
               <b-row align-v="center">
@@ -72,6 +72,9 @@
       </b-col>
     </b-row>
     <b-modal title="Arrienda la habitación" id="rent-room" title-class="primary" hide-footer>
+      <RentPanel :idPost="fields.id"/>
+    </b-modal>
+    <b-modal title="Finaliza el arriendo la habitación" id="unrent-room" title-class="primary" hide-footer>
       <RentPanel :idPost="fields.id"/>
     </b-modal>
   </b-container>
@@ -125,6 +128,9 @@ import RentPanel from '../components/RentPanel.vue'
       OnRent(post){
         this.$bvModal.show('rent-room');
         this.fields.id = post.id;
+      },
+      OnUnRent(post){
+        this.$bvModal.show('unrent-room');
       }
     },
     components: {
