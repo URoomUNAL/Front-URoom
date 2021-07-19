@@ -105,5 +105,42 @@ class PostService{
         );
     }
 
+    CreateQuestion(form){
+        return axios.post(api.API_URL + '/add-question', form, {
+            params: {id: form.post_id},
+            headers:
+                authHeader()
+        });
+    }
+
+    RespondQuestion(form){
+        return axios.post(api.API_URL + '/update-answer', form, {
+            params: {id: form.id},
+            headers:
+                authHeader()
+        });
+        // id pregunta
+        // string respuesta.
+    }
+
+    RemoveQuestion(id){
+        return axios.post(api.API_URL + '/remove-question',{
+            params: {id: id},
+            headers:
+                authHeader()
+        });
+    }
+
+    EditQuestion(id, form){
+        return axios.post(api.API_URL + '/update-question', form, {
+            params: {id: id},
+            headers:
+                authHeader()
+        });
+        // id pregunta.
+        // anonimo
+        // nuevo string
+    }
+
 }
 export default new PostService();
