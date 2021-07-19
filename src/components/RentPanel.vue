@@ -14,7 +14,6 @@
             <b-button type="submit" variant="primary" class="mt-3 text-center">Arrendar a persona</b-button>
         </b-row>
       </b-form>
-      {{id-post}}
     </b-container>
   </b-overlay>
 </template>
@@ -25,7 +24,7 @@
 export default {
   name: "RentPanel",
   props:
-      ['id-post']
+      ['idPost']
   ,
   data(){
     return{
@@ -42,8 +41,16 @@ export default {
   },
   methods: {
     OnSubmit(){
-      console.log("!");
+      console.log(this.idPost,"!");
     }
+  },
+  watch: {
+      idPost(newValue, oldValue){
+          console.log(newValue + oldValue);
+      }
+  },
+  created(){
+      
   }
 }
 </script>

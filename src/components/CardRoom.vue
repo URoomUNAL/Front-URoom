@@ -72,7 +72,7 @@
       </b-col>
     </b-row>
     <b-modal title="Arrienda la habitación" id="rent-room" title-class="primary" hide-footer>
-      <RentPanel :id-post="fields.id"/>
+      <RentPanel :idPost="fields.id"/>
     </b-modal>
   </b-container>
 </template>
