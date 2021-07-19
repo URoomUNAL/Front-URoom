@@ -2,7 +2,7 @@
   <b-container>
     <b-row class="pb-5">
       <b-col>
-        <h1 class="primary">Mis Residencias</h1>
+        <h1 class="primary">Mis Habitaciones</h1>
       </b-col>
     </b-row>
     <b-row>

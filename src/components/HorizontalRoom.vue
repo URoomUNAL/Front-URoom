@@ -84,7 +84,7 @@
             </b-row>
             <b-row class="mt-3" >
               <b-col sm="12" md="6" class="text-center">
-                <b-row ><h4>Pros</h4></b-row>
+                <h4>Pros</h4>
                   <div v-if ="typeof posts[index].pros == 'undefined'" >
                     <p>No indicó pros</p> 
                   </div>
@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import UserService from '../services/user-services.js'
   export default {
     props:['posts'],
     data(){
@@ -148,11 +149,14 @@
         }else{
           var form = {
            post_id: this.posts[index].id,
+           user_username: (JSON.parse(localStorage.getItem('user')).email),
            score: this.posts[index].score,
            comment: this.posts[index].comment,
            pros: this.posts[index].pros,
            cons: this.posts[index].contras
           }
+          console.log(form)
+          UserService.RateRoom(form);
           this.escogido = form
           this.posts[index].calification = true
         }

@@ -24,5 +24,12 @@ class UserService{
             }
         });
     }
+    RateRoom(form){
+        console.log(form)
+        return axios.post(api.API_URL + '/rate-posts', form,  { 
+            headers: 
+                authHeader()
+        })
+    }
 }
 export default new UserService();
