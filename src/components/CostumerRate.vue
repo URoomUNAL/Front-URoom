@@ -16,6 +16,7 @@
                   rows="3"
                   max-rows="6"
                   required
+                  style="overflow-y:hidden"
                   >
                   </b-form-textarea>
                   
@@ -30,6 +31,7 @@
                   placeholder="Pros."
                   rows="3"
                   max-rows="6"
+                  style="overflow-y:hidden"
                   ></b-form-textarea>
               </b-col>
               <b-col sm="12" md="6" class="text-center">
@@ -40,6 +42,7 @@
                   placeholder="Contras."
                   rows="3"
                   max-rows="6"
+                  style="overflow-y:hidden"
                   ></b-form-textarea>
                   
               </b-col>

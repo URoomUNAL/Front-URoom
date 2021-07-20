@@ -29,6 +29,7 @@
                     rows="3"
                     max-rows="6"
                     required
+                    style="overflow-y:hidden"
                     >
                     </b-form-textarea>
                   </b-col>
@@ -38,6 +39,9 @@
                   </b-row>
                 </b-form>
               </div>
+              <div v-if="!question.answer && !creator" class="mt-2">
+                <p>No hay respuesta del dueño de la publicación.</p>
+              </div>
           </template>
         </b-card>
       </b-row> 
@@ -45,6 +49,7 @@
 </template>
 
 <script>
+import PostServices from '../services/post-services.js'
   export default {
     props:['questions','creator'],
     data(){
@@ -57,8 +62,11 @@
     methods: {
       answer(index){
         this.questions[index].answer = this.answers[index];
-        console.log(this.questions[index])
-        console.log(this.answers[index])
+        var form = {
+          questionId: this.questions[index].id,
+          answer: this.questions[index].answer
+        }
+        PostServices.AnswerQuestion(form)
       }
     }
   }

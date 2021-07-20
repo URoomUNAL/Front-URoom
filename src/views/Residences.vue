@@ -52,7 +52,7 @@ import PostService from '../services/post-services.js'
       console.log(localStorage.getItem('user'))
       var self = this;
       self.loading = true;
-      PostService.GetFavorites()
+      PostService.GetRatePosts()
         .then(function(response){
           self.rooms = response.data;
           self.loading = false;

@@ -26,7 +26,7 @@ class UserService{
     }
     RateRoom(form){
         console.log(form)
-        return axios.post(api.API_URL + '/rate-posts', form,  { 
+        return axios.post(api.API_URL + '/rate-post', form,  { 
             headers: 
                 authHeader()
         })

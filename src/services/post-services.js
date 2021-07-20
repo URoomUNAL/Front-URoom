@@ -173,5 +173,23 @@ class PostService{
         });
     }
 
+    GetRatePosts(){
+        return axios.get(api.API_URL + '/get-rated', {
+            headers: 
+                authHeader()
+            }
+        );
+    }
+
+    AnswerQuestion(form){
+        return axios.post(api.API_URL + '/update-answer', form, {
+            params: {
+                questionId: form.questionId,
+                answer: form.answer
+            },
+            headers:
+                authHeader()
+        });
+    }
 }
 export default new PostService();
