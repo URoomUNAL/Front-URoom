@@ -50,12 +50,9 @@
           <b-card-text class="text-center">     
               <b-row align-v="center">
                 <b-col>
-<<<<<<< HEAD
                   <b-button v-on:click="getCompletePost(post.id)" variant="primary" class="mt-2" block>Ver publicación</b-button>
-=======
                   <b-button v-if="!post.is_rented" variant="primary" class="mt-2" block @click="OnRent(post)">Arrendar</b-button>
                   <b-button v-if="post.is_rented" variant="info" class="mt-2" block @click="OnUnrent(post)">Desarrendar</b-button>
->>>>>>> a31ceb9511c4f057376fd6c5d07c6f7058fbe778
                 </b-col>
                 
               </b-row>
@@ -65,11 +62,7 @@
                 </b-col>
                 <b-col cols="4" sm="6">
                   <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)" class="mt-2" block>Ocultar</b-button>
-                  <b-button v-if="!post.is_active" variant="info" type="submit" @click="OnSubmit(post, true)" class="mt-2" block>Activar</b-button>
-                </b-col>
-                <b-col cols="12">
-                  <b-button v-if="post.rented" variant="primary" class="mt-2" block @click="OnRent(post)">Arrendar</b-button>
-                  <b-button v-if="!post.rented" variant="info" class="mt-2" block @click="OnUnrent(post)">Desarrendar</b-button>
+                  <b-button v-if="!post.is_active" variant="success" type="submit" @click="OnSubmit(post, true)" class="mt-2" block>Activar</b-button>
                 </b-col>
               </b-row>
             <b-toast v-if="post.id==fields.id" id="status" :variant="toast.variant" title="URoom" auto-hide-delay="3000" no-hover-pause static no-close-button>
@@ -139,7 +132,6 @@ import RentPanel from '../components/RentPanel.vue'
         this.$bvModal.show('rent-room');
         this.fields.id = post.id;
       },
-<<<<<<< HEAD
       OnUnrent(post){
         this.$bvModal.show('unrent-room');
         this.fields.id = post.id;
@@ -149,11 +141,6 @@ import RentPanel from '../components/RentPanel.vue'
         console.log(this.posts)
         this.$router.push({ name: 'Post', params: {id: idx}});
       }
-=======
-      /*OnUnRent(post){
-        this.$bvModal.show('unrent-room');
-      }*/
->>>>>>> a31ceb9511c4f057376fd6c5d07c6f7058fbe778
     },
     components: {
       RentPanel,
