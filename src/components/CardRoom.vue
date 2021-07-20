@@ -50,7 +50,12 @@
           <b-card-text class="text-center">     
               <b-row align-v="center">
                 <b-col>
+<<<<<<< HEAD
                   <b-button v-on:click="getCompletePost(post.id)" variant="primary" class="mt-2" block>Ver publicación</b-button>
+=======
+                  <b-button v-if="!post.is_rented" variant="primary" class="mt-2" block @click="OnRent(post)">Arrendar</b-button>
+                  <b-button v-if="post.is_rented" variant="info" class="mt-2" block @click="OnUnrent(post)">Desarrendar</b-button>
+>>>>>>> a31ceb9511c4f057376fd6c5d07c6f7058fbe778
                 </b-col>
                 
               </b-row>
@@ -134,6 +139,7 @@ import RentPanel from '../components/RentPanel.vue'
         this.$bvModal.show('rent-room');
         this.fields.id = post.id;
       },
+<<<<<<< HEAD
       OnUnrent(post){
         this.$bvModal.show('unrent-room');
         this.fields.id = post.id;
@@ -143,6 +149,11 @@ import RentPanel from '../components/RentPanel.vue'
         console.log(this.posts)
         this.$router.push({ name: 'Post', params: {id: idx}});
       }
+=======
+      /*OnUnRent(post){
+        this.$bvModal.show('unrent-room');
+      }*/
+>>>>>>> a31ceb9511c4f057376fd6c5d07c6f7058fbe778
     },
     components: {
       RentPanel,

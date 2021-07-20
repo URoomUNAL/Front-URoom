@@ -142,5 +142,36 @@ class PostService{
         // nuevo string
     }
 
+    RentRoom(post_id, student_id){
+        return axios.post(api.API_URL + '/rent-post', {} ,{ 
+            params: {
+                post_id: post_id,
+                student_id: student_id
+            },
+            headers:
+                authHeader()
+        });
+    }
+
+    UnrentRoom(post_id){
+        return axios.post(api.API_URL + '/unrent-post',{ 
+            params: {
+                post_id: post_id
+            },
+            headers:
+                authHeader()
+        });
+    }
+
+    GetInterestedInPost(post_id){
+        return axios.get(api.API_URL + '/get-interested-users', {
+            params: {
+                post_id: post_id
+            },
+            headers:
+                authHeader()
+        });
+    }
+
 }
 export default new PostService();

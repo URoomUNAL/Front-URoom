@@ -19,7 +19,7 @@
             <b-button variant="primary" v-b-toggle.sign-up>Regístrate</b-button>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="logged">
-            <b-nav-item to="/MyRooms" v-if="this.roles[0] != 'ROLE_STUDENT'">Mis residencias</b-nav-item>
+            <b-nav-item to="/MyRooms" v-if="this.roles[0] != 'ROLE_STUDENT'">Mis habitaciones</b-nav-item>
             <b-nav-item to="/MyFavorites" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis favoritas</b-nav-item>
             <b-nav-item-dropdown toggle-class="btn btn-primary white px-4" no-flip :text="name">
               <b-dropdown-item to="/Account">Mi cuenta</b-dropdown-item>
