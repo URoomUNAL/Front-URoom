@@ -2,7 +2,7 @@
   <b-container>
     <b-row class="pb-5">
       <b-col>
-        <h1 class="primary">Mis habitaciones</h1>
+        <h1 class="primary">Mis Habitaciones</h1>
       </b-col>
     </b-row>
     <b-row>
@@ -13,14 +13,15 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <b-col lg="8" class="mb-4">
-        <b-button block variant="primary" to="/AddRoom">Añade una Habitación</b-button>
+      <b-col lg="8">
+        <b-button block variant="primary" to="/Rooms">Explora más habitaciones</b-button>
       </b-col>
     </b-row>
     <b-row align-h="center">
       <b-col>
-        <CardRoom v-if="rooms && loading==false" :posts="rooms"/>
-        <h2 class="my-5" v-if="!rooms && loading ==false">Aún no has creado tu primera publicación ¿Qué estás esperando?</h2>
+        <!-- <CardRoom v-if="rooms && loading==false" :posts="rooms" :favorites="true"/> -->
+        <HorizontalRoom v-if="rooms && loading==false" :posts="rooms"/>
+        <h2 class="my-5" v-if="!rooms && loading ==false">Aún no has estado en ninguna residencia ¡Ve a explorar!</h2>
       </b-col>
     </b-row>
     <b-row align-h="center" class="mb-5" v-if="loading">
@@ -32,11 +33,10 @@
 </template>
 
 <script>
-import CardRoom from '../components/CardRoom.vue'
+import HorizontalRoom from '../components/HorizontalRoom.vue'
 import PostService from '../services/post-services.js'
-
   export default {
-    name: 'MyRooms',
+    name: 'MyResidences',
     data(){
       return{
         loading: true,
@@ -48,18 +48,19 @@ import PostService from '../services/post-services.js'
       }
     },
     created(){
+
+      console.log(localStorage.getItem('user'))
       var self = this;
       self.loading = true;
-      PostService.GetMyPosts()
+      PostService.GetRatePosts()
         .then(function(response){
-          console.log(response.data);
           self.rooms = response.data;
           self.loading = false;
         }
       );
     },
     components: {
-      CardRoom
+        HorizontalRoom
     }
   }
 </script>

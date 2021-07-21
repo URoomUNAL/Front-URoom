@@ -22,36 +22,51 @@
               <p>Esta publicación no tiene servicios</p>
             </b-container>
           </b-card-text>
-          <b-card-text>
+          <!--<<b-card-text>
             <strong>Normas: </strong>
             <b-container v-if="post.rules.length">
               <b-tag v-for="rule in post.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
             </b-container>
-            <b-container v-if="!post.rules.length">
+            b-container v-if="!post.rules.length">
               <p>Esta publicación no tiene normas</p>
             </b-container>
+          </b-card-text>-->
+          <b-card-text>
+            <b-row align-h="center">
+              <b-col cols="6" class="text-center mt-3" style="border-right: 1px dashed;">
+                <strong>Visualizaciones</strong>
+                <h3 class="primary">{{post.visits}}</h3>
+              </b-col>
+              <b-col cols="6" class="text-center mt-3" style="border-left: 1px dashed;">
+                <strong> Interesados </strong>
+                <h3 class="primary">{{post.interested}}</h3>
+              </b-col>
+            </b-row>
           </b-card-text>
           <b-card-text class="text-center">  
             <b-form-rating class="align-items-center" v-if="post.score" v-model="post.score" readonly show-value inline no-border/>
             <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
           </b-card-text>
-          <b-card-text class="text-center">     
-            <!-- <div v-if='!favorites'> -->
-              <b-button variant="primary">Editar Publicación</b-button>
-              <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)">Ocultar</b-button>
-              <b-button v-if="!post.is_active" variant="info" type="submit" @click="OnSubmit(post, true)">Activar</b-button>
-            <!-- </div> -->
-            <!-- <div v-if='favorites'> -->
-              <!-- <b-row>
-                <b-col sm="12" md="8">
-                  <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
+          <b-card-text class="text-center">
+            <b-row align-v="center">
+                <b-col cols="4" sm="6">
+                  <b-button variant="secondary" class="mt-2" block><b-icon-pencil-fill class="mr-3"/>Editar</b-button>
                 </b-col>
-                <b-col sm="12" md="4">
-                  <b-button block variant="danger"><b-icon icon="heart-fill" scale="1"></b-icon>
-                  </b-button>      
+                <b-col cols="4" sm="6">
+                  <b-button v-if="post.is_active" variant="danger" type="submit" @click="OnSubmit(post, false)" class="mt-2" block>Ocultar</b-button>
+                  <b-button v-if="!post.is_active" variant="success" type="submit" @click="OnSubmit(post, true)" class="mt-2" block>Activar</b-button>
                 </b-col>
+              </b-row>     
+              <b-row align-v="center">
+                <b-col>
+                  
+                  <b-button v-if="!post.is_rented" variant="primary" class="mt-2" block @click="OnRent(post)">Arrendar</b-button>
+                  <b-button v-if="post.is_rented" variant="info" class="mt-2" block @click="OnUnrent(post)">Desarrendar</b-button>
+                  <b-button v-on:click="getCompletePost(post.id)" variant="primary" class="mt-2" block>Ver publicación</b-button>
+                </b-col>
+                
               </b-row>
-            </div> -->
+              
             <b-toast v-if="post.id==fields.id" id="status" :variant="toast.variant" title="URoom" auto-hide-delay="3000" no-hover-pause static no-close-button>
               {{toast.message}}
             </b-toast>
@@ -60,15 +75,23 @@
         </b-overlay>
       </b-col>
     </b-row>
+    <b-modal title="Arrienda la habitación" id="rent-room" title-class="primary" hide-footer>
+      <RentPanel :idPost="fields.id"/>
+    </b-modal>
+    <b-modal title="Finaliza el arriendo la habitación" id="unrent-room" title-class="primary" hide-footer hide-header-close>
+      <CostumerRate :idPost="fields.id"/>
+    </b-modal>
   </b-container>
 </template>
 
 <script>
+import CostumerRate from '../components/CostumerRate.vue'
 import PostService from '../services/post-services.js'
+import RentPanel from '../components/RentPanel.vue'
 
   export default {
     props:['posts', 'favorites'],
-    name: 'RoomsGroup',
+    name: 'CardRoom',
     data(){
       return{
         fields: {
@@ -106,7 +129,24 @@ import PostService from '../services/post-services.js'
           self.fields.loading = false;
           self.$bvToast.show('status');
         });
+      },
+      OnRent(post){
+        this.$bvModal.show('rent-room');
+        this.fields.id = post.id;
+      },
+      OnUnrent(post){
+        this.$bvModal.show('unrent-room');
+        this.fields.id = post.id;
+      },
+      getCompletePost(idx){  
+        console.log(JSON.parse(localStorage.getItem('user')).email)
+        console.log(this.posts)
+        this.$router.push({ name: 'Post', params: {id: idx}});
       }
+    },
+    components: {
+      RentPanel,
+      CostumerRate
     }
   }
 </script>
