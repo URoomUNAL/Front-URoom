@@ -78,8 +78,8 @@
     <b-modal title="Arrienda la habitación" id="rent-room" title-class="primary" hide-footer>
       <RentPanel :idPost="fields.id"/>
     </b-modal>
-    <b-modal title="Finaliza el arriendo la habitación" id="unrent-room" title-class="primary" hide-footer>
-      <CostumerRate :student="this.student" @listo="fermer"/>
+    <b-modal title="Finaliza el arriendo la habitación" id="unrent-room" title-class="primary" hide-footer hide-header-close>
+      <CostumerRate :idPost="fields.id"/>
     </b-modal>
   </b-container>
 </template>

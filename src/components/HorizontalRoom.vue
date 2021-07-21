@@ -2,8 +2,7 @@
   <b-container>
   
     <b-row align-h="center" align-v="center" class="my-4">
-    
-      <b-col  v-for="(post,index) in posts" :key="post.id" xl="10" md="10" sm="10" class="pr-4">
+      <b-col v-for="(post,index) in posts" :key="post.id" xl="10" md="10" sm="10" class="pr-4">
         <b-card :title="post.title" :img-src="post.main_img" img-width="370rm" img-alt="Card Image" img-left class="text-left" title-text-variant="primary">
           <div v-if="!post.is_rated && !post.calification">
             <b-form @submit.prevent="calification(index)">
