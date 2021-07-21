@@ -1,12 +1,14 @@
 <template>
   <b-container>
+  
     <b-row align-h="center" align-v="center" class="my-4">
+    
       <b-col  v-for="(post,index) in posts" :key="post.id" xl="10" md="10" sm="10" class="pr-4">
         <b-card :title="post.title" :img-src="post.main_img" img-width="370rm" img-alt="Card Image" img-left class="text-left" title-text-variant="primary">
-          <div v-if="!post.calification">
+          <div v-if="!post.is_rated && !post.calification">
             <b-form @submit.prevent="calification(index)">
             <b-alert v-model="posts[index].show" variant="danger" >
-                {{posts[index].message}}
+                {{posts[index].comment}}
             </b-alert>
             <b-card-text>
               <p>{{post.address}}</p>
@@ -47,7 +49,7 @@
                 <h4>Contras</h4>
                   <b-form-textarea
                   id="textarea"
-                  v-model="posts[index].contras"
+                  v-model="posts[index].cons"
                   placeholder="Contras."
                   rows="3"
                   max-rows="6"
@@ -65,7 +67,7 @@
             </b-row>
             </b-form>
           </div>
-          <div v-if="post.calification">
+          <div v-if="post.is_rated">
             <b-card-text>
               <p>{{post.address}}</p>
             </b-card-text>
@@ -75,27 +77,29 @@
             <b-card-text>
             </b-card-text>
             
-            <b-form-rating readonly show-value variant="warning" required v-model="posts[index].score"></b-form-rating>
+            <b-form-rating readonly show-value variant="warning" required v-model="posts[index].calification.score"></b-form-rating>
             <b-row class="mt-3">
               <b-col sm="12" md="12">
-                <p> <strong>Comentario:</strong>  {{posts[index].comment}}</p> 
+                <p> <strong>Comentario:</strong>  {{posts[index].calification.comment}}</p> 
                   
               </b-col>
             </b-row>
             <b-row class="mt-3" >
               <b-col sm="12" md="6" class="text-center">
                 <h4>Pros</h4>
-                  <div v-if ="typeof posts[index].pros == 'undefined'" >
+                  <div v-if ="!posts[index].calification.pros" >
                     <p>No indicó pros</p> 
                   </div>
-                  <p>{{posts[index].pros}}</p> 
+                  <div v-if="posts[index].calification.pros">
+                    <p>{{posts[index].calification.pros}}</p> 
+                  </div>
               </b-col>
               <b-col sm="12" md="6" class="text-center" >
                   <h4 md="12">Contras</h4>
-                  <div v-if ="typeof posts[index].contras == 'undefined'" >
+                  <div v-if ="!posts[index].calification.cons" >
                     <p>No indicó contras</p> 
                   </div>
-                  <p>{{posts[index].contras}}</p> 
+                  <p>{{posts[index].calification.cons}}</p> 
               </b-col>
             </b-row>
             <b-row class="mt-3">
@@ -108,9 +112,6 @@
         </b-card>
       </b-col>
     </b-row>
-    <div v-if="escogido">
-      {{escogido}}
-    </div>
     
   </b-container>
 </template>
@@ -132,6 +133,10 @@ import UserService from '../services/user-services.js'
         
       }
     },
+    created(){
+      console.log(this.posts)
+      
+    },
     name: 'HorizontalRoom',
     methods: {
       getFormatPrice(price){
@@ -144,21 +149,28 @@ import UserService from '../services/user-services.js'
         this.idx = index;
         this.escogido = this.posts[index];
         if(!this.posts[index].score){
-          this.posts[index].message = 'Tiene que seleccionar las estrellas.';
+          this.posts[index].comment = 'Tiene que seleccionar las estrellas.';
           this.posts[index].show = true;
         }else{
+          this.posts[index].is_rated = true
+          this.posts[index].calification = {
+            score: this.posts[index].score,
+            pros: this.posts[index].pros,
+            cons: this.posts[index].cons,
+            comment: this.posts[index].comment
+          }
           var form = {
            post_id: this.posts[index].id,
            user_username: (JSON.parse(localStorage.getItem('user')).email),
            score: this.posts[index].score,
            comment: this.posts[index].comment,
            pros: this.posts[index].pros,
-           cons: this.posts[index].contras
+           cons: this.posts[index].cons
           }
           console.log(form)
           UserService.RateRoom(form);
           this.escogido = form
-          this.posts[index].calification = true
+          this.posts[index].is_rated = true
         }
       },
       value(index){

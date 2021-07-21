@@ -27,7 +27,7 @@
             <b-container v-if="post.rules.length">
               <b-tag v-for="rule in post.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
             </b-container>
-            b-container v-if="!post.rules.length">
+            <b-container v-if="!post.rules.length">
               <p>Esta publicación no tiene normas</p>
             </b-container>
           </b-card-text>-->
@@ -79,7 +79,7 @@
       <RentPanel :idPost="fields.id"/>
     </b-modal>
     <b-modal title="Finaliza el arriendo la habitación" id="unrent-room" title-class="primary" hide-footer>
-      <CostumerRate :idPost="fields.id"/>
+      <CostumerRate :student="this.student" @listo="fermer"/>
     </b-modal>
   </b-container>
 </template>
@@ -101,7 +101,8 @@ import RentPanel from '../components/RentPanel.vue'
         toast:{
           message: '',
           variant: ''
-        }
+        },
+        student: ''
       }
     },
     methods: {
@@ -136,14 +137,26 @@ import RentPanel from '../components/RentPanel.vue'
       },
       OnUnrent(post){
         this.$bvModal.show('unrent-room');
+        var self = this
+        PostService.UnrentRoom(post.id).then(function(response){
+          self.student = response.data
+        })
+        console.log(this.student)
         this.fields.id = post.id;
+        post.is_rented = true;
       },
       getCompletePost(idx){  
         console.log(JSON.parse(localStorage.getItem('user')).email)
         console.log(this.posts)
         this.$router.push({ name: 'Post', params: {id: idx}});
+      },
+      fermer(value){
+        console.log(value);
+        this.$bvModal.hide('unrent-room');
+        
       }
     },
+    
     components: {
       RentPanel,
       CostumerRate

@@ -154,9 +154,21 @@ class PostService{
     }
 
     UnrentRoom(post_id){
-        return axios.post(api.API_URL + '/unrent-post',{ 
+        return axios.post(api.API_URL + '/unrent-post',{},{ 
             params: {
                 post_id: post_id
+            },
+            headers:
+                authHeader()
+        });
+    }
+
+    RateStudent(rent_id, score){
+        console.log(rent_id, score)
+        return axios.post(api.API_URL + '/rate-student',{},{ 
+            params: {
+                rent_id: rent_id,
+                score: score
             },
             headers:
                 authHeader()
