@@ -79,7 +79,7 @@
       <RentPanel :idPost="fields.id"/>
     </b-modal>
     <b-modal title="Finaliza el arriendo la habitación" id="unrent-room" title-class="primary" hide-footer hide-header-close>
-      <CostumerRate :idPost="fields.id"/>
+      <CostumerRate :student="student" @listo="fermer"/>
     </b-modal>
   </b-container>
 </template>
@@ -136,14 +136,14 @@ import RentPanel from '../components/RentPanel.vue'
         this.fields.id = post.id;
       },
       OnUnrent(post){
-        this.$bvModal.show('unrent-room');
         var self = this
         PostService.UnrentRoom(post.id).then(function(response){
           self.student = response.data
+          self.$bvModal.show('unrent-room');
+          post.is_rented = false;
         })
-        console.log(this.student)
         this.fields.id = post.id;
-        post.is_rented = true;
+        
       },
       getCompletePost(idx){  
         console.log(JSON.parse(localStorage.getItem('user')).email)
@@ -153,7 +153,6 @@ import RentPanel from '../components/RentPanel.vue'
       fermer(value){
         console.log(value);
         this.$bvModal.hide('unrent-room');
-        
       }
     },
     

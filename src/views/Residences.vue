@@ -54,7 +54,7 @@ import PostService from '../services/post-services.js'
       self.loading = true;
       PostService.GetRatePosts()
         .then(function(response){
-          self.rooms = response.data;
+          self.rooms = response.data.reverse();
           self.loading = false;
         }
       );

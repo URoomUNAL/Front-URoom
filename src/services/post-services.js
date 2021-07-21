@@ -113,14 +113,15 @@ class PostService{
         });
     }
 
-    RespondQuestion(form){
+    AnswerQuestion(form){
         return axios.post(api.API_URL + '/update-answer', form, {
-            params: {id: form.id},
+            params: {
+                questionId: form.questionId,
+                answer: form.answer
+            },
             headers:
                 authHeader()
         });
-        // id pregunta
-        // string respuesta.
     }
 
     RemoveQuestion(id){
@@ -193,15 +194,6 @@ class PostService{
         );
     }
 
-    AnswerQuestion(form){
-        return axios.post(api.API_URL + '/update-answer', form, {
-            params: {
-                questionId: form.questionId,
-                answer: form.answer
-            },
-            headers:
-                authHeader()
-        });
-    }
+    
 }
 export default new PostService();

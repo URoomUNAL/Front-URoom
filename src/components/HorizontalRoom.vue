@@ -1,8 +1,7 @@
 <template>
   <b-container>
-  
     <b-row align-h="center" align-v="center" class="my-4">
-      <b-col v-for="(post,index) in posts" :key="post.id" xl="10" md="10" sm="10" class="pr-4">
+      <b-col v-for="(post,index) in posts" :key="post.rent_id" xl="10" md="10" sm="10" class="pr-4">
         <b-card :title="post.title" :img-src="post.main_img" img-width="370rm" img-alt="Card Image" img-left class="text-left" title-text-variant="primary">
           <div v-if="!post.is_rated && !post.calification">
             <b-form @submit.prevent="calification(index)">
@@ -17,11 +16,11 @@
             </b-card-text>
             <b-card-text>
             </b-card-text>
-            
-            <b-form-rating @change="value(index)" variant="warning" required v-model="posts[index].score"></b-form-rating>
+            <b-form-rating v-if="post.rent_status=='ENDED'" @change="value(index)" variant="warning" required v-model="posts[index].score"></b-form-rating>
+            <b-form-rating v-if="post.rent_status!='ENDED'" @change="value(index)" variant="warning" required v-model="default_score" disabled></b-form-rating>
             <b-row class="mt-3">
               <b-col sm="12" md="12" class="text-center">
-                  <b-form-textarea
+                  <b-form-textarea v-if="post.rent_status=='ENDED'"
                   id="textarea"
                   v-model="posts[index].comment"
                   placeholder="Añade un comentario calificando a la residencia."
@@ -29,36 +28,63 @@
                   max-rows="6"
                   required
                   >
-                  </b-form-textarea>
-                  
+                  </b-form-textarea>                  
+
+                  <b-form-textarea v-if="post.rent_status!='ENDED'"
+                  id="textarea"
+                  v-model="posts[index].comment"
+                  placeholder="Añade un comentario calificando a la residencia."
+                  rows="3"
+                  max-rows="6"
+                  required
+                  disabled
+                  >
+                  </b-form-textarea> 
               </b-col>
             </b-row>
             <b-row class="mt-3">
               <b-col sm="12" md="6" class="text-center">
                 <h4>Pros</h4>
-                 <b-form-textarea
+                 <b-form-textarea v-if="post.rent_status=='ENDED'"
                   id="textarea"
                   v-model="posts[index].pros"
                   placeholder="Pros."
                   rows="3"
                   max-rows="6"
                   ></b-form-textarea>
+                  <b-form-textarea v-if="post.rent_status!='ENDED'"
+                  id="textarea"
+                  v-model="posts[index].pros"
+                  placeholder="Pros."
+                  rows="3"
+                  max-rows="6"
+                  disabled
+                  ></b-form-textarea>
               </b-col>
               <b-col sm="12" md="6" class="text-center">
                 <h4>Contras</h4>
-                  <b-form-textarea
+                  <b-form-textarea v-if="post.rent_status=='ENDED'"
                   id="textarea"
                   v-model="posts[index].cons"
                   placeholder="Contras."
                   rows="3"
                   max-rows="6"
                   ></b-form-textarea>
+                  <b-form-textarea v-if="post.rent_status!='ENDED'"
+                  id="textarea"
+                  v-model="posts[index].cons"
+                  placeholder="Contras."
+                  rows="3"
+                  max-rows="6"
+                  disabled
+                  ></b-form-textarea>
                   
               </b-col>
             </b-row>
             <b-row class="mt-3">
               <b-col sm="12" md="6">
-                <b-button type="submit" block variant="primary">Calificar</b-button>      
+                <b-button type="submit" v-if="post.rent_status=='ENDED'" block variant="primary">Calificar</b-button>    
+                <b-button type="submit" v-if="post.rent_status!='ENDED'" block variant="primary" disabled>Calificar</b-button>      
               </b-col>
               <b-col sm="12" md="6">
                 <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
@@ -124,6 +150,7 @@ import UserService from '../services/user-services.js'
         post: '',
         variable: false,
         escogido:'',
+        default_score:0,
         alert: {
           message: '',
           show: ''
