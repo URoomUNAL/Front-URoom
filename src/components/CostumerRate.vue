@@ -1,81 +1,55 @@
 <template>
-  <b-container>
-    {{idPost}}
-    <b-row align-h="center" align-v="center" class="my-4">
-      <b-col xl="10" md="10" sm="10" class="pr-4">
-        <b-card :title="student.name" :img-src="student.img" img-width="370rm" img-alt="Card Image" img-left class="text-left" title-text-variant="primary">
-            <b-form @submit.prevent="calification()">
-            
-            <b-form-rating @change="value(index)" variant="warning" required v-model="student.score"></b-form-rating>
-            <b-row class="mt-3">
-              <b-col sm="12" md="12" class="text-center">
-                  <b-form-textarea
-                  id="textarea"
-                  v-model="student.comment"
-                  placeholder="Añade un comentario calificando al estudiante."
-                  rows="3"
-                  max-rows="6"
-                  required
-                  style="overflow-y:hidden"
-                  >
-                  </b-form-textarea>
-                  
-              </b-col>
-            </b-row>
-            <b-row class="mt-3">
-              <b-col sm="12" md="6" class="text-center">
-                <h4>Pros</h4>
-                 <b-form-textarea
-                  id="textarea"
-                  v-model="posts[index].pros"
-                  placeholder="Pros."
-                  rows="3"
-                  max-rows="6"
-                  style="overflow-y:hidden"
-                  ></b-form-textarea>
-              </b-col>
-              <b-col sm="12" md="6" class="text-center">
-                <h4>Contras</h4>
-                  <b-form-textarea
-                  id="textarea"
-                  v-model="posts[index].contras"
-                  placeholder="Contras."
-                  rows="3"
-                  max-rows="6"
-                  style="overflow-y:hidden"
-                  ></b-form-textarea>
-                  
-              </b-col>
-            </b-row>
-            <b-row class="mt-3">
-              <b-col sm="12" md="12">
-                <b-button v-on:click="calification()" block variant="primary">Calificar</b-button>      
-              </b-col>
-            </b-row>
-            </b-form>
-        </b-card>
+  <b-container v-if="student">
+    <h3>{{student.name}}</h3>
+
+    <b-form-rating @change="value()" variant="warning" required v-model="student.score"></b-form-rating>
+    <h6 v-if="show">Seleccione una estrella calificando al estudiante.</h6>
+    <!-- <b-row class="mt-3">
+      <b-col sm="12" md="12" class="text-center">
+          <b-form-textarea
+          id="textarea"
+          v-model="student.comment"
+          placeholder="Añade un comentario calificando al estudiante."
+          rows="3"
+          max-rows="6"
+          required
+          style="overflow-y:hidden"
+          >
+          </b-form-textarea>
+          
+      </b-col>
+    </b-row>             -->
+    <b-row class="mt-3">
+      <b-col sm="12" md="12">
+        <b-button block variant="primary" @click="calification()">Calificar</b-button>      
       </b-col>
     </b-row>
-    
   </b-container>
 </template>
 
 <script>
+import PostService from '../services/post-services.js'
   export default {
-    props:['idPost'],
+    props:['student'],
     data(){
       return {
         post: '',
-        alert: {
-          message: '',
-          show: ''
-        }
+        show: true
       }
     },
     name: 'CostumerRate',
     methods: {
-      calification(index){
-        console.log(index)
+      calification(){
+        if(!this.student.score){
+            console.log("hola")
+        }else{
+          PostService.RateStudent(this.student.actual_rent_id, this.student.score)
+          this.$emit('listo', true)
+        }
+      },
+      
+      value(){
+        this.show = false
       }
     },
     watch: { 
@@ -94,6 +68,10 @@
 } 
 h2, h4 {
   color: var(--primary);
+}
+h6 {
+  color: var(--google);
+  font-family: 'jost';
 }
 
 .modal-dialog > .modal-content{

@@ -113,14 +113,15 @@ class PostService{
         });
     }
 
-    RespondQuestion(form){
+    AnswerQuestion(form){
         return axios.post(api.API_URL + '/update-answer', form, {
-            params: {id: form.id},
+            params: {
+                questionId: form.questionId,
+                answer: form.answer
+            },
             headers:
                 authHeader()
         });
-        // id pregunta
-        // string respuesta.
     }
 
     RemoveQuestion(id){
@@ -154,9 +155,21 @@ class PostService{
     }
 
     UnrentRoom(post_id){
-        return axios.post(api.API_URL + '/unrent-post',{ 
+        return axios.post(api.API_URL + '/unrent-post',{},{ 
             params: {
                 post_id: post_id
+            },
+            headers:
+                authHeader()
+        });
+    }
+
+    RateStudent(rent_id, score){
+        console.log(rent_id, score)
+        return axios.post(api.API_URL + '/rate-student',{},{ 
+            params: {
+                rent_id: rent_id,
+                score: score
             },
             headers:
                 authHeader()
@@ -181,15 +194,6 @@ class PostService{
         );
     }
 
-    AnswerQuestion(form){
-        return axios.post(api.API_URL + '/update-answer', form, {
-            params: {
-                questionId: form.questionId,
-                answer: form.answer
-            },
-            headers:
-                authHeader()
-        });
-    }
+    
 }
 export default new PostService();
