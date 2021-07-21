@@ -32,17 +32,19 @@
             <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
           </b-card-text>
 
-          <b-row>
+          <b-row align-v="center" align-h="center">
             <b-col sm="12" md="8">
               <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
             </b-col>
             <b-col sm="12" md="4">
               <div v-if="!favorites">
-                <b-button @mouseover="ishovered = post.id" @mouseleave="ishovered = ''" v-on:click="addFavorites(post.id, index)" block variant="danger"><b-icon v-if="ishovered==post.id || post.is_favorite " icon="heart-fill" scale="1"></b-icon>
-                  <b-icon v-if="ishovered!=post.id && !post.is_favorite" icon="heart" scale="1"></b-icon></b-button>
+                <b-container @mouseover="ishovered = post.id" @mouseleave="ishovered = ''" v-on:click="addFavorites(post.id, index)">
+                  <b-icon v-if="ishovered==post.id || post.is_favorite " icon="heart-fill" variant="danger" scale="1.5"></b-icon>
+                  <b-icon v-if="ishovered!=post.id && !post.is_favorite" icon="heart" variant="danger" scale="1.5"></b-icon>
+                </b-container>
               </div>
               <div v-if="favorites">
-                <b-button @click="$bvModal.show('modal_'+post.id)" block variant="danger"><b-icon icon="heart-fill" scale="1"></b-icon>
+                <b-container @click="$bvModal.show('modal_'+post.id)" block variant="danger"><b-icon icon="heart-fill" variant="danger" scale="1.5"></b-icon>
                 <b-modal 
                 header-class="my-class"
                 :id="'modal_'+post.id"
@@ -51,7 +53,7 @@
                 ¿Seguro que desea eliminar el post de sus <strong>favoritos</strong>?
                 </b-modal>
                 {{quit_favorite}}
-                </b-button>
+                </b-container>
               </div>
             </b-col>
           </b-row>
