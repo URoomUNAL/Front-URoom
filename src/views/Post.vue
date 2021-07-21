@@ -18,7 +18,7 @@
                     <b-col sm="12" md="12" xl="8">
                         <b-carousel fade controls v-if="id">
                             <b-carousel-slide :img-src="room.main_img"/>
-                            <b-carousel-slide v-for="item in room.images" :key="item" :img-src="item.url"/>
+                            <b-carousel-slide v-for="(item, index) in room.images" :key="index" :img-src="item.url"/>
                         </b-carousel>
                         <b-row class="mt-4">
                             <b-col>
@@ -41,9 +41,9 @@
                         <b-row class="my-4">
                             <b-col>
                                 <h2 class="primary my-5">Preguntas y respuestas</h2>
-                                <Questions :questions="this.room.questions" v-if="this.room.questions.length > 0"/>
-                                <p v-if="this.room.questions.length <= 1"> No hay aún preguntas para esta publicación, ¡Se el primero en preguntar!</p>
-                                <b-button variant="primary" class="mt-3" v-b-modal.new-question>Añadir nueva pregunta</b-button>
+                                <Questions :creator="this.user" :questions="this.room.questions" v-if="this.room.questions.length > 0"/>
+                                <p v-if="this.room.questions.length < 1"> No hay aún preguntas para esta publicación, ¡Se el primero en preguntar!</p>
+                                <b-button v-if="!this.user" variant="primary" class="mt-3" v-b-modal.new-question>Añadir nueva pregunta</b-button>
                             </b-col>
                         </b-row>
                     </b-col>
@@ -127,12 +127,14 @@ export default {
           toast:{
             message: '',
             variant: ''
-          }
+          },
+          user: ''
 
       }
   },
   async created(){ 
     this.room = await PostServices.getPost(this.$route.params.id);
+    this.user = (JSON.parse(localStorage.getItem('user')).email) == this.room.user.email
   },
   methods: {
     getFormatPrice(price){

@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    {{idPost}}
     <b-row align-h="center" align-v="center" class="my-4">
       <b-col xl="10" md="10" sm="10" class="pr-4">
         <b-card :title="student.name" :img-src="student.img" img-width="370rm" img-alt="Card Image" img-left class="text-left" title-text-variant="primary">
@@ -15,6 +16,7 @@
                   rows="3"
                   max-rows="6"
                   required
+                  style="overflow-y:hidden"
                   >
                   </b-form-textarea>
                   
@@ -29,6 +31,7 @@
                   placeholder="Pros."
                   rows="3"
                   max-rows="6"
+                  style="overflow-y:hidden"
                   ></b-form-textarea>
               </b-col>
               <b-col sm="12" md="6" class="text-center">
@@ -39,13 +42,14 @@
                   placeholder="Contras."
                   rows="3"
                   max-rows="6"
+                  style="overflow-y:hidden"
                   ></b-form-textarea>
                   
               </b-col>
             </b-row>
             <b-row class="mt-3">
               <b-col sm="12" md="12">
-                <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Calificar</b-button>      
+                <b-button v-on:click="calification()" block variant="primary">Calificar</b-button>      
               </b-col>
             </b-row>
             </b-form>
@@ -58,7 +62,7 @@
 
 <script>
   export default {
-    props:['idpost'],
+    props:['idPost'],
     data(){
       return {
         post: '',
@@ -71,7 +75,7 @@
     name: 'CostumerRate',
     methods: {
       calification(index){
-        
+        console.log(index)
       }
     },
     watch: { 
