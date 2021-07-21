@@ -11,7 +11,7 @@
       </b-row>
       <b-form @submit.prevent="OnSubmit">
         <b-row class="mt-4">
-            <b-form-select v-model="fields.selected" :options="fields.options"/>
+            <b-form-select v-model="fields.selected" :options="fields.options" :disabled="form.anonymous"/>
         </b-row>
         <b-row class="mt-4">
             <b-form-checkbox v-model="form.anonymous"/>
@@ -59,6 +59,7 @@ export default {
           console.log(response);
           self.fields.loading = false;
           self.$router.go();
+          //self.$emit("rent", true);
         })
         .catch(function(error){
           if(error.response){

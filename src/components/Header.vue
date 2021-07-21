@@ -23,7 +23,7 @@
             <b-nav-item to="/MyFavorites" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis favoritas</b-nav-item>
             <b-nav-item-dropdown toggle-class="btn btn-primary white px-4" no-flip :text="name">
               <b-dropdown-item to="/Account">Mi cuenta</b-dropdown-item>
-              <b-dropdown-item to="/Residences">Mis habitaciones</b-dropdown-item>
+              <b-dropdown-item to="/Residences" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis residencias</b-dropdown-item>
               <b-dropdown-divider/>
               <b-dropdown-item-button active @click="LogOut">Cerrar sesión</b-dropdown-item-button>
             </b-nav-item-dropdown>

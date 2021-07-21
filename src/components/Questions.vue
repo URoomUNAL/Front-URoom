@@ -7,9 +7,9 @@
               <b-col cols=10>
                 <strong>{{question.question}}</strong>
               </b-col>
-              <b-col cols=2 class="text-right">
+              <!--<b-col cols=2 class="text-right">
                 <b-icon-pencil-fill variant="primary" v-b-tooltip.hover title="Editar pregunta" font-scale="1.5"/>
-              </b-col>
+              </b-col>-->
             </b-row>
           </b-card-text>
           <template #footer>
