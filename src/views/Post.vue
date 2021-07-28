@@ -85,8 +85,21 @@
                         </b-row>
                         <b-row class="mt-3">
                             <b-col>
-                                <b-form-rating class="align-items-center" v-if="room.score" v-model="room.score" readonly show-value inline no-border/>
+                                <b-form-rating class="align-items-center" v-if="room.score" variant="warning" v-model="room.score" readonly show-value inline no-border/>
                                 <p v-if="!room.score">Esta publicación aún no tiene calificaciones</p>
+                            </b-col>
+                        </b-row>
+                        <b-row class="mt-3">
+                            <b-col>
+                                <h2>Experiencias</h2>
+                                <b-row>
+                                    <b-col v-for="(calification, index) in room.califications" :key="index" xl="12" md="12" sm="12" class="pr-4"> 
+                                        <b-card  :title="calification.user_name" class="text-center" title-text-variant="primary" style="min-width: 100%;">
+                                                <b-form-rating variant="warning"  class="align-center" v-model="calification.score" readonly show-value inline no-border/>
+                                                <p>{{calification.comment}}</p>
+                                        </b-card>
+                                    </b-col>
+                                </b-row>
                             </b-col>
                         </b-row>
                     </b-col>
@@ -172,4 +185,8 @@ export default {
     max-width: 100% !important;
 
 }
+h5{
+    color: var(--primary);
+}
+
 </style>
