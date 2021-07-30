@@ -53,7 +53,7 @@
                     </b-col>
                     <b-col md="6">
                       <b-form-group label="Celular:" description="">
-                        <b-form-input v-model="form.cellphone" type="tel" placeholder="Ingresa tu celular" required/>
+                        <b-form-input v-model="form.cellphone" @change = "handleCellphone" type="tel" placeholder="Ingresa tu celular" required/>
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -122,26 +122,44 @@
     methods: {
       onSubmit() {
         var self = this;
-        self.fields.loading = true;
         console.log(this.form);
-        AuthService.SignUp(this.form)
-        .then(function(){
-          self.fields.loading = false;
-          self.$router.push('/')
-            .then(function(){
-              self.$router.go();
-            })
-        }).catch(function(error){
-          if(error.response){
-            self.alert.message = error.response.data;
-          }else if(error.request){
-            self.alert.message = 'No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde';
-          }else{
-            self.alert.message = 'Ha ocurrido un error desconocido. Intentalo de nuevo más tarde';
-          }
+        if(this.handleCellphone(this.form.cellphone)){
+          self.fields.loading = true;
+          AuthService.SignUp(this.form)
+          .then(function(){
+            self.fields.loading = false;
+            self.$router.push('/')
+              .then(function(){
+                self.$router.go();
+              })
+          }).catch(function(error){
+            if(error.response){
+              self.alert.message = error.response.data;
+            }else if(error.request){
+              self.alert.message = 'No se ha recibido respuesta del servidor. Intentalo de nuevo más tarde';
+            }else{
+              self.alert.message = 'Ha ocurrido un error desconocido. Intentalo de nuevo más tarde';
+            }
+            self.alert.show = true;
+            self.fields.loading = false;
+          });
+        }
+        else{
+          self.alert.message = "Ingrese un número de celular válido"
           self.alert.show = true;
-          self.fields.loading = false;
-        });
+        }
+      },
+      handleCellphone(cellphone){  
+        var suitable_cellphone = /3[0-9]{9,9}$/.test(cellphone);
+        if(suitable_cellphone){
+          this.alert.show = false;
+        }
+        else{
+          self.alert.message = "Ingrese un número de celular válido"
+          self.alert.show = true;
+        }
+        console.log(suitable_cellphone)
+        return suitable_cellphone;
       }
     },
     watch : {

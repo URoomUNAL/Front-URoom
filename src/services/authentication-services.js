@@ -7,6 +7,10 @@ class AuthService{
       var formData = new FormData();
       formData.append('name', form.name + ' ' + form.surname);
       formData.append('email', form.email);
+      if(form.photo == null){
+        var file = new File([""], "foo.txt", {type:"text/plain"})
+        form.photo = file
+      }
       formData.append('photo_file', form.photo);
       formData.append('password', form.password);
       formData.append('cellphone', form.cellphone);
