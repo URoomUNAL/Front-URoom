@@ -1,5 +1,5 @@
 <template>
-    <b-overlay :show="!room" variant="white" spinner-variant="primary">
+    <b-overlay :show="!room" variant="white" spinner-variant="primary" class="mb-3">
         <b-container v-if="room">
             <b-row>
                 <!--<b-col  sm="12" md="2" xl="2" >
@@ -7,9 +7,9 @@
                         <b-button to="/Rooms" variant="primary" class="mt-3" type="submit" block>Volver</b-button>
                     </b-row>
                 </b-col>-->
-                <b-col  sm="12" md="12" xl="12" >
+                <b-col sm="12" md="12" xl="12" >
                     <b-row align-h="center">
-                        <h1 class="primary mb-5">{{room.title}}</h1>
+                        <h1 class="primary mb-3">{{room.title}}</h1>
                     </b-row>
                 </b-col>
             </b-row>
@@ -57,7 +57,7 @@
                         </b-row>
                         <b-row>
                             <b-col>
-                                <h2>Precio</h2>
+                                <h2>Mensualidad</h2>
                                 <p><strong>{{getFormatPrice(room.price)}}</strong></p>
                             </b-col>
                         </b-row>
@@ -65,7 +65,7 @@
                             <b-col>
                                 <h2>Normas</h2>
                                 <b-container v-if="room.rules.length">
-                                    <b-tag v-for="rule in room.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
+                                    <b-tag v-for="rule in room.rules" :key="rule.id" no-remove variant="primary" class="ml-1">{{rule.name}}</b-tag>
                                 </b-container>
                                 <b-container v-if="!room.rules.length">
                                     <p>Esta publicación no tiene normas.</p>
@@ -76,7 +76,7 @@
                             <b-col class="mt-3">
                                 <h2>Servicios</h2>
                                 <b-container v-if="room.services.length">
-                                <b-tag v-for="service in room.services" :key="service.id" no-remove pill variant="primary" class="ml-1">{{service.name}}</b-tag>
+                                <b-tag v-for="service in room.services" :key="service.id" no-remove variant="primary" class="ml-1">{{service.name}}</b-tag>
                                 </b-container>
                                 <b-container v-if="!room.services.length">
                                 <p>Esta publicación no tiene servicios.</p>
@@ -114,6 +114,11 @@
         <b-modal title="Haz una pregunta" id="new-question" title-class="primary" hide-footer>
             <CreateQuestion/>
         </b-modal>
+        <b-container>
+            <div v-if="!room">
+                <br/><br/>
+            </div>
+        </b-container>
     </b-overlay>
 </template>
 <script>
