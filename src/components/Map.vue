@@ -1,5 +1,5 @@
 <template>
-    <b-row style="height: 20rem;" class="p-0 m-0">
+    <b-row style="height: 30rem;" class="p-0 m-0">
         <b-col>
             <l-map 
             v-if="showMap"
@@ -17,13 +17,13 @@
                 :attribution="attribution"
                 
             />
-            <l-marker
+            <l-marker 
               v-for="room in rooms"
               :key="room.id"
               :lat-lng="[room.latitude, room.longitude]"
             >
-              <l-popup>
-                <b-img class="col-8 offset-2" :src="room.main_img"  v-bind="img" alt="Rounded image"></b-img>
+              <l-popup >
+                <b-img class="col-12" :src="room.main_img" fluid v-bind="img" alt="Rounded image"></b-img>
                 <p>{{room.description}}</p>
               </l-popup>
             </l-marker>
@@ -166,5 +166,8 @@ Icon.Default.mergeOptions({
 }
 .leaflet-container {
   cursor: crosshair;
+}
+.leaflet-popup-content-wrapper {
+  width: 15rem;
 }
 </style>

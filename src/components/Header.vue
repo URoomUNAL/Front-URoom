@@ -12,20 +12,20 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-item to="/">Inicio</b-nav-item>
             <b-nav-item to="/Rooms">Habitaciones</b-nav-item>
-            <b-nav-item to="/">Sobre nosotros</b-nav-item>
+            <b-nav-item to="/AboutUs">Sobre nosotros</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="!logged">
             <b-nav-item v-b-toggle.log-in><div class="primary">Inicia sesión</div></b-nav-item>
             <b-button variant="primary" v-b-toggle.sign-up>Regístrate</b-button>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="logged">
-            <b-nav-item to="/MyRooms" v-if="this.roles[0] != 'ROLE_STUDENT'">Mis habitaciones</b-nav-item>
-            <b-nav-item to="/MyFavorites" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis favoritas</b-nav-item>
-            <b-nav-item-dropdown toggle-class="btn btn-primary white px-4" no-flip :text="name">
+            <b-nav-item to="/MyRooms" v-if="this.roles[0] != 'ROLE_STUDENT'">Mis Habitaciones</b-nav-item>
+            <b-nav-item to="/MyFavorites" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis Favoritas</b-nav-item>
+            <b-nav-item-dropdown toggle-class="btn btn-primary white px-4" no-flip :text="name" >
               <b-dropdown-item to="/Account">Mi cuenta</b-dropdown-item>
-              <b-dropdown-item to="/Residences" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis residencias</b-dropdown-item>
+              <b-dropdown-item to="/Residences" v-if="this.roles[0] == 'ROLE_STUDENT'">Mis Residencias</b-dropdown-item>
               <b-dropdown-divider/>
-              <b-dropdown-item-button active @click="LogOut">Cerrar sesión</b-dropdown-item-button>
+              <b-dropdown-item-button active @click="LogOut">Cerrar Sesión</b-dropdown-item-button>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>

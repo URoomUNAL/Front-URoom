@@ -61,16 +61,28 @@ const routes = [
         component:()=>import('@/views/Account.vue'),
         props: true
     },
-    {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
+    {   // Ruta 'UpdateData' Página para que un usuario actualizar la información de su cuenta.
         path:'/UpdateData', 
         name:'UpdateDate',
         component:()=>import('@/views/UpdateData.vue'),
         props: true
     },
-    {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
+    {   // Ruta 'Residences' Página para que un usuario pueda visualizar sus habitaciones arrendadas.
         path:'/Residences', 
         name:'Residences',
         component:()=>import('@/views/Residences.vue'),
+        props: true
+    },
+    {   // Ruta 'AboutUs' Página mostrar información del los creadores del sitio.
+        path:'/AboutUs', 
+        name:'AboutUs',
+        component:()=>import('@/views/AboutUs.vue'),
+        props: true
+    },
+    {   // Ruta 'Account' Página para que un usuario pueda visualizar la información de su cuenta.
+        path:'/Policy', 
+        name:'AboutUs',
+        component:()=>import('@/views/Policy.vue'),
         props: true
     },
     {   // Ruta comodín. Página para soportar el error 404.

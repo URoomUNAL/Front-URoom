@@ -67,7 +67,10 @@ import Filters from '../components/Filters.vue'
           self.markers = response.data;
           self.loading = false;
         }
-      );
+        ).catch(function(error){
+          console.log(error);
+        }
+        );
     },
     methods: {
       distance(value){
@@ -92,3 +95,10 @@ import Filters from '../components/Filters.vue'
     }
   }
 </script>
+
+<style>
+.card-img-top{
+    border-top-left-radius: 1rem !important;
+    border-top-right-radius: 1rem !important;
+}
+</style>

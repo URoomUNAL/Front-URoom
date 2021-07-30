@@ -34,14 +34,14 @@
                   </b-col>
                 </b-row>
                 <hr/>
-                <b-row style="white-space: pre;" align-h="center" align-v="center" class="mb-3">
+                <!--<b-row style="white-space: pre;" align-h="center" align-v="center" class="mb-3">
                   <b-col md="6" lg="3">
                     <b-button variant="google" class="mt-1 col-12"><b-icon icon="google" font-scale="1.5" class="mr-3"/>Google</b-button>
                   </b-col>
                   <b-col md="6" lg="3">
                     <b-button variant="facebook" class="mt-1 col-12"><b-icon icon="facebook" font-scale="1.5" class="mr-3"/>Facebook</b-button>
                   </b-col>
-                </b-row>
+                </b-row>-->
               </b-container>
             </b-form>
           </b-overlay>
