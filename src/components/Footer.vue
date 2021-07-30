@@ -6,7 +6,7 @@
         <p>URoom es el sitio ideal para encontrar tu habitación ideal en cuestión de segundos.</p>
         <p>
           <a href="https://wa.me/573025313032" class="secondary">
-            <i class="fa fa-whatsapp secondary align-middle" style="font-size: 2rem !important;"/>
+            <em class="fa fa-whatsapp secondary align-middle" style="font-size: 2rem !important;"/>
           </a>
           &nbsp;
           <a href="https://wa.me/573025313032" class="secondary">Escribenos a Whatsapp</a>
