@@ -7,12 +7,12 @@
             <p>{{post.address}}</p>
           </b-card-text>
           <b-card-text>
-            <strong>Precio: </strong>{{getFormatPrice(post.price)}}
+            <strong>Mensualidad: </strong>{{getFormatPrice(post.price)}}
           </b-card-text>
           <b-card-text>
             <strong>Servicios: </strong>
             <b-container v-if="post.services.length">
-              <b-tag v-for="service in post.services" :key="service.id" no-remove pill variant="primary" class="ml-1">{{service.name}}</b-tag>
+              <b-tag v-for="service in post.services" :key="service.id" no-remove variant="primary" class="ml-1">{{service.name}}</b-tag>
             </b-container>
             <b-container v-if="!post.services.length">
               <p>Esta publicación no tiene servicios</p>
@@ -21,38 +21,36 @@
           <b-card-text>
             <strong>Normas: </strong>
             <b-container v-if="post.rules.length">
-              <b-tag v-for="rule in post.rules" :key="rule.id" no-remove pill variant="primary" class="ml-1">{{rule.name}}</b-tag>
+              <b-tag v-for="rule in post.rules" :key="rule.id" no-remove variant="primary" class="ml-1">{{rule.name}}</b-tag>
             </b-container>
             <b-container v-if="!post.rules.length">
               <p>Esta publicación no tiene normas</p>
             </b-container>
           </b-card-text>
           <b-card-text class="text-center">  
-            <b-form-rating class="align-items-center" v-if="post.score" v-model="post.score" readonly show-value inline no-border/>
+            <b-form-rating class="align-items-center" v-if="post.score" v-model="post.score" readonly show-value inline no-border precision="1"/>
             <p v-if="!post.score">Esta publicación aún no tiene calificaciones</p>
           </b-card-text>
 
           <b-row align-v="center" align-h="center">
-            <b-col sm="12" md="8">
+            <b-col sm="12" md="8" align-self="center" class="text-center mt-3">
               <b-button v-on:click="getCompletePost(post.id)" block variant="primary">Ver Publicación</b-button>      
             </b-col>
-            <b-col sm="12" md="4">
+            <b-col sm="12" md="4" align-self="center" class="text-center mt-3">
               <div v-if="!favorites">
                 <b-container @mouseover="ishovered = post.id" @mouseleave="ishovered = ''" v-on:click="addFavorites(post.id, index)">
-                  <b-icon v-if="ishovered==post.id || post.is_favorite " icon="heart-fill" variant="danger" scale="1.5"></b-icon>
+                  <b-icon v-if="ishovered==post.id || post.is_favorite " icon="heart-fill" variant="danger" scale="1.5" ></b-icon>
                   <b-icon v-if="ishovered!=post.id && !post.is_favorite" icon="heart" variant="danger" scale="1.5"></b-icon>
                 </b-container>
               </div>
-              <div v-if="favorites">
-                <b-container @click="$bvModal.show('modal_'+post.id)" block variant="danger"><b-icon icon="heart-fill" variant="danger" scale="1.5"></b-icon>
-                <b-modal 
-                header-class="my-class"
-                :id="'modal_'+post.id"
-                @ok="removeFavorite(post.id, index)">
+              <div v-if="favorites" align-self="center" class="text-center mt-3">
+                <b-container @click="$bvModal.show('modal_'+post.id)" block variant="danger"> 
+                  <b-icon icon="heart-fill" variant="danger" scale="1.5"></b-icon>
+                <b-modal header-class="my-class" :id="'modal_'+post.id" @ok="removeFavorite(post.id, index)">
                 <h2>{{post.title}}</h2>  
-                ¿Seguro que desea eliminar el post de sus <strong>favoritos</strong>?
+                  ¿Seguro que desea eliminar el post de sus <strong>favoritos</strong>?
                 </b-modal>
-                {{quit_favorite}}
+                  {{quit_favorite}}
                 </b-container>
               </div>
             </b-col>
@@ -83,12 +81,19 @@ import PostService from '../services/post-services.js'
         this.$router.push({ name: 'Post', params: {id: idx}});
       },
       async addFavorites(idx, index){  
+        var self = this;
         if(this.posts[index].is_favorite){
           this.$root.$emit("bv::show::modal", 'modal_'+idx);
           this.posts[index].is_favorite = false;
           await PostService.removeFavorite(idx)
         }else{
-          PostService.addFavorites(idx);
+          PostService.addFavorites(idx)
+            .then(function(response){
+              console.log(response);
+            }).catch(function(){
+              self.$bvtoast('b-toaster-bottom-right', true);
+            });
+          this.$bvtoast('b-toaster-bottom-right', true);
           this.posts[index].is_favorite = true;
         }
       },

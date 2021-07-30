@@ -5,7 +5,7 @@
         <b-form @submit.prevent="FilterFunction">
           <b-row align-h="center" class="my-4">
             <b-col sm="6" md="4" xl="3">
-                <b-button variant="facebook" class="mt-3 ml-auto float-right" type="submit" block @click="Reset" >Borrar filtros</b-button>
+                <b-button variant="secondary" class="mt-3 ml-auto float-right" type="submit" block @click="Reset" >Borrar filtros</b-button>
             </b-col>
           </b-row>
           <b-row align-h="center" class="my-4">
