@@ -31,6 +31,13 @@
                                 <b-button variant="primary" class="mt-3" @click.prevent="Contact" type="submit" block>Contactarse <b-icon variant="white" icon="telephone" font-scale="1.5"/></b-button>
                             </b-col>
                         </b-row>
+                        <!--<b-row class="mb-3">
+                          <b-col>
+                            <b-button @click="doCopy">
+                              <b-icon-share-fill/> Compartir habitación
+                            </b-button>
+                          </b-col>
+                        </b-row>-->
                         <b-row>
                             <b-col>
                                 <b-toast id="status" :variant="toast.variant" title="URoom" auto-hide-delay="3000" no-hover-pause static no-close-button>
@@ -146,13 +153,14 @@ export default {
             message: '',
             variant: ''
           },
-          user: ''
-
+          user: '',
+          share: "https://proud-grass-0191ffe10.azurestaticapps.net" + window.location.pathname,
+          isCoping: false
       }
   },
   async created(){ 
     this.room = await PostServices.getPost(this.$route.params.id);
-    this.user = (JSON.parse(localStorage.getItem('user')).email) == this.room.user.email
+    this.user = (JSON.parse(localStorage.getItem('user')).email) == this.room.user.email    
   },
   methods: {
     getFormatPrice(price){
@@ -176,10 +184,14 @@ export default {
                 self.$bvModal.show('authentication');
             }
         );
-
+    },
+    ShareButton(){
+      this.isCoping = true;
+      this.$refs.url.select();
+      document.execCommand('copy');
+      this.isCoping = false;
     }
-  }
-  
+  }  
 }
 </script>
 <style>
